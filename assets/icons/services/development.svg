@@ -1,0 +1,20 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="devGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:# 059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="128" r="128" fill="url(#devGrad)" opacity="0.15"/>
+  <g transform="translate(128, 128)">
+    <!-- Code brackets -->
+    <g stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Left bracket -->
+      <polyline points="10,-25 -10,0 10,25"/>
+      <!-- Right bracket -->
+      <polyline points="-10,-25 10,0 -10,25"/>
+      <!-- Center line -->
+      <line x1="-5" y1="-18" x2="5" y2="18"/>
+    </g>
+  </g>
+</svg>

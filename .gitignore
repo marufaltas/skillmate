@@ -1,0 +1,11 @@
+# Node and environment
+node_modules/
+.env
+*.log
+
+# Backend env (do not commit real secrets)
+backend/.env
+
+# OS files
+.DS_Store
+Thumbs.db

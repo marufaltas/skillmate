@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>الدفع - SkillMate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+  /* Embedded CSS from checkout component (trimmed) */
+  :root{--font-cairo:'Cairo',sans-serif}
+  body{margin:0;font-family:var(--font-cairo);background:#0a0e1a;color:#e2e8f0;direction:rtl}
+  .checkout-inner{max-width:1200px;margin:0 auto;padding:40px 18px}
+  .glass{background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.07);border-radius:1rem}
+  .sec-title{font-weight:700;color:#f1f5f9;display:flex;align-items:center;gap:10px}
+  .order-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .method-card{border-radius:12px;border:2px solid rgba(255,255,255,0.07);padding:12px;cursor:pointer;background:rgba(255,255,255,0.02);text-align:center}
+  .method-card.selected{box-shadow:0 0 18px rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.6)}
+  .pay-btn{width:100%;padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,#10b981,#059669)}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center}
+  .modal-box{background:#0f1629;border:1px solid rgba(16,185,129,0.25);border-radius:1rem;padding:24px;text-align:center}
+  .brand-name{display:inline-block;font-weight:900;color:#06283D;position:relative}
+  .brand-name::after{content:'';position:absolute;left:-40%;top:0;width:40%;height:100%;background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));transform:skewX(-20deg);animation:shimmer 2.2s linear infinite;pointer-events:none}
+  @keyframes shimmer{0%{left:-40%}50%{left:120%}100%{left:120%}}
+  </style>
+</head>
+<body>
+  <div style="max-width:1200px;margin:18px auto;display:flex;align-items:center;gap:12px;padding:8px 18px">
+    <a href="platform.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#e2e8f0"><img src="assets/logo.jpg" style="width:46px;height:46px;border-radius:10px"> <span class="brand-name">SkillMate</span></a>
+    <nav style="margin-left:16px"><a href="about.html" style="color:#e2e8f0;text-decoration:none;font-weight:700">عن المنصة</a></nav>
+  </div>
+
+  <div class="checkout-inner">
+    <div style="margin-bottom:20px"><h1 style="margin:0;font-size:22px">إتمام الدفع</h1><p style="color:#94a3b8;margin:6px 0">تأكد من بيانات الطلب ثم اختر وسيلة الدفع</p></div>
+
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:320px">
+        <div class="glass" style="padding:16px;margin-bottom:12px">
+          <div class="sec-title">تفاصيل الطلب</div>
+          <div style="margin-top:12px">
+            <div style="font-size:13px;color:#64748b">الخدمة</div>
+            <div id="serviceTitle" style="font-weight:800;margin-top:6px">--</div>
+            <div style="margin-top:10px;font-size:13px;color:#64748b">السعر</div>
+            <div id="servicePrice" style="font-weight:900;font-size:20px;margin-top:6px">-- جنيه</div>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:14px">
+          <div class="sec-title">اختر وسيلة الدفع</div>
+          <div id="methods" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px"></div>
+          <div style="margin-top:14px">
+            <button id="payBtn" class="pay-btn" disabled>ادفع الآن</button>
+          </div>
+        </div>
+      </div>
+
+      <aside style="width:320px;min-width:260px">
+        <div class="glass" style="padding:14px;margin-bottom:12px">
+          <div style="font-weight:700;color:#f1f5f9">الملخص</div>
+          <div style="margin-top:8px;color:#94a3b8">إجمالي العملية <div id="sumPrice" style="float:left;font-weight:800;color:#10b981">--</div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="modal" class="modal-overlay"><div class="modal-box"><h3 id="modalTitle">تمت العملية بنجاح</h3><p id="modalMsg" style="color:#94a3b8">تم تحويل المبلغ</p><div style="margin-top:12px"><button onclick="closeModal()" class="pay-btn">حسناً</button></div></div></div>
+
+  <script>
+  // Minimal JS to drive checkout and call backend /orders RPC
+  const API_BASE = (window.API_BASE_OVERRIDE) ? window.API_BASE_OVERRIDE : 'http://localhost:3000';
+  function apiFetch(path, opts={}){
+    const token = localStorage.getItem('token');
+    const headers = Object.assign({'Content-Type':'application/json'}, opts.headers||{});
+    if (token) headers['Authorization'] = 'Bearer '+token;
+    return fetch(API_BASE+path, Object.assign({}, opts, { headers })).then(r=>r.json().catch(()=>({})))
+  }
+
+  const paymentMethods = [
+    {id:'vodafone', name:'فودافون كاش'},
+    {id:'orange', name:'أورانج موني'},
+    {id:'instapay', name:'انستاباي'},
+    {id:'bank', name:'تحويل بنكي'},
+    {id:'fawry', name:'فوري'}
+  ];
+
+  let selectedMethod = null;
+  function renderMethods(){
+    const el = document.getElementById('methods');
+    el.innerHTML='';
+    paymentMethods.forEach(m=>{
+      const btn = document.createElement('div');
+      btn.className='method-card'; btn.textContent=m.name; btn.dataset.id=m.id;
+      btn.onclick = ()=>{ document.querySelectorAll('.method-card').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); selectedMethod=m; document.getElementById('payBtn').disabled=false };
+      el.appendChild(btn);
+    });
+  }
+
+  function parseQuery(){
+    const q = new URLSearchParams(location.search);
+    return { service_id: q.get('service_id'), price: q.get('price'), seller_id: q.get('seller_id'), title: q.get('title') }
+  }
+
+  function openModal(title,msg){ document.getElementById('modalTitle').textContent=title; document.getElementById('modalMsg').textContent=msg; document.getElementById('modal').style.display='flex'; }
+  function closeModal(){ document.getElementById('modal').style.display='none'; window.location.href='platform.html'; }
+
+  async function handlePay(){
+    if (!selectedMethod) return alert('اختر وسيلة دفع');
+    const q = parseQuery();
+    const payBtn = document.getElementById('payBtn'); payBtn.disabled=true; payBtn.textContent='جارٍ المعالجة...';
+    // simulate progress
+    await new Promise(r=>setTimeout(r,1500));
+    // call backend to create order and transfer funds
+    try{
+      const res = await apiFetch('/orders', { method: 'POST', body: JSON.stringify({ service_id: q.service_id }) });
+      if (res.error) { openModal('فشل المعاملة', res.error || 'حدث خطأ'); payBtn.disabled=false; payBtn.textContent='ادفع الآن'; return; }
+      openModal('تمت العملية بنجاح!', 'تم تحويل المبلغ إلى البائع. REF: '+(res.order_id || 'N/A'));
+    }catch(e){ openModal('فشل المعاملة','حاول لاحقًا'); }
+  }
+
+  // init
+  (function(){
+    renderMethods();
+    const q = parseQuery();
+    document.getElementById('serviceTitle').textContent = q.title ? decodeURIComponent(q.title) : 'خدمة غير معروفة';
+    document.getElementById('servicePrice').textContent = q.price ? q.price + ' جنيه' : '--';
+    document.getElementById('sumPrice').textContent = q.price ? q.price + ' جنيه' : '--';
+    document.getElementById('payBtn').addEventListener('click', handlePay);
+  })();
+  </script>
+</body>
+</html>

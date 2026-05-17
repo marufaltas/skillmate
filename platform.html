@@ -1,0 +1,2701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillMate - منصة العمل الحر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<style>
+:root {
+  --primary: #6dd5fa;
+  --primary-dark: #3aafe8;
+  --primary-light: #a8e8fb;
+  --secondary: #2c3e50;
+  --accent: #3498db;
+  --accent-hover: #2176ae;
+  --bg-main: linear-gradient(135deg, #e0f7fe 0%, #b3e5fc 40%, #c8efff 70%, #dff6ff 100%);
+  --bg-card: rgba(255,255,255,0.82);
+  --bg-header: rgba(255,255,255,0.96);
+  --text-main: #2c3e50;
+  --text-muted: #607d8b;
+  --text-light: #90a4ae;
+  --border: rgba(109,213,250,0.3);
+  --shadow: 0 8px 32px rgba(52,152,219,0.13);
+  --shadow-card: 0 4px 24px rgba(44,62,80,0.10);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --vip-gold: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --sidebar-w: 260px;
+}
+
+.dark {
+  --bg-main: linear-gradient(135deg, #0d1b2a 0%, #1a2a3a 40%, #0f2237 70%, #162232 100%);
+  --bg-card: rgba(22,40,58,0.92);
+  --bg-header: rgba(13,27,42,0.98);
+  --text-main: #e0f4ff;
+  --text-muted: #90b8cc;
+  --text-light: #5a7a8a;
+  --border: rgba(109,213,250,0.12);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--bg-main);
+  min-height: 100vh;
+  color: var(--text-main);
+  transition: background 0.4s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ===== PAGE SYSTEM ===== */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ===== HEADER ===== */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-header);
+  backdrop-filter: blur(18px);
+  border-bottom: 1.5px solid var(--border);
+  box-shadow: 0 2px 20px rgba(52,152,219,0.08);
+  margin: 12px 12px 0 12px; border-radius: 14px; overflow: visible;
+  transition: background 0.3s;
+}
+.header-inner {
+  max-width: 1300px; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 16px;
+  height: 68px;
+}
+.logo-area {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; flex-shrink: 0;
+}
+.logo-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 900; color: #fff;
+  box-shadow: 0 4px 14px rgba(52,152,219,0.35);
+}
+.logo-name { font-size: 20px; font-weight: 900; color: var(--secondary); letter-spacing: -0.5px; display:inline-flex; align-items:center; gap:8px }
+.dark .logo-name { color: var(--primary-light); }
+
+/* shiny brand effect */
+.brand-name {
+  display:inline-block; position:relative; font-weight:900; font-size:20px;
+  color: #06283D; /* dark navy */
+}
+.brand-name::after{ content:''; position:absolute; left:-50%; top:0; width:50%; height:100%; background:linear-gradient(90deg, rgba(255,255,255,0.0), rgba(255,255,255,0.6), rgba(255,255,255,0.0)); transform:skewX(-20deg); animation:shimmer 2.2s linear infinite; pointer-events:none}
+@keyframes shimmer{ 0%{left:-50%}50%{left:120%}100%{left:120%} }
+.brand-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
+nav { display: flex; align-items: center; gap: 4px; margin: 0 auto; flex-wrap: wrap; }
+nav a {
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; color: var(--text-main);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s; white-space: nowrap;
+}
+nav a:hover, nav a.active { background: rgba(52,152,219,0.12); color: var(--accent); }
+.header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn {
+  padding: 8px 18px; border-radius: 10px;
+  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; transition: all 0.22s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary { background: linear-gradient(135deg, var(--accent) 0%, var(--primary-dark) 100%); color: #fff; box-shadow: 0 4px 14px rgba(52,152,219,0.3); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(52,152,219,0.4); }
+.btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.btn-outline:hover { background: var(--accent); color: #fff; }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-warning { background: var(--warning); color: #fff; }
+.theme-toggle {
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--bg-card);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.profile-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px 6px 10px; border-radius: 12px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-main);
+  transition: all 0.2s;
+}
+.profile-btn:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(52,152,219,0.15); }
+.avatar-sm {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  max-width: 1300px; margin: 0 auto;
+  padding: 70px 24px 50px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-text h1 {
+  font-size: 46px; font-weight: 900; line-height: 1.15;
+  color: var(--secondary); margin-bottom: 14px;
+}
+.dark .hero-text h1 { color: #fff; }
+.hero-text h1 span { color: var(--accent); }
+.hero-text p { font-size: 17px; color: var(--text-muted); line-height: 1.7; margin-bottom: 32px; }
+.search-bar {
+  display: flex; gap: 0; border-radius: 14px;
+  overflow: hidden; box-shadow: 0 8px 30px rgba(52,152,219,0.18);
+  background: #fff; border: 2px solid var(--primary);
+}
+.dark .search-bar { background: #1a2a3a; }
+.search-bar input {
+  flex: 1; padding: 14px 20px; border: none; outline: none;
+  font-family: 'Cairo', sans-serif; font-size: 15px; background: transparent;
+  color: var(--text-main);
+}
+.search-bar button {
+  padding: 0 24px; background: linear-gradient(135deg, var(--accent), var(--primary-dark));
+  color: #fff; border: none; font-family: 'Cairo', sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;
+}
+.search-bar button:hover { opacity: 0.9; }
+.categories {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;
+}
+.cat-tag {
+  padding: 7px 16px; border-radius: 25px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--text-main);
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.cat-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(52,152,219,0.07); transform: translateY(-2px); }
+.hero-img {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.hero-illustration {
+  width: 420px; height: 320px;
+  background: linear-gradient(135deg, rgba(109,213,250,0.3) 0%, rgba(52,152,219,0.2) 100%);
+  border-radius: 30px; display: flex; align-items: center; justify-content: center;
+  font-size: 120px; box-shadow: 0 20px 60px rgba(52,152,219,0.2);
+  position: relative; overflow: hidden;
+}
+.hero-illustration::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(109,213,250,0.4);
+}
+.hero-illustration::after {
+  content: ''; position: absolute; bottom: -20px; left: -20px;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(52,152,219,0.3);
+}
+.float-badge {
+  position: absolute; background: var(--bg-card);
+  border-radius: 12px; padding: 10px 16px;
+  box-shadow: var(--shadow-card); border: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: var(--text-main);
+  animation: float 3s ease-in-out infinite;
+}
+.float-badge:nth-child(2) { top: 20px; left: -20px; animation-delay: 0.5s; }
+.float-badge:nth-child(3) { bottom: 30px; right: -30px; animation-delay: 1s; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* ===== SECTION TITLES ===== */
+.section { max-width: 1300px; margin: 0 auto; padding: 50px 24px; }
+.section-title {
+  font-size: 28px; font-weight: 900; color: var(--secondary);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
+}
+.dark .section-title { color: #fff; }
+.section-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
+.vip-badge {
+  background: var(--vip-gold); color: #fff;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+}
+
+/* ===== SERVICE CARDS ===== */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.service-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow-card); cursor: pointer;
+  transition: all 0.28s; position: relative;
+}
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(52,152,219,0.18); border-color: var(--accent); }
+.service-card:active { transform: scale(0.99); }
+.card-img {
+  width: 100%; height: 160px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px; position: relative;
+}
+.card-img-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.card-img-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.card-img-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.card-img-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.vip-corner {
+  position: absolute; top: 10px; right: 10px;
+  background: var(--vip-gold); color: #fff;
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800;
+}
+.card-body { padding: 16px; }
+.card-title { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; line-height: 1.4; }
+.card-seller {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--text-muted); margin-bottom: 8px;
+}
+.card-stars { color: #f39c12; font-size: 13px; }
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-top: 1px solid var(--border);
+}
+.card-price { font-size: 17px; font-weight: 900; color: var(--accent); }
+.card-price span { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+/* ===== STATS ROW (polished visuals) ===== */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; align-items:stretch }
+.stat-card {
+  background: linear-gradient(180deg,#ffffff,#f7fbff);
+  border-radius: 18px;
+  padding: 16px 14px; border: 1px solid rgba(16,24,40,0.04);
+  box-shadow: 0 10px 28px rgba(16,24,40,0.06);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.stat-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(16,24,40,0.10); }
+.stat-icon { width:64px; height:64px; border-radius:50%; display:flex;align-items:center;justify-content:center; font-size:22px; margin-bottom:8px; box-shadow: inset 0 -6px 12px rgba(255,255,255,0.6); }
+.stat-value { font-size:22px; font-weight:900; color:var(--text-main); line-height:1 }
+.stat-label { font-size:13px; color:var(--text-muted); margin-top:6px; font-weight:800 }
+.stat-meta { font-size:12px; color:#10b981; margin-top:8px; font-weight:800; display:flex;align-items:center;gap:8px }
+.stat-meta .arrow { font-size:12px; transform:translateY(-1px) }
+.stat-meta.up { color:#10b981 }
+.stat-meta.down { color:#e74c3c }
+@keyframes subtlePulse { 0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)} }
+.stat-meta .arrow { animation: subtlePulse 2.8s infinite ease-in-out }
+
+@media (max-width:880px){
+  .stats-row{grid-template-columns:1fr;gap:12px}
+  .stat-card{flex-direction:row;align-items:center;gap:12px;padding:12px}
+  .stat-icon{width:52px;height:52px}
+  .stat-body{display:flex;flex-direction:column;align-items:flex-end}
+}
+
+.dark .stat-card{background:linear-gradient(180deg,rgba(22,40,58,0.9),rgba(13,27,42,0.9));border:1px solid rgba(109,213,250,0.04);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.dark .stat-value{color:#eaf3ff}
+.dark .stat-label{color:var(--text-muted)}
+
+/* ===== TABLE ===== */
+.table-wrap {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.table-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1.5px solid var(--border);
+}
+.table-head h3 { font-size: 16px; font-weight: 800; color: var(--text-main); }
+table { width: 100%; border-collapse: collapse; }
+th {
+  padding: 13px 18px; text-align: right;
+  font-size: 13px; font-weight: 700; color: var(--text-muted);
+  background: rgba(109,213,250,0.06); border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 13px 18px; text-align: right;
+  font-size: 14px; color: var(--text-main);
+  border-bottom: 1px solid var(--border);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(52,152,219,0.04); }
+.badge {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 700; display: inline-block;
+}
+.badge-success { background: rgba(39,174,96,0.15); color: var(--success); }
+.badge-warning { background: rgba(243,156,18,0.15); color: var(--warning); }
+.badge-danger { background: rgba(231,76,60,0.15); color: var(--danger); }
+.badge-blue { background: rgba(52,152,219,0.15); color: var(--accent); }
+
+/* ===== SIDEBAR LAYOUT ===== */
+.dashboard-layout {
+  display: flex; min-height: calc(100vh - 68px);
+  max-width: 1300px; margin: 0 auto; padding: 30px 24px; gap: 24px;
+}
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); box-shadow: var(--shadow-card);
+  padding: 24px 0; height: fit-content;
+  position: sticky; top: 90px;
+}
+.sidebar-user { text-align: center; padding: 0 20px 20px; border-bottom: 1px solid var(--border); }
+.avatar-lg {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 28px; font-weight: 700;
+  margin: 0 auto 10px; position: relative;
+}
+.verified-badge-sm {
+  position: absolute; bottom: 0; right: 0;
+  width: 22px; height: 22px; background: transparent;
+  border-radius: 50%; border: 0; padding:0; overflow:hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.sidebar-name { font-size: 15px; font-weight: 800; color: var(--text-main); }
+.sidebar-type { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+.sidebar-nav { padding: 12px 0; }
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 22px; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--text-main);
+  text-decoration: none; transition: all 0.2s;
+  border-right: 3px solid transparent;
+}
+.sidebar-nav a:hover { background: rgba(52,152,219,0.07); color: var(--accent); }
+.sidebar-nav a.active { background: rgba(52,152,219,0.1); color: var(--accent); border-right-color: var(--accent); }
+.sidebar-nav a span { font-size: 18px; }
+.sidebar-nav a.danger { color: var(--danger); }
+.sidebar-nav a.danger:hover { background: rgba(231,76,60,0.07); }
+.main-content { flex: 1; min-width: 0; }
+.page-title {
+  font-size: 24px; font-weight: 900; color: var(--text-main);
+  margin-bottom: 22px; display: flex; align-items: center; gap: 10px;
+}
+
+/* ===== TAB CONTENT SYSTEM ===== */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 8px 18px; border-radius: 10px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ===== FORM ===== */
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 7px; }
+.form-control {
+  width: 100%; padding: 11px 16px;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  background: var(--bg-card); color: var(--text-main);
+  font-family: 'Cairo', sans-serif; font-size: 14px; outline: none;
+  transition: border-color 0.2s;
+}
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(52,152,219,0.1); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 26px;
+  box-shadow: var(--shadow-card);
+}
+.upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 30px; text-align: center; cursor: pointer;
+  transition: all 0.2s;
+}
+.upload-area:hover { border-color: var(--accent); background: rgba(52,152,219,0.04); }
+.upload-icon { font-size: 36px; margin-bottom: 10px; }
+
+/* ===== MESSAGES ===== */
+.msg-layout { display: grid; grid-template-columns: 280px 1fr; gap: 16px; height: 550px; }
+.msg-list {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); overflow-y: auto;
+}
+.msg-list-head { padding: 16px 18px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 800; }
+.msg-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 18px; cursor: pointer; transition: background 0.2s;
+  border-bottom: 1px solid var(--border);
+}
+.msg-item:hover, .msg-item.active { background: rgba(52,152,219,0.07); }
+.msg-info { flex: 1; min-width: 0; }
+.msg-name { font-size: 14px; font-weight: 700; color: var(--text-main); }
+.msg-preview { font-size: 12px; color: var(--text-muted); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.chat-area {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); display: flex; flex-direction: column;
+}
+.chat-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.msg-bubble { max-width: 65%; padding: 11px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+.msg-bubble.sent { background: linear-gradient(135deg, var(--accent), var(--primary-dark)); color: #fff; margin-right: auto; border-bottom-right-radius: 4px; }
+.msg-bubble.recv { background: rgba(109,213,250,0.15); color: var(--text-main); margin-left: auto; border-bottom-left-radius: 4px; }
+.chat-input { padding: 14px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+.chat-input input { flex: 1; padding: 10px 16px; border-radius: 25px; border: 1.5px solid var(--border); background: transparent; font-family: 'Cairo', sans-serif; font-size: 14px; color: var(--text-main); outline: none; }
+.chat-input input:focus { border-color: var(--accent); }
+
+/* ===== REVIEWS ===== */
+.review-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 20px;
+  box-shadow: var(--shadow-card); margin-bottom: 16px;
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.review-stars { color: #f39c12; font-size: 16px; }
+.review-text { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.6; }
+.review-toggle { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.toggle {
+  width: 40px; height: 22px; background: #ccc; border-radius: 11px;
+  cursor: pointer; position: relative; transition: background 0.3s;
+}
+.toggle.on { background: var(--success); }
+.toggle::after {
+  content: ''; position: absolute;
+  width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  top: 2px; right: 2px; transition: transform 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle.on::after { transform: translateX(-18px); }
+
+/* ===== FAVORITES ===== */
+.fav-empty { text-align: center; padding: 60px 20px; }
+.fav-empty .big-icon { font-size: 60px; margin-bottom: 16px; }
+
+/* ===== SETTINGS ===== */
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-info h4 { font-size: 14px; font-weight: 700; color: var(--text-main); }
+.setting-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.dev-info {
+  text-align: center; padding: 30px;
+  background: linear-gradient(135deg, rgba(109,213,250,0.1), rgba(52,152,219,0.05));
+  border-radius: var(--radius); border: 1px solid var(--border); margin-top: 24px;
+}
+.dev-logo { font-size: 40px; margin-bottom: 10px; }
+
+/* ===== AUTH PAGES ===== */
+.auth-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px;
+}
+.auth-card {
+  width: 100%; max-width: 480px;
+  background: var(--bg-card); border-radius: 24px;
+  border: 1.5px solid var(--border); box-shadow: 0 20px 60px rgba(52,152,219,0.15);
+  padding: 40px;
+}
+.auth-logo { text-align: center; margin-bottom: 30px; }
+.auth-title { font-size: 26px; font-weight: 900; color: var(--text-main); text-align: center; margin-bottom: 6px; }
+.auth-sub { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 28px; }
+.auth-tabs { display: flex; gap: 8px; margin-bottom: 26px; }
+.auth-tab {
+  flex: 1; padding: 10px; text-align: center;
+  border-radius: 10px; cursor: pointer;
+  font-size: 14px; font-weight: 700; color: var(--text-muted);
+  border: 1.5px solid var(--border); background: transparent;
+  font-family: 'Cairo', sans-serif; transition: all 0.2s;
+}
+.auth-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.role-select { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+.role-btn {
+  padding: 14px; border-radius: 12px; text-align: center;
+  border: 2px solid var(--border); cursor: pointer; transition: all 0.2s;
+  background: transparent;
+}
+.role-btn.active { border-color: var(--accent); background: rgba(52,152,219,0.07); }
+.role-btn .role-icon { font-size: 28px; margin-bottom: 6px; }
+.role-btn .role-name { font-size: 14px; font-weight: 700; color: var(--text-main); }
+
+/* ===== ADMIN PANEL ===== */
+.admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.admin-stat {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 22px 18px; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.admin-stat-icon { font-size: 28px; margin-bottom: 8px; }
+.admin-stat-value { font-size: 22px; font-weight: 900; color: var(--text-main); }
+.admin-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+.admin-stat-sub { font-size: 13px; color: var(--success); margin-top: 2px; font-weight: 600; }
+
+/* ===== CONTACT PAGE ===== */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; cursor: pointer; }
+.faq-q { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; color: var(--text-main); }
+.faq-a { font-size: 13px; color: var(--text-muted); margin-top: 10px; line-height: 1.7; display: none; }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-arrow { transition: transform 0.3s; }
+.social-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.social-btn {
+  padding: 10px 20px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  border: none; display: flex; align-items: center; gap: 8px;
+  transition: transform 0.2s;
+}
+.social-btn:hover { transform: translateY(-2px); }
+.social-fb { background: #1877f2; color: #fff; }
+.social-wa { background: #25d366; color: #fff; }
+.social-ig { background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: #fff; }
+
+/* ===== NOTIFICATIONS ===== */
+.notif-dropdown {
+  position: absolute; top: 60px; left: 0;
+  width: 320px; background: var(--bg-card);
+  border-radius: var(--radius); border: 1.5px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15); z-index: 200;
+  display: none;
+}
+.mobile-menu-btn{display:none}
+.mobile-drawer{display:none;position:fixed;right:12px;left:12px;top:76px;background:var(--bg-header);backdrop-filter:blur(16px);border-radius:14px;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,0.35);z-index:120;padding:12px}
+.mobile-drawer-inner{display:flex;flex-direction:column;gap:8px}
+.mobile-drawer a{padding:10px;border-radius:8px;color:var(--text-main);text-decoration:none;font-weight:700}
+.mobile-drawer a:hover{background:rgba(52,152,219,0.06);color:var(--accent)}
+
+/* checkout preview modal */
+.checkout-preview-shell {
+  width: min(92vw, 620px);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.28);
+  padding: 18px;
+  transform: scale(.92);
+  animation: modalZoom .22s ease forwards;
+}
+.checkout-preview-card {
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+  border-width: 1.5px !important;
+}
+.checkout-actions {
+  display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap;
+  margin-top: 14px;
+}
+@keyframes modalZoom { from { transform: scale(.92); opacity: .7; } to { transform: scale(1); opacity: 1; } }
+
+@media (max-width: 900px){
+  nav#main-nav{display:none}
+  .mobile-menu-btn{display:inline-flex}
+  header{margin:8px 8px 0 8px}
+  .header-inner{height:auto;min-height:60px;padding:10px 12px;gap:10px;align-items:center;flex-wrap:wrap}
+  .logo-area{gap:8px;min-width:0;flex:1 1 220px}
+  .brand-name{font-size:clamp(16px,4.4vw,20px)}
+  .brand-sub{display:none}
+  .header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .hero{grid-template-columns:1fr;gap:22px;padding:36px 16px 28px}
+  .hero-text h1{font-size:clamp(26px,7vw,34px);line-height:1.2}
+  .hero-text p{font-size:15px;margin-bottom:18px}
+  .search-bar{flex-direction:column}
+  .search-bar button{width:100%;padding:13px 16px}
+  .categories{gap:8px}
+  .section{padding:34px 16px}
+  .section-title{font-size:clamp(22px,6vw,28px)}
+  .section-sub{margin-bottom:22px}
+  .cards-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+  .card-img{height:140px}
+  .card-footer{flex-direction:column;align-items:stretch;gap:10px}
+  .btn{justify-content:center}
+  .stats-row, .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .form-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .dashboard-layout{flex-direction:column;padding:14px 12px;gap:14px}
+  .sidebar{width:100%;position:static;padding:18px 0;border-radius:18px}
+  .sidebar-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
+  .sidebar-nav a{border-right:none;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;justify-content:flex-start}
+  .sidebar-nav a.active{border-color:var(--accent)}
+  .page-title{font-size:clamp(20px,5.5vw,24px)}
+  .msg-layout{grid-template-columns:1fr;height:auto}
+  .auth-card{padding:22px 18px;max-width:94%}
+  .role-select{grid-template-columns:1fr}
+  .notif-dropdown{width:min(90vw,320px)}
+  .checkout-preview-shell{width:min(94vw,560px);padding:14px;border-radius:20px}
+}
+.notif-dropdown.show { display: block; }
+.notif-head { padding: 16px 18px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 800; }
+.notif-item { padding: 13px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+.notif-item:hover { background: rgba(52,152,219,0.07); }
+.notif-item-text { font-size: 13px; color: var(--text-main); line-height: 1.4; }
+.notif-item-time { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block; margin-left: 8px; }
+.notif-btn-wrap { position: relative; }
+
+/* ===== SERVICES CATALOG ===== */
+.cat-sidebar { width: 220px; flex-shrink: 0; }
+.cat-menu-item {
+  padding: 10px 16px; border-radius: 10px; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--text-muted);
+  transition: all 0.2s; margin-bottom: 4px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cat-menu-item:hover, .cat-menu-item.active { background: rgba(52,152,219,0.1); color: var(--accent); }
+.sub-cats { padding: 0 0 0 16px; display: none; }
+.cat-menu-item.open + .sub-cats { display: block; }
+.sub-cat-item {
+  padding: 7px 12px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; color: var(--text-muted); transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.sub-cat-item:hover { color: var(--accent); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 30px; }
+  .hero-illustration { width: 100%; height: 220px; font-size: 70px; order: -1; }
+  .hero-text h1 { font-size: 32px; }
+  .stats-row, .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .dashboard-layout { flex-direction: column; padding: 16px; }
+  .sidebar { width: 100%; position: static; }
+  .msg-layout { grid-template-columns: 1fr; height: auto; }
+  nav { display: none; }
+}
+
+/* Mobile header tweaks for Android / small screens */
+@media (max-width: 480px) {
+  header { margin: 6px; border-radius: 12px; }
+  .header-inner { min-height: 56px; padding: 8px 10px; gap: 8px; }
+  .logo-area{gap:8px}
+  .logo-icon { width:42px; height:42px; border-radius:12px }
+  .brand-name { font-size: 16px; line-height:1 }
+  .theme-toggle { width:36px;height:36px; border-radius:10px }
+  .profile-btn{padding:5px 10px 5px 8px;gap:6px;max-width:42vw}
+  .profile-btn span{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:18vw}
+  .avatar-sm{width:28px;height:28px;font-size:12px}
+  .header-actions{gap:6px}
+  .mobile-menu-btn { display:inline-flex; font-size:20px }
+  .hero{padding:28px 12px 22px;gap:16px}
+  .hero-illustration{height:180px;border-radius:22px;font-size:56px}
+  .float-badge{display:none}
+  .cards-grid{grid-template-columns:1fr;gap:12px}
+  .stats-row, .admin-stats{grid-template-columns:1fr}
+  .sidebar-nav{grid-template-columns:1fr}
+  .dashboard-layout{padding:10px}
+  .sidebar{padding:14px 0}
+  .sidebar-user{padding:0 14px 14px}
+  .avatar-lg{width:64px;height:64px;font-size:24px}
+  .page-title{margin-bottom:16px}
+  .form-card, .order-detail-card, .auth-card{padding:16px}
+  .filter-bar{padding:14px}
+  .filter-select,.form-control{font-size:13px}
+  .checkout-preview-shell{width:calc(100vw - 16px);padding:12px;border-radius:18px}
+}
+
+@media (max-width: 360px) {
+  .header-inner{padding:7px 8px;gap:6px}
+  .brand-name{font-size:15px}
+  .logo-icon{width:38px;height:38px}
+  .header-actions{gap:4px}
+  .theme-toggle,.mobile-menu-btn{width:34px;height:34px}
+  .profile-btn{max-width:38vw}
+  .profile-btn span{max-width:15vw}
+  .hero-text h1{font-size:24px}
+  .hero-text p{font-size:14px}
+  .section{padding:28px 12px}
+  .section-title{font-size:22px}
+}
+
+/* ensure lottie fills the hero container */
+.hero-illustration lottie-player { width:100%; height:100%; display:block }
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.fade-in { animation: fadeIn 0.4s ease forwards; }
+.service-section { animation: fadeIn 0.35s ease; }
+
+/* ===== MISC ===== */
+.divider { border: none; border-top: 1.5px solid var(--border); margin: 20px 0; }
+.text-center { text-align: center; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.info-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+.info-val { font-weight: 700; color: var(--text-main); }
+.chip { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: rgba(52,152,219,0.12); color: var(--accent); }
+
+/* Services page layout */
+.services-page-layout { display: flex; gap: 24px; }
+.services-main { flex: 1; }
+.filter-bar {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 16px 20px;
+  margin-bottom: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.filter-label { font-size: 14px; font-weight: 700; color: var(--text-muted); }
+.filter-select {
+  padding: 7px 14px; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--bg-card);
+  font-family: 'Cairo', sans-serif; font-size: 13px; color: var(--text-main);
+  cursor: pointer; outline: none;
+}
+
+/* Order Details */
+.order-detail-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.progress-bar-wrap { background: rgba(109,213,250,0.2); border-radius: 10px; height: 8px; overflow: hidden; margin: 8px 0; }
+.progress-bar { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 0.5s; }
+
+/* Seller public profile */
+.seller-hero {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 32px; margin-bottom: 24px;
+  display: flex; gap: 24px; align-items: center;
+  box-shadow: var(--shadow-card);
+}
+.seller-avatar-lg {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 36px; font-weight: 900; flex-shrink: 0;
+  position: relative;
+}
+
+/* Toast notifications */
+.toast-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+  padding: 14px 20px; border-radius: 12px; background: var(--bg-card);
+  border: 1.5px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  font-size: 14px; font-weight: 600; color: var(--text-main);
+  display: flex; align-items: center; gap: 10px;
+  animation: slideUp 0.3s ease; min-width: 260px;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.toast.success { border-color: var(--success); }
+.toast.error { border-color: var(--danger); }
+</style>
+</head>
+<body>
+  <input type="file" id="fileInput" style="display:none" />
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ============================================================ -->
+<!-- PAGE: HOME -->
+<!-- ============================================================ -->
+<div class="page active" id="page-home">
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+          <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+          <span class="brand-name">SkillMate</span>
+          <div class="brand-sub">منصة العمل الحر</div>
+      </div>
+      <nav id="main-nav">
+        <a onclick="showPage('home')" class="active">الرئيسية</a>
+        <a onclick="showPage('services')">تصفح الخدمات</a>
+        <a onclick="showPage('sellers')">البائعين</a>
+        <a href="#features-section">المميزات</a>
+        <a onclick="showPage('contact')">تواصل معنا</a>
+        <a href="about.html">عن المنصة</a>
+      </nav>
+      <button id="mobileMenuBtn" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-drawer" title="قائمة" style="display:none;background:transparent;border:none;font-size:22px;cursor:pointer">☰</button>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()" title="تبديل الوضع"><i class="fa-solid fa-moon"></i></button>
+        <div class="notif-btn-wrap" id="notifWrap" style="display:none">
+          <button class="btn btn-outline btn-sm" onclick="toggleNotif()"><i class="fa-regular fa-bell"></i></button>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-head">الإشعارات <span class="notif-dot"></span></div>
+              <div class="notif-item"><div class="notif-item-text"><i class="fa-solid fa-circle-check" style="color:#27ae60;margin-inline-start:8px"></i> تم قبول توثيق حسابك بنجاح</div><div class="notif-item-time">منذ 5 دقائق</div></div>
+              <div class="notif-item"><div class="notif-item-text"><i class="fa-regular fa-message" style="margin-inline-start:8px"></i> لديك رسالة جديدة من أحمد محمد</div><div class="notif-item-time">منذ ساعة</div></div>
+              <div class="notif-item"><div class="notif-item-text"><i class="fa-solid fa-money-bill-transfer" style="margin-inline-start:8px"></i> تم شحن محفظتك بمبلغ 500 جنيه</div><div class="notif-item-time">أمس</div></div>
+          </div>
+        </div>
+        <div id="header-auth">
+          <button class="btn btn-outline btn-sm" onclick="showPage('login')">تسجيل الدخول</button>
+          <button class="btn btn-primary btn-sm" onclick="showPage('register')">إنشاء حساب</button>
+        </div>
+        <div id="header-user" style="display:none">
+          <div class="profile-btn" onclick="showPage('dashboard')">
+            <div class="avatar-sm">م</div>
+            <span id="header-username">حسابي</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="logout()">خروج</button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+      <div class="mobile-drawer-inner">
+        <a onclick="showPage('home')">الرئيسية</a>
+        <a onclick="showPage('services')">تصفح الخدمات</a>
+        <a onclick="showPage('sellers')">البائعين</a>
+        <a href="#features-section">المميزات</a>
+        <a onclick="showPage('contact')">تواصل معنا</a>
+        <a href="about.html">عن المنصة</a>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn btn-outline btn-sm" onclick="showPage('login')">تسجيل الدخول</button>
+          <button class="btn btn-primary btn-sm" onclick="showPage('register')">إنشاء حساب</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero fade-in">
+    <div class="hero-text">
+      <h1>منصة العمل الحر<br>للمصريين 🇪🇬</h1>
+      <p>ابدأ مشروعك الآن وابحث عن أفضل الخدمات أو قدّم خدماتك بكل سهولة وأمان مع أفضل الكفاءات المصرية</p>
+      <div class="search-bar">
+        <input type="text" placeholder="ابحث عن خدمة... مثل: تصميم لوجو، برمجة موقع..." />
+        <button onclick="requireLogin()"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+      </div>
+      <div class="categories">
+        <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-video" aria-hidden="true"></i> فيديو ومونتاج</div>
+          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> تسويق رقمي</div>
+          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> كتابة وترجمة</div>
+          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-code" aria-hidden="true"></i> برمجة وتطوير</div>
+          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-palette" aria-hidden="true"></i> تصميم جرافيك</div>
+          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-microphone" aria-hidden="true"></i> خدمات صوتية</div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-illustration" style="background-image:url('assets/login-bgn.avif');background-size:cover;background-position:center;">
+          <div class="float-badge">⭐ 4.9 متوسط التقييم</div>
+          <div class="float-badge"><i class="fa-solid fa-user-tie" style="color:var(--accent);margin-inline-start:8px"></i> +5000 بائع موثق</div>
+          <div class="float-badge">🔒 مدفوعات آمنة</div>
+          <div class="float-badge">🏅 موثوق من الحكومة</div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" style="display:none;position:fixed;inset:0;background:rgba(3,10,20,0.72);align-items:center;justify-content:center;z-index:1200;padding:12px">
+    <div class="checkout-preview-shell">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="font-weight:900;color:var(--text-main)">معاينة الخدمة</div>
+        <button onclick="closeCheckoutModal()" style="background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--text-muted)"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="checkoutPreviewHost"></div>
+      <div id="checkoutSummary" style="display:none"></div>
+      <div style="margin-bottom:8px;color:var(--text-muted);font-size:13px">اختر وسيلة الدفع</div>
+      <div id="paymentMethods" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"></div>
+      <div class="checkout-actions">
+        <button onclick="closeCheckoutModal()" style="padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text-main)">إلغاء</button>
+        <button id="checkoutPayBtn" onclick="handleCheckoutPay()" style="padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,#4facfe,#00f2fe);color:#fff;font-weight:800">ادفع الآن</button>
+      </div>
+      <div id="checkoutMsg" style="margin-top:10px;font-size:13px;color:var(--text-muted)"></div>
+    </div>
+  </div>
+
+  <!-- VIP SERVICES -->
+  <!-- STATS STRIP -->
+  <div class="section" aria-hidden="false">
+    <div class="stats-row" style="align-items:stretch">
+      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e6f7ff,#d0f0ff);color:#0b3a57;margin-bottom:10px"><i class="fa-regular fa-user" style="font-size:26px"></i></div>
+        <div class="stat-value">17K+</div>
+        <div class="stat-label">مستخدم نشط</div>
+        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 25% هذا الشهر</div>
+      </div>
+
+      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f3e8ff,#e7ddff);color:#3b1f6b;margin-bottom:10px"><i class="fa-solid fa-briefcase" style="font-size:24px"></i></div>
+        <div class="stat-value">940+</div>
+        <div class="stat-label">خدمة مكتملة</div>
+        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 18% هذا الشهر</div>
+      </div>
+
+      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e6fffa,#d1fff0);color:#0b5a43;margin-bottom:10px"><i class="fa-solid fa-star" style="font-size:24px"></i></div>
+        <div class="stat-value">4.9/5</div>
+        <div class="stat-label">متوسط التقييم</div>
+        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 12% هذا الشهر</div>
+      </div>
+
+      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff4e6,#ffe0b3);color:#6b3700;margin-bottom:10px"><i class="fa-solid fa-trophy" style="font-size:24px"></i></div>
+        <div class="stat-value">1200+</div>
+        <div class="stat-label">محترف مسجل</div>
+        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 20% هذا الشهر</div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title"><i class="fa-solid fa-star" style="color:#f6d365;margin-inline-start:8px"></i> الخدمات المميزة <span class="vip-badge">VIP</span></div>
+    <div class="section-sub">أفضل الخدمات المختارة من كبار المحترفين</div>
+    <div class="cards-grid">
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-1" data-service-id="svc-montage-1" data-price="500" data-seller-id="seller-ahmed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_video.png" alt="مونتاج فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-body">
+          <div class="card-title">مونتاج فيديو احترافي</div>
+          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(128 تقييم)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">500 <span>جنيه</span></div>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+        </div>
+      </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-2" data-service-id="svc-writing-1" data-price="300" data-seller-id="seller-sara"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_translation.png" alt="كتابة محتوى" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-body">
+          <div class="card-title">كتابة محتوى تسويقي فاخر</div>
+          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> سارة محمد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(95 تقييم)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">300 <span>جنيه</span></div>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+        </div>
+      </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-3" data-service-id="svc-web-1" data-price="1200" data-seller-id="seller-mohamed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_web_mario.png" alt="تصميم موقع" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-body">
+          <div class="card-title">تصميم موقع إلكتروني احترافي</div>
+          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> محمد علي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(210 تقييم)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">1,200 <span>جنيه</span></div>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+        </div>
+      </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-4" data-service-id="svc-brand-1" data-price="800" data-seller-id="seller-nour"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP.png" alt="هوية بصرية" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-body">
+          <div class="card-title">تصميم هوية بصرية احترافية</div>
+          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> نور حسن <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(76 تقييم)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">800 <span>جنيه</span></div>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section" id="features-section">
+    <div class="section-title">✨ لماذا SkillMate؟</div>
+    <div class="cards-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="form-card" style="text-align:center">
+        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-lock"></i></div>
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">دفع آمن ومضمون</h3>
+        <p style="font-size:13px;color:var(--text-muted)">أموالك محفوظة في المنصة حتى يتم تسليم العمل بشكل كامل</p>
+      </div>
+      <div class="form-card" style="text-align:center">
+        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-user-check"></i></div>
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">بائعين موثقون</h3>
+        <p style="font-size:13px;color:var(--text-muted)">كل البائعين تم التحقق من هويتهم وشهاداتهم بواسطة فريق الإدارة</p>
+      </div>
+      <div class="form-card" style="text-align:center">
+        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-flag" aria-hidden="true"></i></div>
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">للمصريين فقط</h3>
+        <p style="font-size:13px;color:var(--text-muted)">منصة متخصصة للكفاءات المصرية مع دعم بالجنيه المصري</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--secondary);color:#fff;text-align:center;padding:24px;margin-top:40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <p style="font-size:13px;opacity:0.7">© 2025 SkillMate - جميع الحقوق محفوظة</p>
+      <div style="display:inline-flex;flex-direction:row-reverse;align-items:center;gap:8px;margin-top:6px">
+        <img src="assets/Verified.png" alt="badge" style="width:22px;height:22px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35))">
+        <span style="font-size:14px;font-weight:700;color:var(--accent)">Dev.Maru_Faltas</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: LOGIN -->
+<!-- ============================================================ -->
+<div class="page" id="page-login">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+        <span class="brand-name">SkillMate</span>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </div>
+  </header>
+  <div class="auth-page">
+    <div class="auth-card fade-in">
+      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px"><img src="assets/logo-circle.jpg" style="width:100%;height:100%;object-fit:cover"></div></div>
+      <div class="auth-title">تسجيل الدخول</div>
+      <div class="auth-sub">أهلاً بعودتك! سجّل دخولك للمتابعة</div>
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input class="form-control" type="email" placeholder="example@email.com" id="login-email" value="buyer@test.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">كلمة المرور</label>
+        <input class="form-control" type="password" placeholder="••••••••" id="login-pass" value="123456">
+      </div>
+      <div style="margin-bottom:8px;text-align:left"><a style="color:var(--accent);font-size:13px;cursor:pointer">نسيت كلمة المرور؟</a></div>
+      <button class="btn btn-primary w-full" style="width:100%;justify-content:center;margin-top:8px" onclick="doLogin()">تسجيل الدخول</button>
+      <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-muted)">
+        ليس لديك حساب؟ <span style="color:var(--accent);cursor:pointer;font-weight:700" onclick="showPage('register')">إنشاء حساب جديد</span>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(52,152,219,0.08);border-radius:10px;font-size:12px;color:var(--text-muted)">
+        <b>للتجربة السريعة:</b><br>
+        <i class="fa-solid fa-cart-shopping" style="margin-inline-start:6px"></i> مشتري: buyer@test.com / 123456<br>
+        <i class="fa-solid fa-store" style="margin-inline-start:6px"></i> بائع: seller@test.com / 123456<br>
+        <i class="fa-solid fa-key" style="margin-inline-start:6px"></i> أدمن: admin@test.com / 123456
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="btn btn-outline btn-sm" onclick="showPage('home')">← العودة للرئيسية</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: REGISTER -->
+<!-- ============================================================ -->
+<div class="page" id="page-register">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+        <span class="brand-name">SkillMate</span>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </div>
+  </header>
+  <div class="auth-page">
+    <div class="auth-card fade-in">
+      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px"><img src="assets/logo-circle.jpg" style="width:100%;height:100%;object-fit:cover"></div></div>
+      <div class="auth-title">إنشاء حساب جديد</div>
+      <div class="auth-sub">انضم لأكبر منصة عمل حر للمصريين</div>
+      <div style="margin-bottom:18px">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px">نوع الحساب</div>
+        <div class="role-select">
+          <div class="role-btn active" id="role-buyer" onclick="selectRole('buyer')">
+              <div class="role-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+            <div class="role-name">مشتري</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">أبحث عن خدمات</div>
+          </div>
+            <div class="role-btn" id="role-seller" onclick="selectRole('seller')">
+              <div class="role-icon"><i class="fa-solid fa-store"></i></div>
+            <div class="role-name">بائع</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">أقدم خدمات</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">الاسم الأول</label>
+          <input class="form-control" placeholder="محمد">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الاسم الأخير</label>
+          <input class="form-control" placeholder="أحمد">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input class="form-control" type="email" placeholder="example@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم الهاتف</label>
+        <input class="form-control" placeholder="01XXXXXXXXX">
+      </div>
+      <div class="form-group">
+        <label class="form-label">كلمة المرور</label>
+        <input class="form-control" type="password" placeholder="8 أحرف على الأقل">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px" onclick="doRegister()">إنشاء الحساب</button>
+      <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-muted)">
+        لديك حساب؟ <span style="color:var(--accent);cursor:pointer;font-weight:700" onclick="showPage('login')">تسجيل الدخول</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: SERVICES CATALOG -->
+<!-- ============================================================ -->
+<div class="page" id="page-services">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+      </div>
+      <nav>
+        <a onclick="showPage('home')">الرئيسية</a>
+        <a onclick="showPage('services')" class="active">تصفح الخدمات</a>
+        <a onclick="showPage('sellers')">البائعين</a>
+        <a onclick="showPage('contact')">تواصل معنا</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
+        <div id="services-auth-area"></div>
+      </div>
+    </div>
+  </header>
+  <div class="section services-page-layout">
+    <!-- CATEGORY SIDEBAR -->
+    <div class="cat-sidebar">
+      <div style="font-size:15px;font-weight:800;margin-bottom:14px">التصنيفات</div>
+      <div class="cat-menu-item active" onclick="toggleCat(this)">🎬 مونتاج وفيديو <span>▾</span></div>
+      <div class="sub-cats">
+        <div class="sub-cat-item">⭐ تصميم فيديوهات الإعلانات</div>
+        <div class="sub-cat-item">🎥 تحرير الفيديو (YouTube/Reels)</div>
+        <div class="sub-cat-item">✨ إضافة المؤثرات البصرية VFX</div>
+        <div class="sub-cat-item">🎞 رسوم متحركة 2D/3D</div>
+        <div class="sub-cat-item">🎨 تعديل الألوان Color Grading</div>
+      </div>
+      <div class="cat-menu-item" onclick="toggleCat(this)">📣 التسويق الإلكتروني <span>▾</span></div>
+      <div class="sub-cats">
+        <div class="sub-cat-item">⭐ إدارة حملات إعلانية Ads</div>
+        <div class="sub-cat-item">🔍 تحسين محركات البحث SEO</div>
+        <div class="sub-cat-item">📱 إدارة منصات التواصل</div>
+        <div class="sub-cat-item">📊 تحليل البيانات والسوق</div>
+        <div class="sub-cat-item">📧 التسويق عبر البريد</div>
+      </div>
+      <div class="cat-menu-item" onclick="toggleCat(this)">✍️ كتابة وترجمة <span>▾</span></div>
+      <div class="sub-cats">
+        <div class="sub-cat-item">⭐ كتابة النصوص البيعية Copywriting</div>
+        <div class="sub-cat-item">📝 كتابة المحتوى الإبداعي</div>
+        <div class="sub-cat-item">🔬 الترجمة التقنية والعلمية</div>
+        <div class="sub-cat-item">✅ التدقيق اللغوي</div>
+        <div class="sub-cat-item">🎙 تفريغ النصوص Transcription</div>
+      </div>
+      <div class="cat-menu-item" onclick="toggleCat(this)">💻 برمجة وتطوير <span>▾</span></div>
+      <div class="sub-cats">
+        <div class="sub-cat-item">⭐ تطوير المواقع Web Dev</div>
+        <div class="sub-cat-item">📱 تطبيقات الموبايل Apps</div>
+        <div class="sub-cat-item">🗄 إدارة قواعد البيانات</div>
+        <div class="sub-cat-item">🐛 إصلاح الأخطاء Debugging</div>
+        <div class="sub-cat-item">🔒 أمن المواقع وحمايتها</div>
+      </div>
+      <div class="cat-menu-item" onclick="toggleCat(this)">🎨 تصميم وجرافيك <span>▾</span></div>
+      <div class="sub-cats">
+        <div class="sub-cat-item">⭐ تصميم واجهات UI/UX</div>
+        <div class="sub-cat-item">🖼 تصميم الهوية البصرية Logos</div>
+        <div class="sub-cat-item">📲 تصميمات السوشيال ميديا</div>
+        <div class="sub-cat-item">🖨 تصميم المطبوعات Print</div>
+        <div class="sub-cat-item">📸 تحرير الصور الاحترافي</div>
+      </div>
+    </div>
+    <!-- SERVICES MAIN -->
+    <div class="services-main">
+      <div class="filter-bar">
+        <span class="filter-label">ترتيب حسب:</span>
+        <select class="filter-select"><option>الأعلى تقييماً</option><option>الأحدث</option><option>الأقل سعراً</option><option>الأعلى سعراً</option></select>
+        <select class="filter-select"><option>جميع الأسعار</option><option>أقل من 300 جنيه</option><option>300 - 800 جنيه</option><option>أكثر من 800 جنيه</option></select>
+        <select class="filter-select"><option>جميع البائعين</option><option>موثقون فقط</option></select>
+      </div>
+      <div class="cards-grid">
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-1" data-service-id="svc-ad-1" data-price="800" data-seller-id="seller-ahmed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_video.png" alt="إعلانات فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+          <div class="card-body">
+            <div class="card-title">تصميم فيديوهات إعلانية احترافية</div>
+            <div class="card-seller">👤 أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+            <div class="card-stars">⭐⭐⭐⭐⭐ (128)</div>
+          </div>
+          <div class="card-footer"><div class="card-price">800 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+        </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-2" data-service-id="svc-youtube-1" data-price="350" data-seller-id="seller-karim"><img src="assets/VIP_video.png" alt="YouTube editing" style="width:100%;height:100%;object-fit:cover"></div>
+          <div class="card-body">
+            <div class="card-title">تحرير فيديو YouTube احترافي</div>
+            <div class="card-seller">👤 كريم وليد</div>
+            <div class="card-stars">⭐⭐⭐⭐ (54)</div>
+          </div>
+          <div class="card-footer"><div class="card-price">350 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+        </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-3" data-service-id="svc-vfx-1" data-price="600" data-seller-id="seller-mina"><img src="assets/VIP_video.png" alt="VFX" style="width:100%;height:100%;object-fit:cover"></div>
+          <div class="card-body">
+            <div class="card-title">إضافة مؤثرات بصرية VFX</div>
+            <div class="card-seller">👤 مينا فادي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+            <div class="card-stars">⭐⭐⭐⭐⭐ (88)</div>
+          </div>
+          <div class="card-footer"><div class="card-price">600 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+        </div>
+        <div class="service-card" onclick="goToCheckoutFromButton(this)">
+          <div class="card-img card-img-4" data-service-id="svc-2d-1" data-price="450" data-seller-id="seller-hena"><img src="assets/VIP_video.png" alt="2D animation" style="width:100%;height:100%;object-fit:cover"></div>
+          <div class="card-body">
+            <div class="card-title">رسوم متحركة 2D احترافية</div>
+            <div class="card-seller">👤 هنا علي</div>
+            <div class="card-stars">⭐⭐⭐⭐ (32)</div>
+          </div>
+          <div class="card-footer"><div class="card-price">450 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: SELLERS -->
+<!-- ============================================================ -->
+<div class="page" id="page-sellers">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+      </div>
+      <nav>
+        <a onclick="showPage('home')">الرئيسية</a>
+        <a onclick="showPage('services')">تصفح الخدمات</a>
+        <a onclick="showPage('sellers')" class="active">البائعين</a>
+        <a onclick="showPage('contact')">تواصل معنا</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
+      </div>
+    </div>
+  </header>
+  <div class="section">
+    <div class="section-title">👥 أفضل البائعين</div>
+    <div class="section-sub">تعرف على أبرز الكفاءات الموثقة على المنصة</div>
+    <div class="cards-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
+      <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
+        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-1.png" alt="Ahmed" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div style="font-size:16px;font-weight:800">أحمد السيد</div>
+        <div style="font-size:13px;color:var(--accent);margin:4px 0">مونتاج وتصميم فيديو</div>
+        <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.9</div>
+        <div style="font-size:12px;color:var(--text-muted)">128 طلب مكتمل</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
+      </div>
+      <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
+        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-2.jpg" alt="Sara" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div style="font-size:16px;font-weight:800">سارة محمد</div>
+        <div style="font-size:13px;color:var(--accent);margin:4px 0">كتابة محتوى تسويقي</div>
+        <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.8</div>
+        <div style="font-size:12px;color:var(--text-muted)">95 طلب مكتمل</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
+      </div>
+      <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
+        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-3.jpg" alt="Mohamed" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div style="font-size:16px;font-weight:800">محمد علي</div>
+        <div style="font-size:13px;color:var(--accent);margin:4px 0">برمجة وتطوير مواقع</div>
+        <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 5.0</div>
+        <div style="font-size:12px;color:var(--text-muted)">210 طلب مكتمل</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
+      </div>
+      <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
+        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-4.jpg" alt="Nour" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div style="font-size:16px;font-weight:800">نور حسن</div>
+        <div style="font-size:13px;color:var(--accent);margin:4px 0">تصميم جرافيك وهوية</div>
+        <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.7</div>
+        <div style="font-size:12px;color:var(--text-muted)">76 طلب مكتمل</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: DASHBOARD (BUYER/SELLER) -->
+<!-- ============================================================ -->
+<div class="page" id="page-dashboard">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+      </div>
+      <nav id="dash-nav">
+        <a onclick="showPage('home')">الرئيسية</a>
+        <a onclick="showPage('services')">تصفح الخدمات</a>
+        <a id="nav-sellers-link" onclick="showPage('sellers')">البائعين</a>
+        <a onclick="showPage('contact')">تواصل معنا</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
+        <div class="notif-btn-wrap">
+          <button class="btn btn-outline btn-sm" onclick="toggleNotif()">🔔 <span style="background:var(--danger);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;margin-right:-4px">3</span></button>
+          <div class="notif-dropdown" id="dashNotif">
+            <div class="notif-head">الإشعارات</div>
+            <div class="notif-item"><div class="notif-item-text">✅ تم قبول توثيق حسابك</div><div class="notif-item-time">منذ 5 دقائق</div></div>
+            <div class="notif-item"><div class="notif-item-text">💬 رسالة جديدة من أحمد</div><div class="notif-item-time">منذ ساعة</div></div>
+            <div class="notif-item"><div class="notif-item-text">💰 طلب جديد بمبلغ 500 جنيه</div><div class="notif-item-time">أمس</div></div>
+          </div>
+        </div>
+        <div class="profile-btn" onclick="switchTab('overview')">
+          <div class="avatar-sm" id="dash-avatar">م</div>
+          <span id="dash-username">حسابي</span>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="logout()">خروج</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="avatar-lg" id="sidebar-avatar">م</div>
+        <div class="sidebar-name" id="sidebar-name">حسابي</div>
+        <div class="sidebar-type" id="sidebar-type">مشتري</div>
+      </div>
+      <div class="sidebar-nav">
+        <a onclick="switchTab('overview')" class="active" id="tab-overview"><i class="fa-solid fa-chart-simple" style="margin-inline-start:8px"></i> لوحة التحكم</a>
+        <a onclick="switchTab('account')" id="tab-account"><i class="fa-regular fa-user" style="margin-inline-start:8px"></i> حسابي</a>
+        <a onclick="switchTab('orders')" id="tab-orders"><i class="fa-solid fa-list-check" style="margin-inline-start:8px"></i> طلباتي</a>
+        <a onclick="switchTab('messages')" id="tab-messages"><i class="fa-regular fa-comments" style="margin-inline-start:8px"></i> الرسائل</a>
+        <a onclick="switchTab('reviews')" id="tab-reviews"><i class="fa-solid fa-star" style="margin-inline-start:8px"></i> التقييمات</a>
+        <a onclick="switchTab('favorites')" id="tab-favorites"><i class="fa-solid fa-heart" style="margin-inline-start:8px"></i> المفضلة</a>
+        <a onclick="switchTab('settings')" id="tab-settings"><i class="fa-solid fa-gear" style="margin-inline-start:8px"></i> الإعدادات</a>
+        <a onclick="logout()" class="danger"><i class="fa-solid fa-right-from-bracket" style="margin-inline-start:8px"></i> تسجيل الخروج</a>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- TAB: OVERVIEW (SELLER) -->
+      <div class="tab-content active" id="content-overview">
+        <div class="page-title">📊 لوحة التحكم</div>
+        <!-- Seller Stats -->
+        <div class="stats-row" id="seller-stats">
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value">4.9</div>
+            <div class="stat-label">متوسط التقييم</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">طلبات قيد التنفيذ</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">47</div>
+            <div class="stat-label">طلبات مكتملة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">12,400</div>
+            <div class="stat-label">إجمالي الربح (جنيه)</div>
+          </div>
+        </div>
+
+        <!-- Recent Orders Table -->
+        <div class="table-wrap" style="margin-bottom:28px">
+          <div class="table-head">
+            <h3>📋 آخر الطلبات</h3>
+            <button class="btn btn-outline btn-sm" onclick="switchTab('orders')">عرض الكل</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>رقم الطلب</th>
+                <th>اسم المستخدم</th>
+                <th>اسم الخدمة</th>
+                <th>السعر</th>
+                <th>التقدم</th>
+                <th>التاريخ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>#10047</td><td>خالد نبيل</td><td>مونتاج فيديو احترافي</td><td>500 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>15 مايو 2025</td></tr>
+              <tr><td>#10046</td><td>ريم مصطفى</td><td>تصميم هوية بصرية</td><td>800 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>10 مايو 2025</td></tr>
+              <tr><td>#10045</td><td>عمرو حسين</td><td>كتابة محتوى تسويقي</td><td>300 ج</td><td><span class="badge badge-danger">تم الإلغاء</span></td><td>5 مايو 2025</td></tr>
+              <tr><td>#10044</td><td>منى سعد</td><td>تصميم موقع إلكتروني</td><td>1200 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>1 مايو 2025</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- My Services -->
+        <div class="table-wrap" id="my-services-section">
+          <div class="table-head">
+            <h3>🛠️ خدماتي</h3>
+            <button id="btn-new-service" class="btn btn-primary btn-sm" onclick="openCreateServiceForm()">+ إضافة خدمة جديدة</button>
+          </div>
+          <div id="create-service-form" style="display:none;padding:16px;border-top:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.4));margin-top:8px;border-radius:10px">
+            <div style="display:flex;flex-direction:column;gap:10px;max-width:720px">
+              <input id="svc-title" class="form-control" placeholder="عنوان الخدمة (مثال: مونتاج فيديو احترافي)" />
+              <textarea id="svc-desc" class="form-control" placeholder="وصف الخدمة"></textarea>
+              <input id="svc-price" class="form-control" placeholder="السعر (جنيه)" />
+              <div style="display:flex;gap:8px;align-items:center">
+                <input type="file" id="svc-media" accept="image/*,video/*" />
+                <button class="btn btn-outline btn-sm" onclick="document.getElementById('svc-media').click();return false">اختر ملف وسائط</button>
+                <div style="font-size:13px;color:var(--text-muted)">اختياري: صورة أو فيديو للخدمة</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-primary" id="svc-submit" onclick="submitNewService()">نشر الخدمة</button>
+                <button class="btn btn-outline" onclick="closeCreateServiceForm()">إلغاء</button>
+              </div>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>الخدمة</th>
+                <th>متوسط التقييم</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🎬 مونتاج فيديو احترافي</td>
+                <td>⭐ 4.9</td>
+                <td><span class="badge badge-success">نشط</span></td>
+                <td>
+                  <button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px">إخفاء</button>
+                  <button class="btn btn-sm btn-danger" style="font-size:12px">حذف</button>
+                </td>
+              </tr>
+              <tr>
+                <td>🎨 تصميم هوية بصرية</td>
+                <td>⭐ 4.7</td>
+                <td><span class="badge badge-warning">مخفي</span></td>
+                <td>
+                  <button class="btn btn-sm btn-success" style="font-size:12px">إظهار</button>
+                  <button class="btn btn-sm btn-danger" style="font-size:12px">حذف</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Buyer Overview (hidden by default) -->
+        <div id="buyer-overview" style="display:none">
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value">8</div><div class="stat-label">طلباتي الكلية</div></div>
+            <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-value">2</div><div class="stat-label">طلبات جارية</div></div>
+            <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value">6</div><div class="stat-label">طلبات مكتملة</div></div>
+            <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-value">3,200</div><div class="stat-label">إجمالي الإنفاق (جنيه)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: ACCOUNT -->
+      <div class="tab-content" id="content-account">
+        <div class="page-title">👤 حسابي</div>
+        <div class="form-card" style="margin-bottom:20px">
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">البيانات الشخصية</h3>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">الاسم الأول</label><input class="form-control" value="محمد"></div>
+            <div class="form-group"><label class="form-label">الاسم الأخير</label><input class="form-control" value="أحمد"></div>
+            <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input class="form-control" value="user@email.com"></div>
+            <div class="form-group"><label class="form-label">رقم الهاتف</label><input class="form-control" value="01012345678"></div>
+            <div class="form-group"><label class="form-label">رقم الواتساب</label><input class="form-control" placeholder="01XXXXXXXXX"></div>
+            <div class="form-group"><label class="form-label">الرقم القومي</label><input class="form-control" placeholder="XXXXXXXXXXXXXXX"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">روابط التواصل الاجتماعي</label>
+            <input class="form-control" placeholder="رابط Facebook" style="margin-bottom:8px">
+            <input class="form-control" placeholder="رابط Instagram" style="margin-bottom:8px">
+            <input class="form-control" placeholder="رابط LinkedIn">
+          </div>
+          <button class="btn btn-primary" onclick="showToast('تم حفظ البيانات بنجاح ✅','success')">💾 حفظ التغييرات</button>
+        </div>
+        
+        <!-- Upload Section -->
+        <div class="form-card">
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:8px">التوثيق والمستندات</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">ارفع مستنداتك للحصول على شارة التوثيق ✓ - يتم التحقق من قبل الإدارة</p>
+          <div class="form-grid">
+            <div>
+              <div class="form-label">📸 الصورة الشخصية</div>
+              <div class="upload-area" onclick="openFileDialog('avatar')">
+                <div class="upload-icon">🤳</div>
+                <div style="font-size:14px;font-weight:600">اضغط لرفع الصورة</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:4px">JPG, PNG - حد أقصى 5MB</div>
+              </div>
+            </div>
+            <div>
+              <div class="form-label">🪪 صورة البطاقة الشخصية</div>
+              <div class="upload-area" onclick="openFileDialog('id_card')">
+                <div class="upload-icon">💳</div>
+                <div style="font-size:14px;font-weight:600">اضغط لرفع البطاقة</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:4px">JPG, PNG - حد أقصى 5MB</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <div class="form-label">🎓 صور الشهادات (اختياري)</div>
+            <div class="upload-area" onclick="openFileDialog('certs')">
+              <div class="upload-icon">📜</div>
+              <div style="font-size:14px;font-weight:600">اضغط لرفع الشهادات</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px">يمكنك رفع أكثر من صورة</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:rgba(39,174,96,0.08);border-radius:10px;border:1px solid rgba(39,174,96,0.2);font-size:13px;color:var(--success)">
+            ✅ <b>حالة التوثيق:</b> في انتظار مراجعة الإدارة
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: ORDERS -->
+      <div class="tab-content" id="content-orders">
+        <div class="page-title">📋 طلباتي</div>
+        <div class="table-wrap">
+          <div class="table-head">
+            <h3>كل الطلبات</h3>
+            <div style="display:flex;gap:8px">
+              <select class="filter-select"><option>الكل</option><option>قيد التنفيذ</option><option>مكتمل</option><option>ملغي</option></select>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr><th>رقم الطلب</th><th>اسم المستخدم</th><th>اسم الخدمة</th><th>السعر</th><th>التقدم</th><th>التاريخ</th><th>الإجراءات</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>#10047</td><td>خالد نبيل</td><td>مونتاج فيديو احترافي</td><td>500 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>15 مايو 2025</td><td><button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px" onclick="switchTab('messages')">💬 رسالة</button></td></tr>
+              <tr><td>#10046</td><td>ريم مصطفى</td><td>تصميم هوية بصرية</td><td>800 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>10 مايو 2025</td><td><button class="btn btn-sm btn-success" style="font-size:12px" onclick="showToast('تم فتح صفحة تقييم الطلب','success')">⭐ تقييم</button></td></tr>
+              <tr><td>#10045</td><td>عمرو حسين</td><td>كتابة محتوى تسويقي</td><td>300 ج</td><td><span class="badge badge-danger">تم الإلغاء</span></td><td>5 مايو 2025</td><td>-</td></tr>
+              <tr><td>#10044</td><td>منى سعد</td><td>تصميم موقع إلكتروني</td><td>1200 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>1 مايو 2025</td><td><button class="btn btn-sm btn-success" style="font-size:12px" onclick="showToast('تم فتح صفحة تقييم الطلب','success')">⭐ تقييم</button></td></tr>
+              <tr><td>#10043</td><td>هبة رضا</td><td>تصميم شعار احترافي</td><td>400 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>28 أبريل 2025</td><td><button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px" onclick="switchTab('messages')">💬 رسالة</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: MESSAGES -->
+      <div class="tab-content" id="content-messages">
+        <div class="page-title">💬 الرسائل</div>
+        <div class="msg-layout">
+          <div class="msg-list">
+            <div class="msg-list-head">المحادثات</div>
+            <div class="msg-item active">
+              <div class="avatar-sm">خ</div>
+              <div class="msg-info">
+                <div class="msg-name">خالد نبيل</div>
+                <div class="msg-preview">شكراً جزيلاً على التواصل...</div>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted)">الآن</div>
+            </div>
+            <div class="msg-item">
+              <div class="avatar-sm" style="background:linear-gradient(135deg,#f093fb,#f5576c)">ر</div>
+              <div class="msg-info">
+                <div class="msg-name">ريم مصطفى</div>
+                <div class="msg-preview">متى ستنتهي من التصميم؟</div>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted)">أمس</div>
+            </div>
+            <div class="msg-item">
+              <div class="avatar-sm" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">ه</div>
+              <div class="msg-info">
+                <div class="msg-name">هبة رضا</div>
+                <div class="msg-preview">تمام، سأنتظر...</div>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted)">2 مايو</div>
+            </div>
+          </div>
+          <div class="chat-area">
+            <div class="chat-head">
+              <div class="avatar-sm">خ</div>
+              <div>
+                <div style="font-size:14px;font-weight:700">خالد نبيل</div>
+                <div style="font-size:12px;color:var(--success)">● متصل الآن</div>
+              </div>
+            </div>
+            <div class="chat-messages">
+              <div class="msg-bubble recv">مرحباً، أريد الاستفسار عن خدمة المونتاج</div>
+              <div class="msg-bubble sent">أهلاً بك! بكل سرور، ما الذي تحتاجه تحديداً؟</div>
+              <div class="msg-bubble recv">أريد مونتاج فيديو إعلاني لمنتج جديد، مدته دقيقتان</div>
+              <div class="msg-bubble sent">ممتاز! يمكنني إنجازه في 3 أيام عمل. السعر 500 جنيه شاملاً جميع التعديلات.</div>
+              <div class="msg-bubble recv">شكراً جزيلاً على التواصل 🙏</div>
+            </div>
+            <div class="chat-input">
+              <input type="text" placeholder="اكتب رسالتك هنا..." id="chatInput">
+              <button class="btn btn-primary" onclick="sendMsgToBackend()"><i class="fa-solid fa-paper-plane"></i> إرسال</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: REVIEWS -->
+      <div class="tab-content" id="content-reviews">
+        <div class="page-title">⭐ التقييمات</div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;padding:20px;background:var(--bg-card);border-radius:var(--radius);border:1.5px solid var(--border)">
+          <div style="text-align:center">
+            <div style="font-size:48px;font-weight:900;color:var(--accent)">4.9</div>
+            <div class="card-stars" style="font-size:18px">⭐⭐⭐⭐⭐</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:4px">47 تقييم</div>
+          </div>
+          <div style="flex:1;padding-right:20px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;width:20px">5⭐</span><div class="progress-bar-wrap" style="flex:1"><div class="progress-bar" style="width:88%"></div></div><span style="font-size:12px;color:var(--text-muted)">88%</span></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;width:20px">4⭐</span><div class="progress-bar-wrap" style="flex:1"><div class="progress-bar" style="width:8%;background:linear-gradient(90deg,var(--warning),#fda085)"></div></div><span style="font-size:12px;color:var(--text-muted)">8%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;width:20px">3⭐</span><div class="progress-bar-wrap" style="flex:1"><div class="progress-bar" style="width:4%;background:linear-gradient(90deg,var(--danger),#e74c3c)"></div></div><span style="font-size:12px;color:var(--text-muted)">4%</span></div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:8px">إظهار شارة التوثيق</div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="avatar-sm">خ</div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:14px;font-weight:700">خالد نبيل <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <div class="toggle on" onclick="this.classList.toggle('on')" title="إظهار/إخفاء التقييم"></div>
+                <span style="font-size:12px;color:var(--text-muted)">إظهار في البروفايل</span>
+              </div>
+            </div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <div class="review-text">عمل رائع جداً، الأفضل على الإطلاق! التسليم كان في الموعد المحدد والجودة تفوق التوقعات. سأتعامل معه مجدداً بكل تأكيد.</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:6px">15 مايو 2025</div>
+            <input class="form-control" placeholder="اكتب رداً على التقييم..." style="margin-top:10px;font-size:13px">
+            <button class="btn btn-sm btn-primary" style="margin-top:8px" onclick="showToast('تم إرسال الرد ✅','success')">إرسال الرد</button>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="avatar-sm" style="background:linear-gradient(135deg,#f093fb,#f5576c)">ر</div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:14px;font-weight:700">ريم مصطفى</div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                <span style="font-size:12px;color:var(--text-muted)">مخفي</span>
+              </div>
+            </div>
+            <div class="review-stars">⭐⭐⭐⭐</div>
+            <div class="review-text">شغل ممتاز، لكن كانت هناك تأخير بسيط في التسليم. بشكل عام سعيدة بالنتيجة.</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:6px">10 مايو 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: FAVORITES -->
+      <div class="tab-content" id="content-favorites">
+        <div class="page-title">❤️ المفضلة</div>
+        <div class="cards-grid">
+          <div class="service-card">
+            <div class="card-img card-img-1"><img src="assets/VIP_video.png" alt="إعلانات فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+            <div class="card-body">
+              <div class="card-title">تصميم فيديوهات إعلانية</div>
+              <div class="card-seller">👤 أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div class="card-stars">⭐⭐⭐⭐⭐ (128)</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">800 <span>جنيه</span></div>
+              <button class="btn btn-sm btn-danger" onclick="showToast('تمت إزالة الخدمة من المفضلة','error')">🗑️</button>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="card-img card-img-3"><img src="assets/VIP_web_mario.png" alt="تطوير موقع" style="width:100%;height:100%;object-fit:cover"></div>
+            <div class="card-body">
+              <div class="card-title">تطوير موقع إلكتروني</div>
+              <div class="card-seller">👤 محمد علي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div class="card-stars">⭐⭐⭐⭐⭐ (210)</div>
+            </div>
+            <div class="card-footer">
+              <div class="card-price">1,200 <span>جنيه</span></div>
+              <button class="btn btn-sm btn-danger" onclick="showToast('تمت إزالة الخدمة من المفضلة','error')">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: SETTINGS -->
+      <div class="tab-content" id="content-settings">
+        <div class="page-title">⚙️ الإعدادات</div>
+        <div class="form-card">
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>🌙 الوضع الداكن</h4>
+              <p>تبديل بين الوضع الفاتح والداكن</p>
+            </div>
+            <div class="toggle" id="dark-toggle" onclick="toggleDark();this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>🔔 الإشعارات</h4>
+              <p>تلقي إشعارات عند وصول طلبات جديدة</p>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>📧 إشعارات البريد الإلكتروني</h4>
+              <p>تلقي ملخص أسبوعي على البريد الإلكتروني</p>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>📅 تاريخ إنشاء الحساب</h4>
+              <p id="account-created">15 يناير 2025</p>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>🔐 تغيير كلمة المرور</h4>
+              <p>يُنصح بتغيير كلمة المرور كل 3 أشهر</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="showToast('سيتم إرسال رابط إعادة تعيين كلمة المرور','success')">تغيير</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <h4>🗑️ حذف الحساب</h4>
+              <p style="color:var(--danger)">هذا الإجراء لا يمكن التراجع عنه</p>
+            </div>
+            <button class="btn btn-sm btn-danger" onclick="showToast('يرجى التواصل مع الدعم الفني لحذف الحساب','error')">حذف الحساب</button>
+          </div>
+        </div>
+          <div class="dev-info">
+          <div class="dev-logo"><img src="assets/logo.jpg" style="width:40px;height:40px;object-fit:cover;border-radius:8px" alt="logo"></div>
+          <div style="font-size:20px;font-weight:900;color:var(--text-main)"><span class="brand-name">SkillMate</span></div>
+          <div style="font-size:13px;color:var(--text-muted);margin:6px 0">منصة العمل الحر</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px">
+            <span style="font-size:14px;font-weight:700;color:var(--accent)">Dev.Maru_Faltas</span>
+            <span style="background:var(--success);color:#fff;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:8px">الإصدار 1.0.0 | جميع الحقوق محفوظة © 2025</div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div><!-- /dashboard-layout -->
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: ADMIN -->
+<!-- ============================================================ -->
+<div class="page" id="page-admin">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+      </div>
+      <div style="font-size:14px;font-weight:700;color:var(--danger)">🔑 لوحة الأدمن</div>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
+        <button class="btn btn-outline btn-sm" onclick="logout()">خروج</button>
+      </div>
+    </div>
+  </header>
+  <div class="dashboard-layout">
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="avatar-lg" style="background:linear-gradient(135deg,var(--danger),#c0392b)">أ<div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="sidebar-name">المدير</div>
+        <div class="sidebar-type" style="color:var(--danger)">أدمن النظام</div>
+      </div>
+      <div class="sidebar-nav">
+        <a onclick="switchAdminTab('admin-overview')" class="active"><span>📊</span> الإحصائيات</a>
+        <a onclick="switchAdminTab('admin-users')"><span>👥</span> المستخدمون</a>
+        <a onclick="switchAdminTab('admin-orders')"><span>📋</span> الطلبات</a>
+        <a onclick="switchAdminTab('admin-finance')"><span>💰</span> المالية</a>
+        <a onclick="switchAdminTab('admin-disputes')"><span>⚠️</span> النزاعات</a>
+        <a onclick="switchAdminTab('admin-verify')"><span>✅</span> التوثيق</a>
+        <a onclick="switchAdminTab('admin-tickets')"><span>🎫</span> التذاكر</a>
+        <a onclick="logout()" class="danger"><span>🚪</span> تسجيل الخروج</a>
+      </div>
+    </div>
+    <div class="main-content">
+
+      <!-- ADMIN OVERVIEW -->
+      <div class="tab-content active" id="content-admin-overview">
+        <div class="page-title">📊 لوحة التحكم الرئيسية</div>
+        <div class="admin-stats">
+          <div class="admin-stat"><div class="admin-stat-icon">👥</div><div class="admin-stat-value">1,247</div><div class="admin-stat-label">إجمالي المستخدمين</div><div class="admin-stat-sub">+24 هذا الأسبوع</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">📦</div><div class="admin-stat-value">3,841</div><div class="admin-stat-label">إجمالي الطلبات</div><div class="admin-stat-sub">+87 هذا الشهر</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">💰</div><div class="admin-stat-value">124,500 ج</div><div class="admin-stat-label">إجمالي المبالغ</div><div class="admin-stat-sub">+12,000 ج هذا الشهر</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">⚠️</div><div class="admin-stat-value">7</div><div class="admin-stat-label">نزاعات مفتوحة</div><div class="admin-stat-sub" style="color:var(--warning)">تحتاج مراجعة</div></div>
+        </div>
+        <div class="admin-stats" style="grid-template-columns:repeat(4,1fr)">
+          <div class="admin-stat" style="background:linear-gradient(135deg,rgba(39,174,96,0.1),rgba(39,174,96,0.05))"><div class="admin-stat-icon">✅</div><div class="admin-stat-value">89,200 ج</div><div class="admin-stat-label">الأرباح الصافية (Commission)</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">⏳</div><div class="admin-stat-value">15,300 ج</div><div class="admin-stat-label">طلبات السحب المعلقة</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">👛</div><div class="admin-stat-value">35,000 ج</div><div class="admin-stat-label">إجمالي المحافظ</div></div>
+          <div class="admin-stat"><div class="admin-stat-icon">📝</div><div class="admin-stat-value">12</div><div class="admin-stat-label">طلبات توثيق معلقة</div></div>
+        </div>
+      </div>
+
+      <!-- ADMIN USERS -->
+      <div class="tab-content" id="content-admin-users">
+        <div class="page-title">👥 إدارة المستخدمين</div>
+        <div class="table-wrap">
+          <div class="table-head"><h3>قائمة المستخدمين</h3>
+            <input class="form-control" placeholder="🔍 بحث..." style="width:200px;padding:7px 12px;font-size:13px">
+          </div>
+          <table>
+            <thead><tr><th>المستخدم</th><th>النوع</th><th>التوثيق</th><th>الطلبات</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
+            <tbody>
+              <tr><td>محمد أحمد | buyer@test.com</td><td><span class="badge badge-blue">مشتري</span></td><td><span class="badge badge-success"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span></td><td>8</td><td>يناير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
+              <tr><td>سارة محمد | seller@test.com</td><td><span class="badge badge-warning">بائع</span></td><td><span class="badge badge-success"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span></td><td>95</td><td>فبراير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
+              <tr><td>كريم وليد | karim@test.com</td><td><span class="badge badge-warning">بائع</span></td><td><span class="badge badge-warning">⏳ قيد المراجعة</span></td><td>12</td><td>مارس 2025</td><td><button class="btn btn-sm btn-success" style="font-size:12px" onclick="showToast('تم قبول التوثيق ✅','success')">قبول التوثيق</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN ORDERS -->
+      <div class="tab-content" id="content-admin-orders">
+        <div class="page-title">📋 إدارة الطلبات</div>
+        <div class="table-wrap">
+          <div class="table-head"><h3>كل الطلبات</h3></div>
+          <table>
+            <thead><tr><th>رقم الطلب</th><th>المشتري</th><th>البائع</th><th>الخدمة</th><th>السعر</th><th>الحالة</th><th>التاريخ</th></tr></thead>
+            <tbody>
+              <tr><td>#10047</td><td>خالد نبيل</td><td>أية سمير</td><td>مونتاج فيديو</td><td>500 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>15 مايو</td></tr>
+              <tr><td>#10046</td><td>ريم مصطفى</td><td>عمر محمد</td><td>تصميم هوية</td><td>800 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>10 مايو</td></tr>
+              <tr><td>#10045</td><td>عمرو حسين</td><td>يوسف محمد</td><td>كتابة محتوى</td><td>300 ج</td><td><span class="badge badge-danger">ملغي</span></td><td>5 مايو</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN FINANCE -->
+      <div class="tab-content" id="content-admin-finance">
+        <div class="page-title">💰 المالية والمدفوعات</div>
+        <div class="table-wrap">
+          <div class="table-head"><h3>سجل عمليات الدفع</h3></div>
+          <table>
+            <thead><tr><th>رقم العملية</th><th>المشتري</th><th>البائع</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>#PAY-001</td><td>خالد نبيل</td><td>أحمد السيد</td><td>500 ج</td><td>15 مايو</td><td><span class="badge badge-success">ناجح</span></td></tr>
+              <tr><td>#PAY-002</td><td>ريم مصطفى</td><td>اماني عدلي</td><td>800 ج</td><td>10 مايو</td><td><span class="badge badge-success">ناجح</span></td></tr>
+              <tr><td>#PAY-003</td><td>منى سعد</td><td>محمد علي</td><td>1200 ج</td><td>8 مايو</td><td><span class="badge badge-warning">معلق</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap" style="margin-top:20px">
+          <div class="table-head"><h3>⏳ طلبات السحب المعلقة</h3></div>
+          <table>
+            <thead><tr><th>البائع</th><th>المبلغ</th><th>طريقة السحب</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
+            <tbody>
+              <tr><td>أحمد السيد</td><td>3,500 ج</td><td>فودافون كاش</td><td>14 مايو</td><td><button class="btn btn-sm btn-success" onclick="showToast('تم تحويل المبلغ ✅','success')">تحويل</button> <button class="btn btn-sm btn-danger" onclick="showToast('تم رفض الطلب','error')">رفض</button></td></tr>
+              <tr><td>سارة محمد</td><td>2,100 ج</td><td>انستاباي</td><td>13 مايو</td><td><button class="btn btn-sm btn-success" onclick="showToast('تم تحويل المبلغ ✅','success')">تحويل</button> <button class="btn btn-sm btn-danger" onclick="showToast('تم رفض الطلب','error')">رفض</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN DISPUTES -->
+      <div class="tab-content" id="content-admin-disputes">
+        <div class="page-title">⚠️ النزاعات والشكاوى</div>
+        <div class="table-wrap">
+          <div class="table-head"><h3>مركز النزاعات</h3></div>
+          <table>
+            <thead><tr><th>عنوان الشكوى</th><th>المشتري</th><th>البائع</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>تأخير في تسليم الفيديو</td><td>خالد نبيل</td><td>أحمد السيد</td>
+                <td><span class="badge badge-warning">قيد المراجعة</span></td><td>14 مايو</td>
+                <td>
+                  <button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px" onclick="showToast('تم فتح المحادثة','success')">💬 فتح الدردشة</button>
+                  <button class="btn btn-sm btn-success" style="font-size:12px" onclick="showToast('تم الحل لصالح المشتري','success')">✅ حل</button>
+                  <button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم رد المبلغ ✅','success')">💰 رد المبلغ</button>
+                </td>
+              </tr>
+              <tr>
+                <td>جودة العمل مش زي المتفق</td><td>ريم مصطفى</td><td>نور حسن</td>
+                <td><span class="badge badge-success">تم الحل</span></td><td>10 مايو</td>
+                <td><button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px">عرض التفاصيل</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN VERIFY -->
+      <div class="tab-content" id="content-admin-verify">
+        <div class="page-title">✅ مركز التوثيق</div>
+        <div style="margin-bottom:20px;padding:14px 18px;background:rgba(243,156,18,0.1);border-radius:10px;border:1px solid rgba(243,156,18,0.3);font-size:14px;color:var(--warning);font-weight:600">
+          ⏳ يوجد 12 طلب توثيق قيد الانتظار
+        </div>
+        <div class="form-card" style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+            <div>
+              <div style="font-size:16px;font-weight:800">كريم وليد</div>
+              <div style="font-size:13px;color:var(--text-muted)">karim@test.com | بائع | تسجيل: مارس 2025</div>
+            </div>
+            <span class="badge badge-warning">⏳ قيد المراجعة</span>
+          </div>
+          <div class="form-grid">
+            <div class="upload-area" style="cursor:pointer" onclick="showToast('جاري فتح الصورة من Google Drive','success')">
+              <div class="upload-icon">🤳</div>
+              <div style="font-size:13px;font-weight:600">صورة شخصية</div>
+              <div style="font-size:12px;color:var(--accent);margin-top:4px">فتح رابط الصورة ↗</div>
+            </div>
+            <div class="upload-area" style="cursor:pointer" onclick="showToast('جاري فتح البطاقة من Google Drive','success')">
+              <div class="upload-icon">💳</div>
+              <div style="font-size:13px;font-weight:600">صورة البطاقة</div>
+              <div style="font-size:12px;color:var(--accent);margin-top:4px">فتح رابط البطاقة ↗</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:16px">
+            <button class="btn btn-success" onclick="showToast('تم قبول التوثيق - شارة التوثيق نشطة ✅','success')">✅ قبول التوثيق</button>
+            <button class="btn btn-danger" onclick="showToast('تم رفض التوثيق','error')">❌ رفض</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TICKETS -->
+      <div class="tab-content" id="content-admin-tickets">
+        <div class="page-title">🎫 رسائل العملاء</div>
+        <div class="table-wrap">
+          <div class="table-head"><h3>تذاكر الدعم الفني</h3></div>
+          <table>
+            <thead><tr><th>رقم التذكرة</th><th>المستخدم</th><th>الموضوع</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
+            <tbody>
+              <tr><td>#TKT-001</td><td>خالد نبيل</td><td>مشكلة تقنية في الدفع</td><td><span class="badge badge-warning">مفتوحة</span></td><td>15 مايو</td><td><button class="btn btn-sm btn-primary" style="font-size:12px" onclick="showToast('تم فتح التذكرة للرد','success')">رد</button></td></tr>
+              <tr><td>#TKT-002</td><td>منى سعد</td><td>استفسار عن الدفع</td><td><span class="badge badge-success">مغلقة</span></td><td>13 مايو</td><td><button class="btn btn-sm" style="font-size:12px;background:rgba(52,152,219,0.1);color:var(--accent)">عرض</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE: CONTACT -->
+<!-- ============================================================ -->
+<div class="page" id="page-contact">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area" onclick="showPage('home')">
+        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+      </div>
+      <nav>
+        <a onclick="showPage('home')">الرئيسية</a>
+        <a onclick="showPage('services')">تصفح الخدمات</a>
+        <a onclick="showPage('contact')" class="active">تواصل معنا</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
+      </div>
+    </div>
+  </header>
+  <div class="section">
+    <div class="section-title">📞 تواصل معنا</div>
+    <div class="section-sub">نحن هنا لمساعدتك في أي وقت</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchContactTab('support')">🎫 تذكرة دعم</button>
+      <button class="tab-btn" onclick="switchContactTab('direct')">📬 تواصل مباشر</button>
+      <button class="tab-btn" onclick="switchContactTab('social')">📲 منصاتنا</button>
+      <button class="tab-btn" onclick="switchContactTab('faq')">❓ الأسئلة الشائعة</button>
+    </div>
+
+    <div class="tab-content active" id="content-support">
+      <div class="contact-grid">
+        <div class="form-card">
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">🎫 إرسال تذكرة دعم</h3>
+          <div class="form-group">
+            <label class="form-label">موضوع الرسالة</label>
+            <select class="form-control">
+              <option>اختر الموضوع...</option>
+              <option>مشكلة تقنية</option>
+              <option>استفسار عن دفع</option>
+              <option>اقتراح</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">نص الرسالة</label>
+            <textarea class="form-control" rows="5" placeholder="اشرح مشكلتك بالتفصيل..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">إرفاق صورة (اختياري)</label>
+            <div class="upload-area" onclick="showToast('سيتم رفع الصورة على Google Drive','success')">
+              <div class="upload-icon">📎</div>
+              <div style="font-size:13px;font-weight:600">اضغط لإرفاق سكرين شوت</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="showToast('تم إرسال تذكرتك بنجاح! رقمك: TKT-' + Math.floor(Math.random()*1000),'success')">📤 إرسال التذكرة</button>
+        </div>
+        <div>
+          <div class="form-card" style="margin-bottom:16px">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:14px">⏱️ وقت الاستجابة المتوقع</h3>
+            <div class="info-row"><span>🟢</span><span>مشاكل تقنية طارئة</span><span class="info-val">خلال ساعتين</span></div>
+            <div class="info-row"><span>🟡</span><span>استفسارات الدفع</span><span class="info-val">خلال 24 ساعة</span></div>
+            <div class="info-row"><span>🔵</span><span>الاقتراحات والملاحظات</span><span class="info-val">خلال 48 ساعة</span></div>
+          </div>
+          <div class="form-card">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:14px">📋 تتبع تذاكرك</h3>
+            <div style="font-size:14px;color:var(--text-muted)">آخر تذاكرك:</div>
+            <div style="margin-top:12px;padding:12px;background:rgba(52,152,219,0.06);border-radius:10px">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:13px;font-weight:700">#TKT-001</span><span class="badge badge-warning">مفتوحة</span></div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px">مشكلة تقنية في الدفع</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="content-direct">
+      <div class="contact-grid">
+        <div class="form-card">
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">📬 بيانات التواصل المباشر</h3>
+          <div class="info-row" style="font-size:15px;margin-bottom:14px"><span>📧</span><span>البريد الرسمي:</span><span class="info-val">support@freelancemisr.com</span></div>
+          <div class="info-row" style="font-size:15px;margin-bottom:14px"><span>📞</span><span>الدعم الفني:</span><span class="info-val">01000000001</span></div>
+          <div class="info-row" style="font-size:15px;margin-bottom:14px"><span>💰</span><span>قسم المدفوعات:</span><span class="info-val">01000000002</span></div>
+          <div class="info-row" style="font-size:15px;margin-bottom:14px"><span>⚠️</span><span>قسم الشكاوى:</span><span class="info-val">01000000003</span></div>
+        </div>
+        <div class="form-card">
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">🕐 ساعات العمل</h3>
+          <div class="info-row"><span>🌅</span><span>السبت - الخميس</span><span class="info-val">9 ص - 11 م</span></div>
+          <div class="info-row"><span>🌆</span><span>الجمعة</span><span class="info-val">2 م - 8 م</span></div>
+          <div style="margin-top:16px;padding:12px;background:rgba(39,174,96,0.08);border-radius:10px;font-size:13px;color:var(--success);font-weight:600">🟢 الدعم الفني متاح الآن</div>
+          <div style="margin-top:12px;padding:12px;background:rgba(52,152,219,0.06);border-radius:10px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">📍 المقر الإداري</div>
+            <div style="font-size:13px;color:var(--text-muted)">حلوان، القاهرة، جمهورية مصر العربية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="content-social">
+      <div class="form-card">
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">📲 تابعنا على منصاتنا</h3>
+        <div class="social-links">
+          <button class="social-btn social-fb" onclick="showToast('جاري فتح الفيسبوك...','success')">📘 Facebook</button>
+          <button class="social-btn social-wa" onclick="showToast('جاري فتح الواتساب...','success')">💬 WhatsApp</button>
+          <button class="social-btn social-ig" onclick="showToast('جاري فتح الانستجرام...','success')">📸 Instagram</button>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:rgba(52,152,219,0.06);border-radius:var(--radius)">
+          <div style="font-size:15px;font-weight:800;margin-bottom:12px">📍 موقعنا على الخريطة</div>
+          <div style="font-size:14px;color:var(--text-muted);line-height:1.8">
+            <div>🏢 المقر الإداري: حلوان، القاهرة</div>
+            <div>🇪🇬 جمهورية مصر العربية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="content-faq">
+      <div class="form-card">
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:20px">❓ الأسئلة الشائعة</h3>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+          <div class="faq-q">كيف يمكنني إنشاء حساب على المنصة؟ <span class="faq-arrow">▾</span></div>
+          <div class="faq-a">يمكنك إنشاء حساب مجانًا عبر الضغط على "إنشاء حساب" في الهيدر، ثم اختيار نوع الحساب (مشتري أو بائع) وملء البيانات المطلوبة.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+          <div class="faq-q">كيف يعمل نظام الدفع؟ <span class="faq-arrow">▾</span></div>
+          <div class="faq-a">يدفع المشتري المبلغ للمنصة عند إتمام الطلب، وتحتفظ المنصة بالمبلغ حتى يتم تسليم العمل والموافقة عليه. بعدها يتم تحويل المبلغ للبائع.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+          <div class="faq-q">كيف أحصل على شارة التوثيق؟ <span class="faq-arrow">▾</span></div>
+          <div class="faq-a">ارفع صورتك الشخصية وصورة بطاقتك القومية من تبويب "حسابي". بعد مراجعة الإدارة (خلال 24-48 ساعة) ستحصل تلقائيًا على شارة التوثيق ✓.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+          <div class="faq-q">ماذا أفعل في حالة حدوث نزاع مع البائع؟ <span class="faq-arrow">▾</span></div>
+          <div class="faq-a">تواصل مع فريق الدعم عبر صفحة "تواصل معنا" وأرسل تذكرة دعم بتفاصيل المشكلة. سيتدخل فريق الإدارة لحل النزاع بعدالة لكلا الطرفين.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+          <div class="faq-q">ما هي نسبة عمولة المنصة؟ <span class="faq-arrow">▾</span></div>
+          <div class="faq-a">تأخذ المنصة عمولة 10% فقط من قيمة كل طلب مكتمل. باقي المبلغ يذهب مباشرة للبائع.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+// STATE
+let currentUser = null; // { role: 'buyer'|'seller'|'admin', name: '...', id: '...' }
+let selectedRole = 'buyer';
+
+// API base - change if your backend runs elsewhere
+const API_BASE = (window.API_BASE_OVERRIDE) ? window.API_BASE_OVERRIDE : 'http://localhost:3000';
+
+async function apiFetch(path, opts = {}) {
+  const token = localStorage.getItem('token');
+  const headers = Object.assign({'Content-Type':'application/json'}, opts.headers || {});
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  try {
+    const res = await fetch(API_BASE + path, Object.assign({}, opts, { headers }));
+    let json;
+    try { json = await res.json(); } catch (e) { json = { error: 'invalid_response' }; }
+    return json;
+  } catch (err) {
+    // Network or CORS error — signal caller to optionally fallback to local mock auth
+    return { networkError: true, error: 'network_error', details: (err && err.message) || String(err) };
+  }
+}
+
+function getDisplayName(user) {
+  if (!user) return 'حسابي';
+  const name = (user.name || user.full_name || '').trim();
+  if (name) return name;
+  if (user.email) return user.email.split('@')[0];
+  return 'حسابي';
+}
+
+function isVerifiedProfile(user) {
+  return !!(user && user.avatar_url && user.id_card_url);
+}
+
+function buildCheckoutUrl(data) {
+  const q = new URLSearchParams();
+  if (data.service_id) q.set('service_id', data.service_id);
+  if (data.price) q.set('price', data.price);
+  if (data.seller_id) q.set('seller_id', data.seller_id);
+  if (data.title) q.set('title', data.title);
+  return 'checkout.html?' + q.toString();
+}
+
+function renderUserProfileUI() {
+  const user = currentUser;
+  const name = getDisplayName(user);
+  const verified = isVerifiedProfile(user);
+  const initial = (name && name.charAt(0)) || 'م';
+  const dashName = document.getElementById('dash-username');
+  const sidebarName = document.getElementById('sidebar-name');
+  const dashAvatar = document.getElementById('dash-avatar');
+  const sidebarAvatar = document.getElementById('sidebar-avatar');
+  if (dashName) dashName.textContent = name;
+  if (sidebarName) sidebarName.textContent = name;
+  if (dashAvatar) dashAvatar.textContent = initial;
+  if (sidebarAvatar) {
+    sidebarAvatar.innerHTML = initial + (verified ? '<div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div>' : '');
+  }
+}
+
+function syncCurrentUserProfile(patch) {
+  if (!currentUser) return;
+  currentUser = Object.assign({}, currentUser, patch || {});
+  localStorage.setItem('user', JSON.stringify(currentUser));
+  renderUserProfileUI();
+  updateAuthUI();
+}
+
+function buildPreviewCard(card) {
+  if (!card) return null;
+  const clone = card.cloneNode(true);
+  clone.classList.add('checkout-preview-card');
+  clone.removeAttribute('onclick');
+  clone.querySelectorAll('button').forEach(btn => btn.remove());
+  clone.querySelectorAll('[onclick]').forEach(el => el.removeAttribute('onclick'));
+  clone.querySelectorAll('.service-card').forEach(el => el.style.cursor = 'default');
+  return clone;
+}
+
+// Checkout navigation helpers
+function goToCheckoutFromButton(btn){
+  const card = btn.closest('.service-card') || btn.closest('.card-img');
+  if (!card) return showToast('خطأ في تحديد الخدمة','error');
+  const img = card.querySelector('.card-img') || card.querySelector('[data-service-id]') || card;
+  const serviceId = img && img.dataset && img.dataset.serviceId ? img.dataset.serviceId : img.getAttribute('data-service-id');
+  const price = img && img.dataset && img.dataset.price ? img.dataset.price : img.getAttribute('data-price');
+  const seller = img && img.dataset && img.dataset.sellerId ? img.dataset.sellerId : img.getAttribute('data-seller-id');
+  goToCheckout(serviceId, price, seller, card);
+}
+
+function goToCheckout(serviceId, price, sellerId, card){
+  const titleEl = card ? card.querySelector('.card-title') : null;
+  const title = titleEl ? titleEl.textContent.trim() : '';
+  openCheckoutModal({ service_id: serviceId, price: price, seller_id: sellerId, title }, card);
+}
+
+let currentCheckout = null;
+
+function openCheckoutModal(data, sourceCard) {
+  currentCheckout = data || {};
+  const modal = document.getElementById('checkoutModal');
+  if (!modal) return;
+  const previewHost = document.getElementById('checkoutPreviewHost');
+  const titleNode = document.getElementById('checkoutTitle');
+  const sellerNode = document.getElementById('checkoutSeller');
+  const priceNode = document.getElementById('checkoutPrice');
+  const msgNode = document.getElementById('checkoutMsg');
+  if (previewHost) {
+    previewHost.innerHTML = '';
+    const previewCard = buildPreviewCard(sourceCard);
+    if (previewCard) previewHost.appendChild(previewCard);
+    else {
+      const fallback = document.createElement('div');
+      fallback.className = 'order-detail-card';
+      fallback.innerHTML = '<div style="font-weight:800;margin-bottom:8px">' + (currentCheckout.title || 'خدمة غير معروفة') + '</div>' + '<div style="color:var(--text-muted)">السعر: ' + (currentCheckout.price || '--') + ' جنيه</div>';
+      previewHost.appendChild(fallback);
+    }
+  }
+  if (titleNode) titleNode.textContent = currentCheckout.title || 'خدمة غير معروفة';
+  if (sellerNode) sellerNode.textContent = currentCheckout.seller_id ? ('البائع: ' + currentCheckout.seller_id) : '';
+  if (priceNode) priceNode.textContent = currentCheckout.price ? (currentCheckout.price + ' جنيه') : '--';
+  if (msgNode) msgNode.textContent = 'اضغط ادفع الآن للانتقال إلى صفحة التشيك أوت';
+  modal.style.display = 'flex';
+}
+
+function closeCheckoutModal() {
+  const modal = document.getElementById('checkoutModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function handleCheckoutPay() {
+  if (!currentCheckout || !currentCheckout.service_id) {
+    showToast('لا توجد خدمة محددة','error');
+    return;
+  }
+  closeCheckoutModal();
+  window.location.href = buildCheckoutUrl(currentCheckout);
+}
+
+// ========== SERVICES DYNAMIC FETCH & RENDER ==========
+async function fetchServices() {
+  const res = await apiFetch('/services');
+  if (!res || res.error) return console.warn('Failed to load services', res && res.error);
+  renderServices(res);
+  renderMyServices(res);
+}
+
+function renderServices(list) {
+  const grid = document.querySelector('#page-services .cards-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  (list || []).forEach(svc => {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.onclick = () => goToCheckout(svc.id, svc.price, svc.seller_id, card);
+    const media = svc.media_url ? `<img src="${svc.media_url}" style="width:100%;height:100%;object-fit:cover">` : '';
+    const imgShell = document.createElement('div'); imgShell.className = 'card-img'; imgShell.setAttribute('data-service-id', svc.id);
+    imgShell.setAttribute('data-price', svc.price || 0); imgShell.setAttribute('data-seller-id', svc.seller_id || '');
+    imgShell.innerHTML = media || '<div style="font-size:40px">🎯</div>';
+    const body = document.createElement('div'); body.className = 'card-body';
+    body.innerHTML = `<div class="card-title">${svc.title || 'بدون عنوان'}</div>` + `<div class="card-seller">👤 ${svc.seller_id || 'بائع'}</div>` + `<div class="card-stars">⭐⭐⭐⭐☆</div>`;
+    const footer = document.createElement('div'); footer.className = 'card-footer'; footer.innerHTML = `<div class="card-price">${svc.price || 0} <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button>`;
+    card.appendChild(imgShell); card.appendChild(body); card.appendChild(footer);
+    grid.appendChild(card);
+  });
+}
+
+function renderMyServices(allServices) {
+  const tbody = document.querySelector('#my-services-section table tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const list = (allServices || []).filter(s => currentUser && s.seller_id === currentUser.id);
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">لم تقم بنشر أي خدمة بعد</td></tr>';
+    return;
+  }
+  list.forEach(svc => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${svc.title}</td><td>⭐ 0.0</td><td><span class="badge badge-success">نشط</span></td><td><button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px">إخفاء</button> <button class="btn btn-sm btn-danger" style="font-size:12px">حذف</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ========== CREATE SERVICE (Seller) ==========
+function openCreateServiceForm() {
+  if (!currentUser) return showToast('سجّل الدخول أولاً','error');
+  if (currentUser.role !== 'seller') return showToast('يجب أن تكون بائعاً لنشر خدمة','error');
+  document.getElementById('create-service-form').style.display = 'block';
+  document.getElementById('btn-new-service').style.display = 'none';
+}
+
+function closeCreateServiceForm() {
+  document.getElementById('create-service-form').style.display = 'none';
+  document.getElementById('btn-new-service').style.display = 'inline-flex';
+  document.getElementById('svc-title').value = '';
+  document.getElementById('svc-desc').value = '';
+  document.getElementById('svc-price').value = '';
+  document.getElementById('svc-media').value = null;
+}
+
+async function submitNewService() {
+  const title = document.getElementById('svc-title').value.trim();
+  const desc = document.getElementById('svc-desc').value.trim();
+  const price = parseFloat(document.getElementById('svc-price').value) || 0;
+  const mediaInput = document.getElementById('svc-media');
+  if (!title) return showToast('ضع عنواناً للخدمة','error');
+  if (!price || price <= 0) return showToast('حدد سعراً صالحاً','error');
+  let media_url = null;
+  // If a file selected, upload it first
+  if (mediaInput && mediaInput.files && mediaInput.files[0]) {
+    const f = mediaInput.files[0];
+    try {
+      const form = new FormData();
+      form.append('file', f);
+      form.append('purpose', 'service_media');
+      const token = localStorage.getItem('token');
+      const res = await fetch(API_BASE + '/upload', { method: 'POST', body: form, headers: token ? { 'Authorization': 'Bearer ' + token } : {} });
+      const json = await res.json();
+      if (json && json.file && json.file.url) media_url = json.file.url;
+    } catch (e) {
+      console.warn('media upload failed', e);
+    }
+  }
+  // Create service
+  const payload = { title, description: desc, price, media_url };
+  const created = await apiFetch('/services', { method: 'POST', body: JSON.stringify(payload) });
+  if (!created || created.error) return showToast(created && created.error ? created.error : 'فشل إنشاء الخدمة','error');
+  showToast('تم نشر الخدمة بنجاح','success');
+  closeCreateServiceForm();
+  // refresh lists
+  await fetchServices();
+}
+
+// initialize services on load
+document.addEventListener('DOMContentLoaded', () => {
+  fetchServices();
+});
+
+// ===== PAGE NAVIGATION =====
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+  updateAuthUI();
+  if (page === 'dashboard' && currentUser) renderUserProfileUI();
+}
+
+function updateAuthUI() {
+  const authEl = document.getElementById('header-auth');
+  const userEl = document.getElementById('header-user');
+  const notifWrap = document.getElementById('notifWrap');
+  const stored = localStorage.getItem('user');
+  if (!currentUser && stored) currentUser = JSON.parse(stored);
+
+  if (currentUser) {
+    if (authEl) authEl.style.display = 'none';
+    if (userEl) userEl.style.display = 'flex';
+    const headerUsername = document.getElementById('header-username');
+    if (headerUsername) headerUsername.textContent = getDisplayName(currentUser);
+    if (notifWrap) notifWrap.style.display = 'flex';
+    renderUserProfileUI();
+  } else {
+    if (authEl) authEl.style.display = 'flex';
+    if (userEl) userEl.style.display = 'none';
+    if (notifWrap) notifWrap.style.display = 'none';
+  }
+}
+
+function requireLogin() {
+  if (!currentUser) { showPage('login'); showToast('يرجى تسجيل الدخول أولاً 🔐','error'); }
+}
+
+// ===== AUTH =====
+function doLogin() {
+  (async () => {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value.trim();
+    if (!email || !pass) return showToast('الرجاء إدخال البريد وكلمة المرور','error');
+    const res = await apiFetch('/auth/login', { method: 'POST', body: JSON.stringify({ email, password: pass }) });
+    if (res.networkError) {
+      // fallback to local mock auth
+      const local = localLogin(email, pass);
+      if (!local) return showToast('فشل تسجيل الدخول (خدمة غير متاحة)','error');
+      // apply local session
+      localStorage.setItem('token', local.token);
+      localStorage.setItem('user', JSON.stringify(local.user));
+      currentUser = local.user;
+      applyUserUI(local.user.role, local.user.name);
+      showPage('dashboard');
+      return showToast('تم تسجيل الدخول (وضع محلي) — ' + local.user.name,'success');
+    }
+    if (res.error) return showToast(res.error || 'فشل تسجيل الدخول','error');
+    // success
+    localStorage.setItem('token', res.token);
+    localStorage.setItem('user', JSON.stringify(res.user));
+    currentUser = res.user;
+    if (res.user.role === 'admin') { applyAdminUI(); showPage('admin'); }
+    else { applyUserUI(res.user.role, res.user.name); showPage('dashboard'); }
+    showToast('أهلاً بك ' + res.user.name + '!','success');
+  })();
+}
+
+function doRegister() {
+  (async () => {
+    // collect minimal fields from form (best-effort)
+    const first = document.querySelector('#page-register .form-grid .form-control') ? document.querySelector('#page-register .form-grid .form-control').value.trim() : '';
+    const email = document.querySelector('#page-register input[type="email"]') ? document.querySelector('#page-register input[type="email"]').value.trim() : '';
+    const pass  = document.querySelector('#page-register input[type="password"]') ? document.querySelector('#page-register input[type="password"]').value.trim() : '';
+    const role = selectedRole || 'buyer';
+    if (!email || !pass) return showToast('الرجاء إدخال بريد وكلمة مرور صحيحة','error');
+    const res = await apiFetch('/auth/register', { method: 'POST', body: JSON.stringify({ name: first || email.split('@')[0], email, password: pass, role }) });
+    if (res.networkError) {
+      // fallback to local mock register
+      const local = localRegister(email, pass, first || email.split('@')[0], role);
+      if (!local) return showToast('فشل إنشاء الحساب (خدمة غير متاحة) أو البريد مستخدم','error');
+      localStorage.setItem('token', local.token);
+      localStorage.setItem('user', JSON.stringify(local.user));
+      currentUser = local.user;
+      showToast('تم إنشاء الحساب محليًا!','success');
+      setTimeout(() => showPage('dashboard'), 900);
+      return;
+    }
+    if (res.error) return showToast(res.error || 'فشل إنشاء الحساب','error');
+    localStorage.setItem('token', res.token);
+    localStorage.setItem('user', JSON.stringify(res.user));
+    currentUser = res.user;
+    showToast('تم إنشاء الحساب بنجاح!','success');
+    setTimeout(() => showPage('dashboard'), 1200);
+  })();
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('currentUser');
+  updateAuthUI();
+  showPage('home');
+  showToast('تم تسجيل الخروج بنجاح 👋','success');
+}
+
+// ===== Local mock auth (fallback when backend is unreachable)
+function _loadLocalUsers(){
+  try{ return JSON.parse(localStorage.getItem('local_users')||'[]') }catch(e){ return [] }
+}
+function _saveLocalUsers(list){ localStorage.setItem('local_users', JSON.stringify(list)); }
+function localRegister(email, password, name, role){
+  const users = _loadLocalUsers();
+  if (users.find(u=>u.email===email)) return null;
+  const id = 'local-' + Date.now() + '-' + Math.floor(Math.random()*9999);
+  const user = { id, name, email, role, created_at: new Date().toISOString() };
+  users.push({ ...user, password });
+  _saveLocalUsers(users);
+  return { token: 'local-token-'+id, user };
+}
+function localLogin(email, password){
+  const users = _loadLocalUsers();
+  const u = users.find(x=>x.email===email && x.password===password);
+  if (!u) return null;
+  const user = { id: u.id, name: u.name, email: u.email, role: u.role };
+  return { token: 'local-token-'+u.id, user };
+}
+
+function applyUserUI(role, name) {
+  if (currentUser) currentUser.name = name;
+  renderUserProfileUI();
+
+  const isSeller = role === 'seller';
+  document.getElementById('sidebar-type').textContent = isSeller ? 'بائع - مقدم خدمة' : 'مشتري';
+  document.getElementById('seller-stats').style.display = isSeller ? 'grid' : 'none';
+  document.getElementById('my-services-section').style.display = isSeller ? 'block' : 'none';
+  document.getElementById('buyer-overview').style.display = isSeller ? 'none' : 'grid';
+
+  // Seller sees "طالبي الخدمات" instead of "البائعين"
+  const sellersLink = document.getElementById('nav-sellers-link');
+  if (sellersLink) {
+    sellersLink.textContent = isSeller ? 'طالبي الخدمات' : 'البائعين';
+    sellersLink.onclick = isSeller ? () => showToast('قسم طالبي الخدمات','success') : () => showPage('sellers');
+  }
+}
+
+function applyAdminUI() {
+  // nothing extra needed
+}
+
+function selectRole(role) {
+  selectedRole = role;
+  document.getElementById('role-buyer').classList.toggle('active', role === 'buyer');
+  document.getElementById('role-seller').classList.toggle('active', role === 'seller');
+}
+
+// ===== TABS =====
+function switchTab(tab) {
+  document.querySelectorAll('#page-dashboard .tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#page-dashboard .sidebar-nav a').forEach(a => a.classList.remove('active'));
+  const content = document.getElementById('content-' + tab);
+  const link = document.getElementById('tab-' + tab);
+  if (content) content.classList.add('active');
+  if (link) link.classList.add('active');
+}
+
+function switchAdminTab(tab) {
+  document.querySelectorAll('#page-admin .tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#page-admin .sidebar-nav a').forEach(a => a.classList.remove('active'));
+  const content = document.getElementById('content-' + tab);
+  if (content) content.classList.add('active');
+}
+
+function switchContactTab(tab) {
+  document.querySelectorAll('#page-contact .tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#page-contact .tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('content-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ===== DARK MODE =====
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  document.querySelectorAll('.theme-toggle').forEach(b => {
+    b.innerHTML = document.body.classList.contains('dark') ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  });
+}
+
+// ===== NOTIFICATIONS =====
+function toggleNotif() {
+  const dropdowns = document.querySelectorAll('.notif-dropdown');
+  dropdowns.forEach(d => d.classList.toggle('show'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.notif-btn-wrap')) {
+    document.querySelectorAll('.notif-dropdown').forEach(d => d.classList.remove('show'));
+  }
+});
+
+// ===== CATEGORY SIDEBAR =====
+function toggleCat(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.cat-menu-item').forEach(c => c.classList.remove('open', 'active'));
+  if (!wasOpen) { el.classList.add('open', 'active'); }
+  else { el.classList.add('active'); }
+}
+
+// ===== CHAT =====
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  if (!input.value.trim()) return;
+  const messages = document.querySelector('.chat-messages');
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble sent';
+  bubble.textContent = input.value;
+  messages.appendChild(bubble);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Enhanced: send to backend when possible
+async function sendMsgToBackend() {
+  const input = document.getElementById('chatInput');
+  if (!input.value.trim()) return;
+  const head = document.querySelector('.chat-head');
+  const toUser = head ? head.dataset.toUser : null;
+  // optimistic UI
+  sendMsg();
+  if (currentUser && toUser) {
+    const res = await apiFetch('/messages', { method: 'POST', body: JSON.stringify({ to_user: toUser, content: input.value }) });
+    if (res.error) showToast(res.error || 'فشل إرسال الرسالة','error');
+  }
+}
+
+// ===== TOAST =====
+function showToast(msg, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.innerHTML = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+  container.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(20px)'; toast.style.transition = '0.3s'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// ===== INIT =====
+updateAuthUI();
+
+// Init category toggle (open first one)
+document.querySelector('.cat-menu-item').classList.add('open');
+
+// ===== UPLOAD HANDLING =====
+const fileInput = document.getElementById('fileInput');
+let pendingUploadPurpose = null;
+function openFileDialog(purpose){
+  pendingUploadPurpose = purpose || 'other';
+  fileInput.value = null;
+  fileInput.click();
+}
+fileInput.addEventListener('change', async (ev) => {
+  const f = ev.target.files && ev.target.files[0];
+  if (!f) return;
+  const form = new FormData();
+  form.append('file', f);
+  form.append('purpose', pendingUploadPurpose || 'other');
+  showToast('جاري رفع الملف...','success');
+  try {
+    const token = localStorage.getItem('token');
+    let serverResponse = null;
+    try {
+      const res = await fetch(API_BASE + '/upload', { method: 'POST', body: form, headers: token ? { 'Authorization': 'Bearer ' + token } : {} });
+      serverResponse = await res.json().catch(()=>({ error: 'invalid_response' }));
+    } catch (e) {
+      serverResponse = { networkError: true };
+    }
+
+    if (serverResponse && !serverResponse.error && !serverResponse.networkError) {
+      showToast('تم الرفع بنجاح','success');
+      const fileUrl = serverResponse.file && serverResponse.file.url ? serverResponse.file.url : null;
+      if (fileUrl && pendingUploadPurpose === 'avatar') {
+        const avatarEl = document.getElementById('dash-avatar');
+        if (avatarEl) avatarEl.style.backgroundImage = `url(${fileUrl})`, avatarEl.textContent = '';
+        syncCurrentUserProfile({ avatar_url: fileUrl });
+      }
+      if (fileUrl && pendingUploadPurpose === 'id_card') {
+        syncCurrentUserProfile({ id_card_url: fileUrl });
+      }
+    } else {
+      // Fallback: try uploading directly to 0x0.st (no API key required)
+      showToast('رفع الخادم فشل، محاولة رفع بديل...','warning');
+      try {
+        const extForm = new FormData();
+        extForm.append('file', f);
+        const r = await fetch('https://0x0.st', { method: 'POST', body: extForm });
+        if (!r.ok) throw new Error('external_upload_failed');
+        const text = await r.text();
+        const url = text.trim().split('\n')[0];
+        if (!url || !url.startsWith('http')) throw new Error('invalid_external_url');
+        // save the external link in our DB for this user (if backend available)
+        const saveRes = await apiFetch('/save-file-link', { method: 'POST', body: JSON.stringify({ url, filename: f.name, content_type: f.type, size: f.size, purpose: pendingUploadPurpose }) });
+        if (saveRes && saveRes.ok) {
+          showToast('تم الرفع والربط بنجاح','success');
+          const fileUrl = saveRes.file ? saveRes.file.url : url;
+          if (pendingUploadPurpose === 'avatar') {
+            const avatarEl = document.getElementById('dash-avatar');
+            if (avatarEl) avatarEl.style.backgroundImage = `url(${fileUrl})`, avatarEl.textContent = '';
+            syncCurrentUserProfile({ avatar_url: fileUrl });
+          }
+          if (pendingUploadPurpose === 'id_card') {
+            syncCurrentUserProfile({ id_card_url: fileUrl });
+          }
+        } else if (saveRes && saveRes.networkError) {
+          // backend unreachable; still show success with external URL
+          showToast('تم الرفع إلى المزود الخارجي (لم يتم حفظ الرابط على الخادم)','success');
+        } else {
+          showToast(saveRes.error || 'فشل حفظ الرابط على الخادم','error');
+        }
+      } catch (e2) {
+        showToast(e2.message || 'فشل رفع الملف خارجيًا','error');
+      }
+    }
+  } catch (e) {
+    showToast(e.message || 'فشل رفع الملف','error');
+  } finally {
+    pendingUploadPurpose = null;
+  }
+});
+
+// ===== MOBILE DRAWER =====
+const mobileBtn = document.getElementById('mobileMenuBtn');
+const mobileDrawer = document.getElementById('mobile-drawer');
+if (mobileBtn && mobileDrawer) {
+  mobileBtn.addEventListener('click', () => {
+    const open = mobileDrawer.style.display === 'block';
+    mobileDrawer.style.display = open ? 'none' : 'block';
+    mobileBtn.setAttribute('aria-expanded', (!open).toString());
+    mobileDrawer.setAttribute('aria-hidden', open.toString());
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#mobile-drawer') && !e.target.closest('#mobileMenuBtn')) {
+      if (mobileDrawer.style.display === 'block') mobileDrawer.style.display = 'none';
+    }
+  });
+  window.addEventListener('resize', () => { if (window.innerWidth > 920) mobileDrawer.style.display = 'none'; });
+}
+</script>
+</body>
+</html>
