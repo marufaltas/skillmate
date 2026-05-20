@@ -2121,23 +2121,202 @@ tr:hover td { background: rgba(52,152,219,0.04); }
 let currentUser = null; // { role: 'buyer'|'seller'|'admin', name: '...', id: '...' }
 let selectedRole = 'buyer';
 
-// API base - change if your backend runs elsewhere
-const API_BASE = (window.API_BASE_OVERRIDE) ? window.API_BASE_OVERRIDE : 'http://localhost:3000';
 
-async function apiFetch(path, opts = {}) {
-  const token = localStorage.getItem('token');
-  const headers = Object.assign({'Content-Type':'application/json'}, opts.headers || {});
-  if (token) headers['Authorization'] = 'Bearer ' + token;
+// ========== SUPABASE INTEGRATION ==========
+// تأكد من إضافة <script src="https://unpkg.com/@supabase/supabase-js"></script> و <script src="supabase.js"></script> في رأس الصفحة
+
+// تسجيل الدخول عبر Supabase
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value.trim();
+  if (!email || !pass) return showToast('الرجاء إدخال البريد وكلمة المرور','error');
   try {
-    const res = await fetch(API_BASE + path, Object.assign({}, opts, { headers }));
-    let json;
-    try { json = await res.json(); } catch (e) { json = { error: 'invalid_response' }; }
-    return json;
-  } catch (err) {
-    // Network or CORS error — signal caller to optionally fallback to local mock auth
-    return { networkError: true, error: 'network_error', details: (err && err.message) || String(err) };
+    const user = await window.doLogin(email, pass);
+    currentUser = user;
+    localStorage.setItem('user', JSON.stringify(user));
+    updateAuthUI();
+    if (user.role === 'admin') { applyAdminUI(); showPage('admin'); }
+    else { applyUserUI(user.role, user.name); showPage('dashboard'); }
+    showToast('أهلاً بك ' + user.name + '!','success');
+  } catch(e) {
+    showToast(e.message || 'فشل تسجيل الدخول','error');
   }
 }
+
+// تسجيل مستخدم جديد عبر Supabase
+async function doRegister() {
+  const first = document.querySelector('#page-register .form-grid .form-control') ? document.querySelector('#page-register .form-grid .form-control').value.trim() : '';
+  const email = document.querySelector('#page-register input[type="email"]') ? document.querySelector('#page-register input[type="email"]').value.trim() : '';
+  const pass  = document.querySelector('#page-register input[type="password"]') ? document.querySelector('#page-register input[type="password"]').value.trim() : '';
+  const role = selectedRole || 'buyer';
+  if (!email || !pass) return showToast('الرجاء إدخال بريد وكلمة مرور صحيحة','error');
+  try {
+    await window.doRegister(first || email.split('@')[0], email, pass, role);
+    showToast('تم إنشاء الحساب بنجاح!','success');
+    setTimeout(() => showPage('login'), 1200);
+  } catch(e) {
+    showToast(e.message || 'فشل إنشاء الحساب','error');
+  }
+}
+
+// تسجيل الخروج
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('user');
+  updateAuthUI();
+  showPage('home');
+  showToast('تم تسجيل الخروج بنجاح 👋','success');
+}
+
+// جلب الخدمات من Supabase
+async function fetchServices() {
+  try {
+    const list = await window.fetchServices();
+    renderServices(list);
+    renderMyServices(list);
+  } catch(e) {
+    showToast('تعذر تحميل الخدمات','error');
+  }
+}
+
+// جلب التصنيفات
+async function fetchCategories() {
+  try {
+    const cats = await window.fetchCategories();
+    // يمكنك هنا ملء قائمة التصنيفات في الواجهة
+  } catch(e) {
+    showToast('تعذر تحميل التصنيفات','error');
+  }
+}
+
+// رفع ملف (صورة/هوية/خدمة)
+async function uploadFileHandler(file, purpose) {
+  try {
+    const url = await window.uploadFile(file, purpose);
+    showToast('تم رفع الملف بنجاح','success');
+    return url;
+  } catch(e) {
+    showToast(e.message || 'فشل رفع الملف','error');
+    return null;
+  }
+}
+
+// إضافة خدمة جديدة
+async function submitNewService() {
+  const title = document.getElementById('svc-title').value.trim();
+  const desc = document.getElementById('svc-desc').value.trim();
+  const price = parseFloat(document.getElementById('svc-price').value) || 0;
+  const mediaInput = document.getElementById('svc-media');
+  if (!title) return showToast('ضع عنواناً للخدمة','error');
+  if (!price || price <= 0) return showToast('حدد سعراً صالحاً','error');
+  let media_url = null;
+  if (mediaInput && mediaInput.files && mediaInput.files[0]) {
+    media_url = await uploadFileHandler(mediaInput.files[0], 'service_media');
+  }
+  try {
+    await window.addService({ title, description: desc, price, media_url });
+    showToast('تم نشر الخدمة بنجاح','success');
+    closeCreateServiceForm();
+    await fetchServices();
+  } catch(e) {
+    showToast(e.message || 'فشل إنشاء الخدمة','error');
+  }
+}
+
+// إرسال رسالة
+async function sendMsgToBackend() {
+  const input = document.getElementById('chatInput');
+  if (!input.value.trim()) return;
+  // يجب تحديد to_user من واجهة الدردشة
+  const head = document.querySelector('.chat-head');
+  const toUser = head ? head.dataset.toUser : null;
+  sendMsg(); // optimistic UI
+  if (currentUser && toUser) {
+    try {
+      await window.sendMessage(toUser, input.value);
+    } catch(e) {
+      showToast(e.message || 'فشل إرسال الرسالة','error');
+    }
+  }
+}
+
+// رفع صورة شخصية/هوية
+function openFileDialog(purpose){
+  pendingUploadPurpose = purpose || 'other';
+  fileInput.value = null;
+  fileInput.click();
+}
+fileInput.addEventListener('change', async (ev) => {
+  const f = ev.target.files && ev.target.files[0];
+  if (!f) return;
+  showToast('جاري رفع الملف...','success');
+  try {
+    const url = await uploadFileHandler(f, pendingUploadPurpose);
+    if (url && pendingUploadPurpose === 'avatar') {
+      const avatarEl = document.getElementById('dash-avatar');
+      if (avatarEl) avatarEl.style.backgroundImage = `url(${url})`, avatarEl.textContent = '';
+      syncCurrentUserProfile({ avatar_url: url });
+    }
+    if (url && pendingUploadPurpose === 'id_card') {
+      syncCurrentUserProfile({ id_card_url: url });
+    }
+  } catch(e) {}
+  finally { pendingUploadPurpose = null; }
+});
+
+// جلب الطلبات
+async function fetchOrders() {
+  try {
+    const orders = await window.fetchOrders();
+    // يمكنك هنا عرض الطلبات في الواجهة
+  } catch(e) { showToast('تعذر تحميل الطلبات','error'); }
+}
+
+// جلب المفضلة
+async function fetchFavorites() {
+  try {
+    const favs = await window.fetchFavorites();
+    // يمكنك هنا عرض المفضلة في الواجهة
+  } catch(e) { showToast('تعذر تحميل المفضلة','error'); }
+}
+
+// إضافة للمفضلة
+async function addFavorite(service_id) {
+  try { await window.addFavorite(service_id); showToast('تمت الإضافة للمفضلة','success'); } catch(e) { showToast(e.message,'error'); }
+}
+
+// حذف من المفضلة
+async function removeFavorite(service_id) {
+  try { await window.removeFavorite(service_id); showToast('تمت الإزالة من المفضلة','success'); } catch(e) { showToast(e.message,'error'); }
+}
+
+// إضافة تقييم
+async function addReview(service_id, rating, comment) {
+  try { await window.addReview(service_id, rating, comment); showToast('تم إرسال التقييم','success'); } catch(e) { showToast(e.message,'error'); }
+}
+
+// طلب توثيق
+async function requestVerification(file_id, doc_type) {
+  try { await window.requestVerification(file_id, doc_type); showToast('تم إرسال طلب التوثيق','success'); } catch(e) { showToast(e.message,'error'); }
+}
+
+// جلب الإشعارات
+async function fetchNotifications() {
+  try { const notifs = await window.fetchNotifications(); /* عرض الإشعارات */ } catch(e) { showToast('تعذر تحميل الإشعارات','error'); }
+}
+
+// دوال الأدمن (جلب كل المستخدمين/الطلبات/التوثيقات)
+async function fetchAllUsers() { try { return await window.fetchAllUsers(); } catch(e) { showToast(e.message,'error'); } }
+async function fetchAllOrders() { try { return await window.fetchAllOrders(); } catch(e) { showToast(e.message,'error'); } }
+async function fetchAllVerifications() { try { return await window.fetchAllVerifications(); } catch(e) { showToast(e.message,'error'); } }
+async function updateVerificationStatus(verification_id, status, review_notes) { try { await window.updateVerificationStatus(verification_id, status, review_notes); showToast('تم تحديث حالة التوثيق','success'); } catch(e) { showToast(e.message,'error'); } }
+
+// عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  fetchServices();
+  fetchCategories();
+  updateAuthUI();
+});
 
 function getDisplayName(user) {
   if (!user) return 'حسابي';
