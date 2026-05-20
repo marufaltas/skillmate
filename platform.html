@@ -2437,10 +2437,13 @@ async function handleCheckoutPay() {
 
 // ========== SERVICES DYNAMIC FETCH & RENDER ==========
 async function fetchServices() {
-  const res = await apiFetch('/services');
-  if (!res || res.error) return console.warn('Failed to load services', res && res.error);
-  renderServices(res);
-  renderMyServices(res);
+  try {
+    const list = await window.fetchServices();
+    renderServices(list);
+    renderMyServices(list);
+  } catch(e) {
+    showToast('تعذر تحميل الخدمات','error');
+  }
 }
 
 function renderServices(list) {
@@ -2504,29 +2507,17 @@ async function submitNewService() {
   if (!title) return showToast('ضع عنواناً للخدمة','error');
   if (!price || price <= 0) return showToast('حدد سعراً صالحاً','error');
   let media_url = null;
-  // If a file selected, upload it first
   if (mediaInput && mediaInput.files && mediaInput.files[0]) {
-    const f = mediaInput.files[0];
-    try {
-      const form = new FormData();
-      form.append('file', f);
-      form.append('purpose', 'service_media');
-      const token = localStorage.getItem('token');
-      const res = await fetch(API_BASE + '/upload', { method: 'POST', body: form, headers: token ? { 'Authorization': 'Bearer ' + token } : {} });
-      const json = await res.json();
-      if (json && json.file && json.file.url) media_url = json.file.url;
-    } catch (e) {
-      console.warn('media upload failed', e);
-    }
+    media_url = await window.uploadFile(mediaInput.files[0], 'service_media');
   }
-  // Create service
-  const payload = { title, description: desc, price, media_url };
-  const created = await apiFetch('/services', { method: 'POST', body: JSON.stringify(payload) });
-  if (!created || created.error) return showToast(created && created.error ? created.error : 'فشل إنشاء الخدمة','error');
-  showToast('تم نشر الخدمة بنجاح','success');
-  closeCreateServiceForm();
-  // refresh lists
-  await fetchServices();
+  try {
+    await window.addService({ title, description: desc, price, media_url });
+    showToast('تم نشر الخدمة بنجاح','success');
+    closeCreateServiceForm();
+    await fetchServices();
+  } catch(e) {
+    showToast(e.message || 'فشل إنشاء الخدمة','error');
+  }
 }
 
 // initialize services on load
