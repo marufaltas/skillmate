@@ -1843,6 +1843,8 @@ window.removeFavorite = async () => {};
 window.addReview = async () => {};
 window.fetchAllUsers = async () => await apiFetch({ action: 'getAllUsers' });
 window.getVerifications = async () => await apiFetch({ action: 'getVerifications' });
+window.sendMessage = async (toUser, content) => await apiFetch({ action: 'sendMessage', toUser, content });
+window.saveFileLink = async (payload) => await apiFetch(Object.assign({ action: 'saveFileLink' }, payload));
 
 // NOTE: Some legacy code references Supabase; we've added wrappers that call Google Apps Script endpoints instead.
 
@@ -2286,27 +2288,30 @@ function doLogin() {
     const email = document.getElementById('login-email').value.trim();
     const pass  = document.getElementById('login-pass').value.trim();
     if (!email || !pass) return showToast('الرجاء إدخال البريد وكلمة المرور','error');
-    const res = await apiFetch('/auth/login', { method: 'POST', body: JSON.stringify({ email, password: pass }) });
-    if (res.networkError) {
-      // fallback to local mock auth
-      const local = localLogin(email, pass);
-      if (!local) return showToast('فشل تسجيل الدخول (خدمة غير متاحة)','error');
-      // apply local session
-      localStorage.setItem('token', local.token);
-      localStorage.setItem('user', JSON.stringify(local.user));
-      currentUser = local.user;
-      applyUserUI(local.user.role, local.user.name);
-      showPage('dashboard');
-      return showToast('تم تسجيل الدخول (وضع محلي) — ' + local.user.name,'success');
+    try {
+      const res = await window.doLogin(email, pass);
+      if (res && res.networkError) {
+        const local = localLogin(email, pass);
+        if (!local) return showToast('فشل تسجيل الدخول (خدمة غير متاحة)','error');
+        localStorage.setItem('token', local.token);
+        localStorage.setItem('user', JSON.stringify(local.user));
+        currentUser = local.user;
+        applyUserUI(local.user.role, local.user.name);
+        showPage('dashboard');
+        return showToast('تم تسجيل الدخول (وضع محلي) — ' + local.user.name,'success');
+      }
+      if (!res || res.error || (!res.user && !res.userId && !res.name)) return showToast(res && (res.error||res.message) ? (res.error||res.message) : 'فشل تسجيل الدخول','error');
+      // normalize user object
+      const user = res.user || { id: res.userId || res.user_id || res.id, name: res.name || (res.user && res.user.name) || (res.user && res.user.email), role: res.role || (res.user && res.user.role) || 'buyer' };
+      localStorage.setItem('token', res.token || '');
+      localStorage.setItem('user', JSON.stringify(user));
+      currentUser = user;
+      if (user.role === 'admin') { applyAdminUI(); showPage('admin'); }
+      else { applyUserUI(user.role, user.name); showPage('dashboard'); }
+      showToast('أهلاً بك ' + (user.name || 'مستخدم') + '!','success');
+    } catch (e) {
+      showToast(e.message || 'فشل تسجيل الدخول','error');
     }
-    if (res.error) return showToast(res.error || 'فشل تسجيل الدخول','error');
-    // success
-    localStorage.setItem('token', res.token);
-    localStorage.setItem('user', JSON.stringify(res.user));
-    currentUser = res.user;
-    if (res.user.role === 'admin') { applyAdminUI(); showPage('admin'); }
-    else { applyUserUI(res.user.role, res.user.name); showPage('dashboard'); }
-    showToast('أهلاً بك ' + res.user.name + '!','success');
   })();
 }
 
@@ -2318,24 +2323,28 @@ function doRegister() {
     const pass  = document.querySelector('#page-register input[type="password"]') ? document.querySelector('#page-register input[type="password"]').value.trim() : '';
     const role = selectedRole || 'buyer';
     if (!email || !pass) return showToast('الرجاء إدخال بريد وكلمة مرور صحيحة','error');
-    const res = await apiFetch('/auth/register', { method: 'POST', body: JSON.stringify({ name: first || email.split('@')[0], email, password: pass, role }) });
-    if (res.networkError) {
-      // fallback to local mock register
-      const local = localRegister(email, pass, first || email.split('@')[0], role);
-      if (!local) return showToast('فشل إنشاء الحساب (خدمة غير متاحة) أو البريد مستخدم','error');
-      localStorage.setItem('token', local.token);
-      localStorage.setItem('user', JSON.stringify(local.user));
-      currentUser = local.user;
-      showToast('تم إنشاء الحساب محليًا!','success');
-      setTimeout(() => showPage('dashboard'), 900);
-      return;
+    try {
+      const res = await window.doRegister(first || email.split('@')[0], email, pass, role);
+      if (res && res.networkError) {
+        const local = localRegister(email, pass, first || email.split('@')[0], role);
+        if (!local) return showToast('فشل إنشاء الحساب (خدمة غير متاحة) أو البريد مستخدم','error');
+        localStorage.setItem('token', local.token);
+        localStorage.setItem('user', JSON.stringify(local.user));
+        currentUser = local.user;
+        showToast('تم إنشاء الحساب محليًا!','success');
+        setTimeout(() => showPage('dashboard'), 900);
+        return;
+      }
+      if (!res || res.error) return showToast(res && (res.error||res.message) ? (res.error||res.message) : 'فشل إنشاء الحساب','error');
+      const user = res.user || { id: res.userId || res.user_id || res.id, name: res.name || (res.user && res.user.name) || email, role: res.role || (res.user && res.user.role) || role };
+      localStorage.setItem('token', res.token || '');
+      localStorage.setItem('user', JSON.stringify(user));
+      currentUser = user;
+      showToast('تم إنشاء الحساب بنجاح!','success');
+      setTimeout(() => showPage('dashboard'), 1200);
+    } catch (e) {
+      showToast(e.message || 'فشل إنشاء الحساب','error');
     }
-    if (res.error) return showToast(res.error || 'فشل إنشاء الحساب','error');
-    localStorage.setItem('token', res.token);
-    localStorage.setItem('user', JSON.stringify(res.user));
-    currentUser = res.user;
-    showToast('تم إنشاء الحساب بنجاح!','success');
-    setTimeout(() => showPage('dashboard'), 1200);
   })();
 }
 
@@ -2472,8 +2481,10 @@ async function sendMsgToBackend() {
   // optimistic UI
   sendMsg();
   if (currentUser && toUser) {
-    const res = await apiFetch('/messages', { method: 'POST', body: JSON.stringify({ to_user: toUser, content: input.value }) });
-    if (res.error) showToast(res.error || 'فشل إرسال الرسالة','error');
+    try {
+      const res = await window.sendMessage(toUser, input.value);
+      if (res && res.error) showToast(res.error || 'فشل إرسال الرسالة','error');
+    } catch (e) { showToast(e.message || 'فشل إرسال الرسالة','error'); }
   }
 }
 
@@ -2509,40 +2520,40 @@ fileInput.addEventListener('change', async (ev) => {
   form.append('purpose', pendingUploadPurpose || 'other');
   showToast('جاري رفع الملف...','success');
   try {
-    const token = localStorage.getItem('token');
-    let serverResponse = null;
+    // Primary: upload via Apps Script endpoint
     try {
-      const res = await fetch(API_BASE + '/upload', { method: 'POST', body: form, headers: token ? { 'Authorization': 'Bearer ' + token } : {} });
-      serverResponse = await res.json().catch(()=>({ error: 'invalid_response' }));
-    } catch (e) {
-      serverResponse = { networkError: true };
+      const url = await window.uploadFile(f, pendingUploadPurpose);
+      if (url) {
+        showToast('تم الرفع بنجاح','success');
+        if (pendingUploadPurpose === 'avatar') {
+          const avatarEl = document.getElementById('dash-avatar');
+          if (avatarEl) avatarEl.style.backgroundImage = `url(${url})`, avatarEl.textContent = '';
+          syncCurrentUserProfile({ avatar_url: url });
+        }
+        if (pendingUploadPurpose === 'id_card') {
+          syncCurrentUserProfile({ id_card_url: url });
+        }
+        pendingUploadPurpose = null;
+        return;
+      }
+    } catch (ePrimary) {
+      // continue to fallback
     }
 
-    if (serverResponse && !serverResponse.error && !serverResponse.networkError) {
-      showToast('تم الرفع بنجاح','success');
-      const fileUrl = serverResponse.file && serverResponse.file.url ? serverResponse.file.url : null;
-      if (fileUrl && pendingUploadPurpose === 'avatar') {
-        const avatarEl = document.getElementById('dash-avatar');
-        if (avatarEl) avatarEl.style.backgroundImage = `url(${fileUrl})`, avatarEl.textContent = '';
-        syncCurrentUserProfile({ avatar_url: fileUrl });
-      }
-      if (fileUrl && pendingUploadPurpose === 'id_card') {
-        syncCurrentUserProfile({ id_card_url: fileUrl });
-      }
-    } else {
-      // Fallback: try uploading directly to 0x0.st (no API key required)
-      showToast('رفع الخادم فشل، محاولة رفع بديل...','warning');
+    // Fallback: try uploading directly to 0x0.st (no API key required)
+    showToast('رفع الخادم فشل، محاولة رفع بديل...','warning');
+    try {
+      const extForm = new FormData();
+      extForm.append('file', f);
+      const r = await fetch('https://0x0.st', { method: 'POST', body: extForm });
+      if (!r.ok) throw new Error('external_upload_failed');
+      const text = await r.text();
+      const url = text.trim().split('\n')[0];
+      if (!url || !url.startsWith('http')) throw new Error('invalid_external_url');
+      // save the external link via Apps Script if available
       try {
-        const extForm = new FormData();
-        extForm.append('file', f);
-        const r = await fetch('https://0x0.st', { method: 'POST', body: extForm });
-        if (!r.ok) throw new Error('external_upload_failed');
-        const text = await r.text();
-        const url = text.trim().split('\n')[0];
-        if (!url || !url.startsWith('http')) throw new Error('invalid_external_url');
-        // save the external link in our DB for this user (if backend available)
-        const saveRes = await apiFetch('/save-file-link', { method: 'POST', body: JSON.stringify({ url, filename: f.name, content_type: f.type, size: f.size, purpose: pendingUploadPurpose }) });
-        if (saveRes && saveRes.ok) {
+        const saveRes = await window.saveFileLink({ url, filename: f.name, content_type: f.type, size: f.size, purpose: pendingUploadPurpose });
+        if (saveRes && (saveRes.ok || saveRes.success)) {
           showToast('تم الرفع والربط بنجاح','success');
           const fileUrl = saveRes.file ? saveRes.file.url : url;
           if (pendingUploadPurpose === 'avatar') {
@@ -2554,14 +2565,16 @@ fileInput.addEventListener('change', async (ev) => {
             syncCurrentUserProfile({ id_card_url: fileUrl });
           }
         } else if (saveRes && saveRes.networkError) {
-          // backend unreachable; still show success with external URL
           showToast('تم الرفع إلى المزود الخارجي (لم يتم حفظ الرابط على الخادم)','success');
         } else {
-          showToast(saveRes.error || 'فشل حفظ الرابط على الخادم','error');
+          showToast(saveRes && (saveRes.error || saveRes.message) ? (saveRes.error || saveRes.message) : 'فشل حفظ الرابط على الخادم','error');
         }
-      } catch (e2) {
-        showToast(e2.message || 'فشل رفع الملف خارجيًا','error');
+      } catch (eSave) {
+        // no backend to save link, still show external URL success
+        showToast('تم الرفع إلى المزود الخارجي (الرابط مؤقت)','success');
       }
+    } catch (e2) {
+      showToast(e2.message || 'فشل رفع الملف خارجيًا','error');
     }
   } catch (e) {
     showToast(e.message || 'فشل رفع الملف','error');
