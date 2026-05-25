@@ -2202,25 +2202,8 @@ tr:hover td { background: rgba(52,152,219,0.04); }
                 <th>الإجراءات</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>🎬 مونتاج فيديو احترافي</td>
-                <td>⭐ 4.9</td>
-                <td><span class="badge badge-success">نشط</span></td>
-                <td>
-                  <button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px" onclick="toggleManagedServiceRow(this,'hide')">إخفاء</button>
-                  <button class="btn btn-sm btn-danger" style="font-size:12px" onclick="deleteManagedServiceRow(this)">حذف</button>
-                </td>
-              </tr>
-              <tr>
-                <td>🎨 تصميم هوية بصرية</td>
-                <td>⭐ 4.7</td>
-                <td><span class="badge badge-warning">مخفي</span></td>
-                <td>
-                  <button class="btn btn-sm btn-success" style="font-size:12px" onclick="toggleManagedServiceRow(this,'show')">إظهار</button>
-                  <button class="btn btn-sm btn-danger" style="font-size:12px" onclick="deleteManagedServiceRow(this)">حذف</button>
-                </td>
-              </tr>
+            <tbody id="my-services-body">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">تحميل الخدمات...</td></tr>
             </tbody>
           </table>
         </div>
@@ -3118,6 +3101,7 @@ window.addOrder = async (data) => {
   if (!payload.buyer_id && payload.user_id) payload.buyer_id = payload.user_id;
   return await apiFetch(Object.assign({ action: 'addOrder' }, payload));
 };
+window.getMyServices = async (sellerId) => await apiFetch({ action: 'getMyServices', seller_id: sellerId || (currentUser ? (currentUser.seller_id || currentUser.id) : ''), role: 'seller' });
 window.updateOrderStatus = async (orderId, status) => await apiFetch({ action: 'updateOrderStatus', order_id: orderId, status: status || 'completed' });
 window.fetchTransactions = async (userId, role) => await apiFetch({ action: 'getTransactions', userId, role });
 window.requestVerification = async (user_id, file_url, doc_type) => await apiFetch({ action: 'requestVerification', user_id, file_url, doc_type });
@@ -3633,6 +3617,7 @@ function switchTab(tab) {
   if (link) link.classList.add('active');
   if (tab === 'wallet' && typeof renderWalletUI === 'function') renderWalletUI();
   if (tab === 'overview' && typeof renderDashboardStats === 'function') renderDashboardStats();
+  if (tab === 'services' && typeof renderMyServices === 'function') renderMyServices();
 }
 
 function switchAdminTab(tab) {
@@ -4650,7 +4635,48 @@ function showTicketDetails(button) {
   showToast(ticket + ' - ' + user + ' - ' + subject + ' - ' + status, 'success');
 }
 
+function renderMyServices() {
+  var tbody = document.getElementById('my-services-body');
+  if (!tbody) return;
+  var activeUser = currentUser || window.currentUser;
+  if (!activeUser || activeUser.role !== 'seller') {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">يجب تسجيل الدخول كبائع لعرض الخدمات</td></tr>';
+    return;
+  }
+  if (typeof window.getMyServices !== 'function') {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">خدمة جلب الخدمات غير متاحة</td></tr>';
+    return;
+  }
+  window.getMyServices(activeUser.seller_id || activeUser.id).then(function(services) {
+    if (!services || (Array.isArray(services) && services.length === 0) || (services.error && services.error !== 'seller_id_required')) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">لا توجد خدمات مضافة بعد. أضف خدمتك الأولى الآن!</td></tr>';
+      return;
+    }
+    var list = Array.isArray(services) ? services : (services.services || []);
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">لا توجد خدمات مضافة بعد. أضف خدمتك الأولى الآن!</td></tr>';
+      return;
+    }
+    tbody.innerHTML = list.map(function(s) {
+      var statusClass = s.status === 'active' || !s.status ? 'badge-success' : 'badge-warning';
+      var statusText = s.status === 'active' || !s.status ? 'نشط' : (s.status === 'blocked' ? 'محظور' : 'مخفي');
+      var rating = parseFloat(s.rating) || 0;
+      return '<tr><td>' + (s.title || 'خدمة') + '</td>' +
+        '<td>⭐ ' + rating.toFixed(1) + '</td>' +
+        '<td><span class="badge ' + statusClass + '">' + statusText + '</span></td>' +
+        '<td>' +
+          '<button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px" onclick="showToast(\'قريباً\',\'info\')">إخفاء</button> ' +
+          '<button class="btn btn-sm btn-danger" style="font-size:12px" onclick="deleteManagedServiceRow(this, \'' + (s.id || '') + '\')">حذف</button>' +
+        '</td></tr>';
+    }).join('');
+  }).catch(function() {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">تعذر تحميل الخدمات</td></tr>';
+  });
+}
+
 function openCreateServiceForm() {
+  var activeUser = currentUser || window.currentUser;
+  if (!activeUser || activeUser.role !== 'seller') return showToast('فقط البائعون يمكنهم إضافة خدمات', 'error');
   var form = document.getElementById('create-service-form');
   if (form) { form.style.display = 'block'; form.scrollIntoView({ behavior: 'smooth' }); }
 }
