@@ -1,30 +1,75 @@
-<!-- Scripts moved to the end of the file -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillMate - منصة العمل الحر</title>
+<title>فريلانس مصر - منصة العمل الحر للمصريين</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <style>
 :root {
+  --primary: #6dd5fa;
+  --primary-dark: #3aafe8;
+  --primary-light: #a8e8fb;
+  --secondary: #2c3e50;
   --accent: #3498db;
-  --primary: #1e90ff;
-  --primary-dark: #1565c0;
-  --secondary: #0b3a57;
-  --primary-light: #ffffff;
-  --bg-card: #ffffff;
-  --border: #e6eef7;
-  --text-main: #102028;
-  --text-muted: #6b7280;
-  --radius: 14px;
-  --shadow-card: 0 10px 30px rgba(16,24,40,0.06);
-  --vip-gold: #f6d365;
-  --success: #10b981;
+  --accent-hover: #2176ae;
+  --bg-main: linear-gradient(135deg, #e0f7fe 0%, #b3e5fc 40%, #c8efff 70%, #dff6ff 100%);
+  --bg-card: rgba(255,255,255,0.82);
+  --bg-header: rgba(255,255,255,0.96);
+  --text-main: #2c3e50;
+  --text-muted: #607d8b;
+  --text-light: #90a4ae;
+  --border: rgba(109,213,250,0.3);
+  --shadow: 0 8px 32px rgba(52,152,219,0.13);
+  --shadow-card: 0 4px 24px rgba(44,62,80,0.10);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --vip-gold: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --success: #27ae60;
+  --warning: #f39c12;
   --danger: #e74c3c;
+  --sidebar-w: 260px;
+}
+.dark {
+  --bg-main: linear-gradient(135deg, #0d1b2a 0%, #1a2a3a 40%, #0f2237 70%, #162232 100%);
+  --bg-card: rgba(22,40,58,0.92);
+  --bg-header: rgba(13,27,42,0.98);
+  --text-main: #e0f4ff;
+  --text-muted: #90b8cc;
+  --text-light: #5a7a8a;
+  --border: rgba(109,213,250,0.12);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--bg-main);
+  min-height: 100vh;
+  color: var(--text-main);
+  transition: background 0.4s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ===== PAGE SYSTEM ===== */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ===== HEADER ===== */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-header);
+  backdrop-filter: blur(18px);
+  border-bottom: 1.5px solid var(--border);
+  box-shadow: 0 2px 20px rgba(52,152,219,0.08);
+  transition: background 0.3s;
 }
 .header-inner {
   max-width: 1300px; margin: 0 auto;
@@ -44,8 +89,77 @@
   font-size: 20px; font-weight: 900; color: #fff;
   box-shadow: 0 4px 14px rgba(52,152,219,0.35);
 }
-.logo-name { font-size: 20px; font-weight: 900; color: var(--secondary); letter-spacing: -0.5px; display:inline-flex; align-items:center; gap:8px }
+.logo-name { font-size: 18px; font-weight: 900; color: var(--secondary); letter-spacing: -0.5px; }
 .dark .logo-name { color: var(--primary-light); }
+nav { display: flex; align-items: center; gap: 4px; margin: 0 auto; flex-wrap: wrap; }
+nav a {
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; color: var(--text-main);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s; white-space: nowrap;
+}
+nav a:hover, nav a.active { background: rgba(52,152,219,0.12); color: var(--accent); }
+.header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn {
+  padding: 8px 18px; border-radius: 10px;
+  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; transition: all 0.22s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary { background: linear-gradient(135deg, var(--accent) 0%, var(--primary-dark) 100%); color: #fff; box-shadow: 0 4px 14px rgba(52,152,219,0.3); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(52,152,219,0.4); }
+.btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.btn-outline:hover { background: var(--accent); color: #fff; }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-warning { background: var(--warning); color: #fff; }
+.theme-toggle {
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--bg-card);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.profile-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px 6px 10px; border-radius: 12px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-main);
+  transition: all 0.2s;
+}
+.profile-btn:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(52,152,219,0.15); }
+.avatar-sm {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  max-width: 1300px; margin: 0 auto;
+  padding: 70px 24px 50px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-text h1 {
+  font-size: 46px; font-weight: 900; line-height: 1.15;
+  color: var(--secondary); margin-bottom: 14px;
+}
+.dark .hero-text h1 { color: #fff; }
+.hero-text h1 span { color: var(--accent); }
+.hero-text p { font-size: 17px; color: var(--text-muted); line-height: 1.7; margin-bottom: 32px; }
+.search-bar {
+  display: flex; gap: 0; border-radius: 14px;
+  overflow: hidden; box-shadow: 0 8px 30px rgba(52,152,219,0.18);
+  background: #fff; border: 2px solid var(--primary);
+}
+.dark .search-bar { background: #1a2a3a; }
+.search-bar input {
+  flex: 1; padding: 14px 20px; border: none; outline: none;
+  font-family: 'Cairo', sans-serif; font-size: 15px; background: transparent;
+  color: var(--text-main);
+}
 .search-bar button {
   padding: 0 24px; background: linear-gradient(135deg, var(--accent), var(--primary-dark));
   color: #fff; border: none; font-family: 'Cairo', sans-serif;
@@ -119,7 +233,6 @@
   transition: all 0.28s; position: relative;
 }
 .service-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(52,152,219,0.18); border-color: var(--accent); }
-.service-card:active { transform: scale(0.99); }
 .card-img {
   width: 100%; height: 160px;
   display: flex; align-items: center; justify-content: center;
@@ -148,30 +261,206 @@
 .card-price { font-size: 17px; font-weight: 900; color: var(--accent); }
 .card-price span { font-size: 12px; font-weight: 400; color: var(--text-muted); }
 
-/* ===== STATS ROW (polished visuals) ===== */
-.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; align-items:stretch }
+/* ===== STATS ROW ===== */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
 .stat-card {
-  background: linear-gradient(180deg,#ffffff,#f7fbff);
-  border-radius: 18px;
-  padding: 16px 14px; border: 1px solid rgba(16,24,40,0.04);
-  box-shadow: 0 10px 28px rgba(16,24,40,0.06);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition: transform 0.18s, box-shadow 0.18s;
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 22px 20px; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-card); text-align: center;
+  transition: transform 0.2s;
 }
-.stat-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(16,24,40,0.10); }
-.stat-icon { width:64px; height:64px; border-radius:50%; display:flex;align-items:center;justify-content:center; font-size:22px; margin-bottom:8px; box-shadow: inset 0 -6px 12px rgba(255,255,255,0.6); }
-.stat-value { font-size:22px; font-weight:900; color:var(--text-main); line-height:1 }
-.stat-label { font-size:13px; color:var(--text-muted); margin-top:6px; font-weight:800 }
-.stat-meta { font-size:12px; color:#10b981; margin-top:8px; font-weight:800; display:flex;align-items:center;gap:8px }
-.stat-meta .arrow { font-size:12px; transform:translateY(-1px) }
-.stat-meta.up { color:#10b981 }
-.stat-meta.down { color:#e74c3c }
-@keyframes subtlePulse { 0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)} }
+.stat-card:hover { transform: translateY(-3px); }
+.stat-icon { font-size: 32px; margin-bottom: 8px; }
+.stat-value { font-size: 26px; font-weight: 900; color: var(--accent); line-height: 1; }
+.stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
 
-/* ========== Google Sheets Integration (to be implemented) ========== */
-/* هنا ستتم إضافة دوال الربط مع Google Apps Script لاحقاً */
+/* ===== TABLE ===== */
+.table-wrap {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.table-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; border-bottom: 1.5px solid var(--border);
+}
+.table-head h3 { font-size: 16px; font-weight: 800; color: var(--text-main); }
+table { width: 100%; border-collapse: collapse; }
+th {
+  padding: 13px 18px; text-align: right;
+  font-size: 13px; font-weight: 700; color: var(--text-muted);
+  background: rgba(109,213,250,0.06); border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 13px 18px; text-align: right;
+  font-size: 14px; color: var(--text-main);
+  border-bottom: 1px solid var(--border);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(52,152,219,0.04); }
+.badge {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 700; display: inline-block;
+}
+.badge-success { background: rgba(39,174,96,0.15); color: var(--success); }
+.badge-warning { background: rgba(243,156,18,0.15); color: var(--warning); }
+.badge-danger { background: rgba(231,76,60,0.15); color: var(--danger); }
+.badge-blue { background: rgba(52,152,219,0.15); color: var(--accent); }
 
-/* ملاحظة: تم حذف جميع دوال Supabase. يجب ربط الدوال الجديدة هنا لاحقاً. */
+/* ===== SIDEBAR LAYOUT ===== */
+.dashboard-layout {
+  display: flex; min-height: calc(100vh - 68px);
+  max-width: 1300px; margin: 0 auto; padding: 30px 24px; gap: 24px;
+}
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); box-shadow: var(--shadow-card);
+  padding: 24px 0; height: fit-content;
+  position: sticky; top: 90px;
+}
+.sidebar-user { text-align: center; padding: 0 20px 20px; border-bottom: 1px solid var(--border); }
+.avatar-lg {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 28px; font-weight: 700;
+  margin: 0 auto 10px; position: relative;
+}
+.verified-badge-sm {
+  position: absolute; bottom: 0; right: 0;
+  width: 22px; height: 22px; background: #27ae60;
+  border-radius: 50%; border: 2px solid var(--bg-card);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 10px;
+}
+.sidebar-name { font-size: 15px; font-weight: 800; color: var(--text-main); }
+.sidebar-type { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+.sidebar-nav { padding: 12px 0; }
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 22px; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--text-main);
+  text-decoration: none; transition: all 0.2s;
+  border-right: 3px solid transparent;
+}
+.sidebar-nav a:hover { background: rgba(52,152,219,0.07); color: var(--accent); }
+.sidebar-nav a.active { background: rgba(52,152,219,0.1); color: var(--accent); border-right-color: var(--accent); }
+.sidebar-nav a span { font-size: 18px; }
+.sidebar-nav a.danger { color: var(--danger); }
+.sidebar-nav a.danger:hover { background: rgba(231,76,60,0.07); }
+.main-content { flex: 1; min-width: 0; }
+.page-title {
+  font-size: 24px; font-weight: 900; color: var(--text-main);
+  margin-bottom: 22px; display: flex; align-items: center; gap: 10px;
+}
+
+/* ===== TAB CONTENT SYSTEM ===== */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 8px 18px; border-radius: 10px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.tab-btn.active, .tab-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ===== FORM ===== */
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 7px; }
+.form-control {
+  width: 100%; padding: 11px 16px;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  background: var(--bg-card); color: var(--text-main);
+  font-family: 'Cairo', sans-serif; font-size: 14px; outline: none;
+  transition: border-color 0.2s;
+}
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(52,152,219,0.1); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 26px;
+  box-shadow: var(--shadow-card);
+}
+.upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 30px; text-align: center; cursor: pointer;
+  transition: all 0.2s;
+}
+.upload-area:hover { border-color: var(--accent); background: rgba(52,152,219,0.04); }
+.upload-icon { font-size: 36px; margin-bottom: 10px; }
+
+/* ===== MESSAGES ===== */
+.msg-layout { display: grid; grid-template-columns: 280px 1fr; gap: 16px; height: 550px; }
+.msg-list {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); overflow-y: auto;
+}
+.msg-list-head { padding: 16px 18px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 800; }
+.msg-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 18px; cursor: pointer; transition: background 0.2s;
+  border-bottom: 1px solid var(--border);
+}
+.msg-item:hover, .msg-item.active { background: rgba(52,152,219,0.07); }
+.msg-info { flex: 1; min-width: 0; }
+.msg-name { font-size: 14px; font-weight: 700; color: var(--text-main); }
+.msg-preview { font-size: 12px; color: var(--text-muted); truncate: ellipsis; white-space: nowrap; overflow: hidden; }
+.chat-area {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); display: flex; flex-direction: column;
+}
+.chat-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.msg-bubble { max-width: 65%; padding: 11px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+.msg-bubble.sent { background: linear-gradient(135deg, var(--accent), var(--primary-dark)); color: #fff; margin-right: auto; border-bottom-right-radius: 4px; }
+.msg-bubble.recv { background: rgba(109,213,250,0.15); color: var(--text-main); margin-left: auto; border-bottom-left-radius: 4px; }
+.chat-input { padding: 14px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+.chat-input input { flex: 1; padding: 10px 16px; border-radius: 25px; border: 1.5px solid var(--border); background: transparent; font-family: 'Cairo', sans-serif; font-size: 14px; color: var(--text-main); outline: none; }
+.chat-input input:focus { border-color: var(--accent); }
+
+/* ===== REVIEWS ===== */
+.review-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  border: 1.5px solid var(--border); padding: 20px;
+  box-shadow: var(--shadow-card); margin-bottom: 16px;
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.review-stars { color: #f39c12; font-size: 16px; }
+.review-text { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.6; }
+.review-toggle { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.toggle {
+  width: 40px; height: 22px; background: #ccc; border-radius: 11px;
+  cursor: pointer; position: relative; transition: background 0.3s;
+}
+.toggle.on { background: var(--success); }
+.toggle::after {
+  content: ''; position: absolute;
+  width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  top: 2px; right: 2px; transition: transform 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle.on::after { transform: translateX(-18px); }
+
+/* ===== FAVORITES ===== */
+.fav-empty { text-align: center; padding: 60px 20px; }
+.fav-empty .big-icon { font-size: 60px; margin-bottom: 16px; }
+
+/* ===== SETTINGS ===== */
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-info h4 { font-size: 14px; font-weight: 700; color: var(--text-main); }
+.setting-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.dev-info {
+  text-align: center; padding: 30px;
+  background: linear-gradient(135deg, rgba(109,213,250,0.1), rgba(52,152,219,0.05));
+  border-radius: var(--radius); border: 1px solid var(--border); margin-top: 24px;
+}
 .dev-logo { font-size: 40px; margin-bottom: 10px; }
 
 /* ===== AUTH PAGES ===== */
@@ -247,72 +536,6 @@
   box-shadow: 0 12px 40px rgba(0,0,0,0.15); z-index: 200;
   display: none;
 }
-.mobile-menu-btn{display:none}
-.mobile-drawer{display:none;position:fixed;right:12px;left:12px;top:76px;background:var(--bg-header);backdrop-filter:blur(16px);border-radius:14px;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,0.35);z-index:120;padding:12px}
-.mobile-drawer-inner{display:flex;flex-direction:column;gap:8px}
-.mobile-drawer a{padding:10px;border-radius:8px;color:var(--text-main);text-decoration:none;font-weight:700}
-.mobile-drawer a:hover{background:rgba(52,152,219,0.06);color:var(--accent)}
-
-/* checkout preview modal */
-.checkout-preview-shell {
-  width: min(92vw, 620px);
-  background: var(--bg-card);
-  border: 1.5px solid var(--border);
-  border-radius: 24px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.28);
-  padding: 18px;
-  transform: scale(.92);
-  animation: modalZoom .22s ease forwards;
-}
-.checkout-preview-card {
-  pointer-events: none;
-  transform: none !important;
-  box-shadow: none !important;
-  border-width: 1.5px !important;
-}
-.checkout-actions {
-  display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap;
-  margin-top: 14px;
-}
-@keyframes modalZoom { from { transform: scale(.92); opacity: .7; } to { transform: scale(1); opacity: 1; } }
-
-@media (max-width: 900px){
-  nav#main-nav{display:none}
-  .mobile-menu-btn{display:inline-flex}
-  header{margin:8px 8px 0 8px}
-  .header-inner{height:auto;min-height:60px;padding:10px 12px;gap:10px;align-items:center;flex-wrap:wrap}
-  .logo-area{gap:8px;min-width:0;flex:1 1 220px}
-  .brand-name{font-size:clamp(16px,4.4vw,20px)}
-  .brand-sub{display:none}
-  .header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
-  .hero{grid-template-columns:1fr;gap:22px;padding:36px 16px 28px}
-  .hero-text h1{font-size:clamp(26px,7vw,34px);line-height:1.2}
-  .hero-text p{font-size:15px;margin-bottom:18px}
-  .search-bar{flex-direction:column}
-  .search-bar button{width:100%;padding:13px 16px}
-  .categories{gap:8px}
-  .section{padding:34px 16px}
-  .section-title{font-size:clamp(22px,6vw,28px)}
-  .section-sub{margin-bottom:22px}
-  .cards-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
-  .card-img{height:140px}
-  .card-footer{flex-direction:column;align-items:stretch;gap:10px}
-  .btn{justify-content:center}
-  .stats-row, .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .form-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .dashboard-layout{flex-direction:column;padding:14px 12px;gap:14px}
-  .sidebar{width:100%;position:static;padding:18px 0;border-radius:18px}
-  .sidebar-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px}
-  .sidebar-nav a{border-right:none;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;justify-content:flex-start}
-  .sidebar-nav a.active{border-color:var(--accent)}
-  .page-title{font-size:clamp(20px,5.5vw,24px)}
-  .msg-layout{grid-template-columns:1fr;height:auto}
-  .auth-card{padding:22px 18px;max-width:94%}
-  .role-select{grid-template-columns:1fr}
-  .notif-dropdown{width:min(90vw,320px)}
-  .checkout-preview-shell{width:min(94vw,560px);padding:14px;border-radius:20px}
-}
 .notif-dropdown.show { display: block; }
 .notif-head { padding: 16px 18px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 800; }
 .notif-item { padding: 13px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
@@ -343,7 +566,7 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; gap: 30px; }
-  .hero-illustration { width: 100%; height: 220px; font-size: 70px; order: -1; }
+  .hero-illustration { width: 100%; height: 200px; font-size: 70px; }
   .hero-text h1 { font-size: 32px; }
   .stats-row, .admin-stats { grid-template-columns: repeat(2, 1fr); }
   .form-grid { grid-template-columns: 1fr; }
@@ -353,53 +576,6 @@
   .msg-layout { grid-template-columns: 1fr; height: auto; }
   nav { display: none; }
 }
-
-/* Mobile header tweaks for Android / small screens */
-@media (max-width: 480px) {
-  header { margin: 6px; border-radius: 12px; }
-  .header-inner { min-height: 56px; padding: 8px 10px; gap: 8px; }
-  .logo-area{gap:8px}
-  .logo-icon { width:42px; height:42px; border-radius:12px }
-  .brand-name { font-size: 16px; line-height:1 }
-  .theme-toggle { width:36px;height:36px; border-radius:10px }
-  .profile-btn{padding:5px 10px 5px 8px;gap:6px;max-width:42vw}
-  .profile-btn span{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:18vw}
-  .avatar-sm{width:28px;height:28px;font-size:12px}
-  .header-actions{gap:6px}
-  .mobile-menu-btn { display:inline-flex; font-size:20px }
-  .hero{padding:28px 12px 22px;gap:16px}
-  .hero-illustration{height:180px;border-radius:22px;font-size:56px}
-  .float-badge{display:none}
-  .cards-grid{grid-template-columns:1fr;gap:12px}
-  .stats-row, .admin-stats{grid-template-columns:1fr}
-  .sidebar-nav{grid-template-columns:1fr}
-  .dashboard-layout{padding:10px}
-  .sidebar{padding:14px 0}
-  .sidebar-user{padding:0 14px 14px}
-  .avatar-lg{width:64px;height:64px;font-size:24px}
-  .page-title{margin-bottom:16px}
-  .form-card, .order-detail-card, .auth-card{padding:16px}
-  .filter-bar{padding:14px}
-  .filter-select,.form-control{font-size:13px}
-  .checkout-preview-shell{width:calc(100vw - 16px);padding:12px;border-radius:18px}
-}
-
-@media (max-width: 360px) {
-  .header-inner{padding:7px 8px;gap:6px}
-  .brand-name{font-size:15px}
-  .logo-icon{width:38px;height:38px}
-  .header-actions{gap:4px}
-  .theme-toggle,.mobile-menu-btn{width:34px;height:34px}
-  .profile-btn{max-width:38vw}
-  .profile-btn span{max-width:15vw}
-  .hero-text h1{font-size:24px}
-  .hero-text p{font-size:14px}
-  .section{padding:28px 12px}
-  .section-title{font-size:22px}
-}
-
-/* ensure lottie fills the hero container */
-.hero-illustration lottie-player { width:100%; height:100%; display:block }
 
 /* ===== ANIMATION ===== */
 @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -476,7 +652,6 @@
 </style>
 </head>
 <body>
-  <input type="file" id="fileInput" style="display:none" />
 
 <!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
@@ -489,9 +664,8 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-          <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
-          <span class="brand-name">SkillMate</span>
-          <div class="brand-sub">منصة العمل الحر</div>
+        <div class="logo-icon">ف</div>
+        <span class="logo-name">فريلانس مصر</span>
       </div>
       <nav id="main-nav">
         <a onclick="showPage('home')" class="active">الرئيسية</a>
@@ -499,18 +673,16 @@
         <a onclick="showPage('sellers')">البائعين</a>
         <a href="#features-section">المميزات</a>
         <a onclick="showPage('contact')">تواصل معنا</a>
-        <a href="about.html">عن المنصة</a>
       </nav>
-      <button id="mobileMenuBtn" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-drawer" title="قائمة" style="display:none;background:transparent;border:none;font-size:22px;cursor:pointer">☰</button>
       <div class="header-actions">
-        <button class="theme-toggle" onclick="toggleDark()" title="تبديل الوضع"><i class="fa-solid fa-moon"></i></button>
+        <button class="theme-toggle" onclick="toggleDark()" title="تبديل الوضع">🌙</button>
         <div class="notif-btn-wrap" id="notifWrap" style="display:none">
-          <button class="btn btn-outline btn-sm" onclick="toggleNotif()"><i class="fa-regular fa-bell"></i></button>
+          <button class="btn btn-outline btn-sm" onclick="toggleNotif()">🔔</button>
           <div class="notif-dropdown" id="notifDropdown">
             <div class="notif-head">الإشعارات <span class="notif-dot"></span></div>
-              <div class="notif-item"><div class="notif-item-text"><i class="fa-solid fa-circle-check" style="color:#27ae60;margin-inline-start:8px"></i> تم قبول توثيق حسابك بنجاح</div><div class="notif-item-time">منذ 5 دقائق</div></div>
-              <div class="notif-item"><div class="notif-item-text"><i class="fa-regular fa-message" style="margin-inline-start:8px"></i> لديك رسالة جديدة من أحمد محمد</div><div class="notif-item-time">منذ ساعة</div></div>
-              <div class="notif-item"><div class="notif-item-text"><i class="fa-solid fa-money-bill-transfer" style="margin-inline-start:8px"></i> تم شحن محفظتك بمبلغ 500 جنيه</div><div class="notif-item-time">أمس</div></div>
+            <div class="notif-item"><div class="notif-item-text">✅ تم قبول توثيق حسابك بنجاح</div><div class="notif-item-time">منذ 5 دقائق</div></div>
+            <div class="notif-item"><div class="notif-item-text">💬 لديك رسالة جديدة من أحمد محمد</div><div class="notif-item-time">منذ ساعة</div></div>
+            <div class="notif-item"><div class="notif-item-text">💰 تم شحن محفظتك بمبلغ 500 جنيه</div><div class="notif-item-time">أمس</div></div>
           </div>
         </div>
         <div id="header-auth">
@@ -526,20 +698,6 @@
         </div>
       </div>
     </div>
-    <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
-      <div class="mobile-drawer-inner">
-        <a onclick="showPage('home')">الرئيسية</a>
-        <a onclick="showPage('services')">تصفح الخدمات</a>
-        <a onclick="showPage('sellers')">البائعين</a>
-        <a href="#features-section">المميزات</a>
-        <a onclick="showPage('contact')">تواصل معنا</a>
-        <a href="about.html">عن المنصة</a>
-        <div style="margin-top:12px;display:flex;gap:8px">
-          <button class="btn btn-outline btn-sm" onclick="showPage('login')">تسجيل الدخول</button>
-          <button class="btn btn-primary btn-sm" onclick="showPage('register')">إنشاء حساب</button>
-        </div>
-      </div>
-    </div>
   </header>
 
   <!-- HERO -->
@@ -549,129 +707,77 @@
       <p>ابدأ مشروعك الآن وابحث عن أفضل الخدمات أو قدّم خدماتك بكل سهولة وأمان مع أفضل الكفاءات المصرية</p>
       <div class="search-bar">
         <input type="text" placeholder="ابحث عن خدمة... مثل: تصميم لوجو، برمجة موقع..." />
-        <button onclick="requireLogin()"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+        <button onclick="requireLogin()">🔍 بحث</button>
       </div>
       <div class="categories">
-        <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-video" aria-hidden="true"></i> فيديو ومونتاج</div>
-          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> تسويق رقمي</div>
-          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> كتابة وترجمة</div>
-          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-code" aria-hidden="true"></i> برمجة وتطوير</div>
-          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-palette" aria-hidden="true"></i> تصميم جرافيك</div>
-          <div class="cat-tag" onclick="showPage('services')"><i class="fa-solid fa-microphone" aria-hidden="true"></i> خدمات صوتية</div>
+        <div class="cat-tag" onclick="showPage('services')">🎬 فيديو ومونتاج</div>
+        <div class="cat-tag" onclick="showPage('services')">📣 تسويق رقمي</div>
+        <div class="cat-tag" onclick="showPage('services')">✍️ كتابة وترجمة</div>
+        <div class="cat-tag" onclick="showPage('services')">💻 برمجة وتطوير</div>
+        <div class="cat-tag" onclick="showPage('services')">🎨 تصميم جرافيك</div>
+        <div class="cat-tag" onclick="showPage('services')">🎙️ خدمات صوتية</div>
       </div>
     </div>
     <div class="hero-img">
-      <div class="hero-illustration" style="background-image:url('assets/login-bgn.avif');background-size:cover;background-position:center;">
-          <div class="float-badge">⭐ 4.9 متوسط التقييم</div>
-          <div class="float-badge"><i class="fa-solid fa-user-tie" style="color:var(--accent);margin-inline-start:8px"></i> +5000 بائع موثق</div>
-          <div class="float-badge">🔒 مدفوعات آمنة</div>
-          <div class="float-badge">🏅 موثوق من الحكومة</div>
-        </div>
-    </div>
-  </div>
-
-  <!-- Checkout Modal -->
-  <div id="checkoutModal" style="display:none;position:fixed;inset:0;background:rgba(3,10,20,0.72);align-items:center;justify-content:center;z-index:1200;padding:12px">
-    <div class="checkout-preview-shell">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
-        <div style="font-weight:900;color:var(--text-main)">معاينة الخدمة</div>
-        <button onclick="closeCheckoutModal()" style="background:transparent;border:none;font-size:20px;cursor:pointer;color:var(--text-muted)"><i class="fa-solid fa-xmark"></i></button>
+      <div class="hero-illustration">
+        🇪🇬
+        <div class="float-badge">⭐ 4.9 متوسط التقييم</div>
+        <div class="float-badge">👨‍💼 +5000 بائع موثق</div>
       </div>
-      <div id="checkoutPreviewHost"></div>
-      <div id="checkoutSummary" style="display:none"></div>
-      <div style="margin-bottom:8px;color:var(--text-muted);font-size:13px">اختر وسيلة الدفع</div>
-      <div id="paymentMethods" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"></div>
-      <div class="checkout-actions">
-        <button onclick="closeCheckoutModal()" style="padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text-main)">إلغاء</button>
-        <button id="checkoutPayBtn" onclick="handleCheckoutPay()" style="padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,#4facfe,#00f2fe);color:#fff;font-weight:800">ادفع الآن</button>
-      </div>
-      <div id="checkoutMsg" style="margin-top:10px;font-size:13px;color:var(--text-muted)"></div>
     </div>
   </div>
 
   <!-- VIP SERVICES -->
-  <!-- STATS STRIP -->
-  <div class="section" aria-hidden="false">
-    <div class="stats-row" style="align-items:stretch">
-      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e6f7ff,#d0f0ff);color:#0b3a57;margin-bottom:10px"><i class="fa-regular fa-user" style="font-size:26px"></i></div>
-        <div class="stat-value">17K+</div>
-        <div class="stat-label">مستخدم نشط</div>
-        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 25% هذا الشهر</div>
-      </div>
-
-      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f3e8ff,#e7ddff);color:#3b1f6b;margin-bottom:10px"><i class="fa-solid fa-briefcase" style="font-size:24px"></i></div>
-        <div class="stat-value">940+</div>
-        <div class="stat-label">خدمة مكتملة</div>
-        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 18% هذا الشهر</div>
-      </div>
-
-      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e6fffa,#d1fff0);color:#0b5a43;margin-bottom:10px"><i class="fa-solid fa-star" style="font-size:24px"></i></div>
-        <div class="stat-value">4.9/5</div>
-        <div class="stat-label">متوسط التقييم</div>
-        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 12% هذا الشهر</div>
-      </div>
-
-      <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <div style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff4e6,#ffe0b3);color:#6b3700;margin-bottom:10px"><i class="fa-solid fa-trophy" style="font-size:24px"></i></div>
-        <div class="stat-value">1200+</div>
-        <div class="stat-label">محترف مسجل</div>
-        <div class="stat-meta" style="margin-top:8px;color:#10b981">▲ 20% هذا الشهر</div>
-      </div>
-    </div>
-  </div>
   <div class="section">
-    <div class="section-title"><i class="fa-solid fa-star" style="color:#f6d365;margin-inline-start:8px"></i> الخدمات المميزة <span class="vip-badge">VIP</span></div>
+    <div class="section-title">🌟 الخدمات المميزة <span class="vip-badge">VIP</span></div>
     <div class="section-sub">أفضل الخدمات المختارة من كبار المحترفين</div>
     <div class="cards-grid">
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-1" data-service-id="svc-montage-1" data-price="500" data-seller-id="seller-ahmed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_video.png" alt="مونتاج فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="service-card" onclick="requireLogin()">
+        <div class="card-img card-img-1"><div class="vip-corner">⭐ VIP</div>🎬</div>
         <div class="card-body">
           <div class="card-title">مونتاج فيديو احترافي</div>
-          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
-          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(128 تقييم)</span></div>
+          <div class="card-seller">👤 أحمد السيد <span class="chip">موثق ✓</span></div>
+          <div class="card-stars">⭐⭐⭐⭐⭐ <span style="color:var(--text-muted);font-size:12px">(128 تقييم)</span></div>
         </div>
         <div class="card-footer">
           <div class="card-price">500 <span>جنيه</span></div>
-          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب الآن</button>
         </div>
       </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-2" data-service-id="svc-writing-1" data-price="300" data-seller-id="seller-sara"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_translation.png" alt="كتابة محتوى" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="service-card" onclick="requireLogin()">
+        <div class="card-img card-img-2"><div class="vip-corner">⭐ VIP</div>✍️</div>
         <div class="card-body">
           <div class="card-title">كتابة محتوى تسويقي فاخر</div>
-          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> سارة محمد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
-          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(95 تقييم)</span></div>
+          <div class="card-seller">👤 سارة محمد <span class="chip">موثق ✓</span></div>
+          <div class="card-stars">⭐⭐⭐⭐⭐ <span style="color:var(--text-muted);font-size:12px">(95 تقييم)</span></div>
         </div>
         <div class="card-footer">
           <div class="card-price">300 <span>جنيه</span></div>
-          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب الآن</button>
         </div>
       </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-3" data-service-id="svc-web-1" data-price="1200" data-seller-id="seller-mohamed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_web_mario.png" alt="تصميم موقع" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="service-card" onclick="requireLogin()">
+        <div class="card-img card-img-3"><div class="vip-corner">⭐ VIP</div>💻</div>
         <div class="card-body">
           <div class="card-title">تصميم موقع إلكتروني احترافي</div>
-          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> محمد علي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
-          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(210 تقييم)</span></div>
+          <div class="card-seller">👤 محمد علي <span class="chip">موثق ✓</span></div>
+          <div class="card-stars">⭐⭐⭐⭐⭐ <span style="color:var(--text-muted);font-size:12px">(210 تقييم)</span></div>
         </div>
         <div class="card-footer">
           <div class="card-price">1,200 <span>جنيه</span></div>
-          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب الآن</button>
         </div>
       </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-4" data-service-id="svc-brand-1" data-price="800" data-seller-id="seller-nour"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP.png" alt="هوية بصرية" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="service-card" onclick="requireLogin()">
+        <div class="card-img card-img-4"><div class="vip-corner">⭐ VIP</div>🎨</div>
         <div class="card-body">
           <div class="card-title">تصميم هوية بصرية احترافية</div>
-          <div class="card-seller"><i class="fa-regular fa-user" style="margin-inline-start:6px"></i> نور حسن <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
-          <div class="card-stars"><i class="fa-solid fa-star" style="color:#f39c12;margin-inline-start:6px"></i> <span style="color:var(--text-muted);font-size:12px">(76 تقييم)</span></div>
+          <div class="card-seller">👤 نور حسن <span class="chip">موثق ✓</span></div>
+          <div class="card-stars">⭐⭐⭐⭐⭐ <span style="color:var(--text-muted);font-size:12px">(76 تقييم)</span></div>
         </div>
         <div class="card-footer">
           <div class="card-price">800 <span>جنيه</span></div>
-          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب الآن</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب الآن</button>
         </div>
       </div>
     </div>
@@ -679,20 +785,20 @@
 
   <!-- FEATURES -->
   <div class="section" id="features-section">
-    <div class="section-title">✨ لماذا SkillMate؟</div>
+    <div class="section-title">✨ لماذا فريلانس مصر؟</div>
     <div class="cards-grid" style="grid-template-columns:repeat(3,1fr)">
       <div class="form-card" style="text-align:center">
-        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-lock"></i></div>
+        <div style="font-size:40px;margin-bottom:12px">🔒</div>
         <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">دفع آمن ومضمون</h3>
         <p style="font-size:13px;color:var(--text-muted)">أموالك محفوظة في المنصة حتى يتم تسليم العمل بشكل كامل</p>
       </div>
       <div class="form-card" style="text-align:center">
-        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-user-check"></i></div>
+        <div style="font-size:40px;margin-bottom:12px">✅</div>
         <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">بائعين موثقون</h3>
         <p style="font-size:13px;color:var(--text-muted)">كل البائعين تم التحقق من هويتهم وشهاداتهم بواسطة فريق الإدارة</p>
       </div>
       <div class="form-card" style="text-align:center">
-        <div style="font-size:40px;margin-bottom:12px"><i class="fa-solid fa-flag" aria-hidden="true"></i></div>
+        <div style="font-size:40px;margin-bottom:12px">🇪🇬</div>
         <h3 style="font-size:16px;font-weight:800;margin-bottom:8px">للمصريين فقط</h3>
         <p style="font-size:13px;color:var(--text-muted)">منصة متخصصة للكفاءات المصرية مع دعم بالجنيه المصري</p>
       </div>
@@ -701,13 +807,7 @@
 
   <!-- FOOTER -->
   <footer style="background:var(--secondary);color:#fff;text-align:center;padding:24px;margin-top:40px">
-    <div style="max-width:1200px;margin:0 auto">
-      <p style="font-size:13px;opacity:0.7">© 2025 SkillMate - جميع الحقوق محفوظة</p>
-      <div style="display:inline-flex;flex-direction:row-reverse;align-items:center;gap:8px;margin-top:6px">
-        <img src="assets/Verified.png" alt="badge" style="width:22px;height:22px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35))">
-        <span style="font-size:14px;font-weight:700;color:var(--accent)">Dev.Maru_Faltas</span>
-      </div>
-    </div>
+    <p style="font-size:13px;opacity:0.7">© 2025 فريلانس مصر - جميع الحقوق محفوظة | تطوير: Dev.Maru_Faltas ✓</p>
   </footer>
 </div>
 
@@ -718,17 +818,17 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
-        <span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div>
+        <span class="logo-name">فريلانس مصر</span>
       </div>
       <div class="header-actions">
-        <button class="theme-toggle" onclick="toggleDark()"><i class="fa-solid fa-moon"></i></button>
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
       </div>
     </div>
   </header>
   <div class="auth-page">
     <div class="auth-card fade-in">
-      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px"><img src="assets/logo-circle.jpg" style="width:100%;height:100%;object-fit:cover"></div></div>
+      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px">ف</div></div>
       <div class="auth-title">تسجيل الدخول</div>
       <div class="auth-sub">أهلاً بعودتك! سجّل دخولك للمتابعة</div>
       <div class="form-group">
@@ -746,9 +846,9 @@
       </div>
       <div style="margin-top:16px;padding:12px;background:rgba(52,152,219,0.08);border-radius:10px;font-size:12px;color:var(--text-muted)">
         <b>للتجربة السريعة:</b><br>
-        <i class="fa-solid fa-cart-shopping" style="margin-inline-start:6px"></i> مشتري: buyer@test.com / 123456<br>
-        <i class="fa-solid fa-store" style="margin-inline-start:6px"></i> بائع: seller@test.com / 123456<br>
-        <i class="fa-solid fa-key" style="margin-inline-start:6px"></i> أدمن: admin@test.com / 123456
+        🛒 مشتري: buyer@test.com / 123456<br>
+        🏪 بائع: seller@test.com / 123456<br>
+        🔑 أدمن: admin@test.com / 123456
       </div>
       <div style="text-align:center;margin-top:16px">
         <button class="btn btn-outline btn-sm" onclick="showPage('home')">← العودة للرئيسية</button>
@@ -764,29 +864,29 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
-        <span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div>
+        <span class="logo-name">فريلانس مصر</span>
       </div>
       <div class="header-actions">
-        <button class="theme-toggle" onclick="toggleDark()"><i class="fa-solid fa-moon"></i></button>
+        <button class="theme-toggle" onclick="toggleDark()">🌙</button>
       </div>
     </div>
   </header>
   <div class="auth-page">
     <div class="auth-card fade-in">
-      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px"><img src="assets/logo-circle.jpg" style="width:100%;height:100%;object-fit:cover"></div></div>
+      <div class="auth-logo"><div class="logo-icon" style="width:56px;height:56px;font-size:26px;margin:0 auto;border-radius:16px">ف</div></div>
       <div class="auth-title">إنشاء حساب جديد</div>
       <div class="auth-sub">انضم لأكبر منصة عمل حر للمصريين</div>
       <div style="margin-bottom:18px">
         <div style="font-size:14px;font-weight:700;margin-bottom:10px">نوع الحساب</div>
         <div class="role-select">
           <div class="role-btn active" id="role-buyer" onclick="selectRole('buyer')">
-              <div class="role-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+            <div class="role-icon">🛒</div>
             <div class="role-name">مشتري</div>
             <div style="font-size:11px;color:var(--text-muted);margin-top:3px">أبحث عن خدمات</div>
           </div>
-            <div class="role-btn" id="role-seller" onclick="selectRole('seller')">
-              <div class="role-icon"><i class="fa-solid fa-store"></i></div>
+          <div class="role-btn" id="role-seller" onclick="selectRole('seller')">
+            <div class="role-icon">🏪</div>
             <div class="role-name">بائع</div>
             <div style="font-size:11px;color:var(--text-muted);margin-top:3px">أقدم خدمات</div>
           </div>
@@ -829,7 +929,7 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div><span class="logo-name">فريلانس مصر</span>
       </div>
       <nav>
         <a onclick="showPage('home')">الرئيسية</a>
@@ -897,41 +997,41 @@
         <select class="filter-select"><option>جميع البائعين</option><option>موثقون فقط</option></select>
       </div>
       <div class="cards-grid">
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-1" data-service-id="svc-ad-1" data-price="800" data-seller-id="seller-ahmed"><div class="vip-corner">⭐ VIP</div><img src="assets/VIP_video.png" alt="إعلانات فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="service-card" onclick="requireLogin()">
+          <div class="card-img card-img-1"><div class="vip-corner">⭐ VIP</div>🎬</div>
           <div class="card-body">
             <div class="card-title">تصميم فيديوهات إعلانية احترافية</div>
-            <div class="card-seller">👤 أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+            <div class="card-seller">👤 أحمد السيد <span class="chip">موثق ✓</span></div>
             <div class="card-stars">⭐⭐⭐⭐⭐ (128)</div>
           </div>
-          <div class="card-footer"><div class="card-price">800 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+          <div class="card-footer"><div class="card-price">800 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب</button></div>
         </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-2" data-service-id="svc-youtube-1" data-price="350" data-seller-id="seller-karim"><img src="assets/VIP_video.png" alt="YouTube editing" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="service-card" onclick="requireLogin()">
+          <div class="card-img card-img-2">🎥</div>
           <div class="card-body">
             <div class="card-title">تحرير فيديو YouTube احترافي</div>
             <div class="card-seller">👤 كريم وليد</div>
             <div class="card-stars">⭐⭐⭐⭐ (54)</div>
           </div>
-          <div class="card-footer"><div class="card-price">350 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+          <div class="card-footer"><div class="card-price">350 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب</button></div>
         </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-3" data-service-id="svc-vfx-1" data-price="600" data-seller-id="seller-mina"><img src="assets/VIP_video.png" alt="VFX" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="service-card" onclick="requireLogin()">
+          <div class="card-img card-img-3">✨</div>
           <div class="card-body">
             <div class="card-title">إضافة مؤثرات بصرية VFX</div>
-            <div class="card-seller">👤 مينا فادي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+            <div class="card-seller">👤 مينا فادي <span class="chip">موثق ✓</span></div>
             <div class="card-stars">⭐⭐⭐⭐⭐ (88)</div>
           </div>
-          <div class="card-footer"><div class="card-price">600 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+          <div class="card-footer"><div class="card-price">600 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب</button></div>
         </div>
-        <div class="service-card" onclick="goToCheckoutFromButton(this)">
-          <div class="card-img card-img-4" data-service-id="svc-2d-1" data-price="450" data-seller-id="seller-hena"><img src="assets/VIP_video.png" alt="2D animation" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="service-card" onclick="requireLogin()">
+          <div class="card-img card-img-4">🎞</div>
           <div class="card-body">
             <div class="card-title">رسوم متحركة 2D احترافية</div>
             <div class="card-seller">👤 هنا علي</div>
             <div class="card-stars">⭐⭐⭐⭐ (32)</div>
           </div>
-          <div class="card-footer"><div class="card-price">450 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button></div>
+          <div class="card-footer"><div class="card-price">450 <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();requireLogin()">اطلب</button></div>
         </div>
       </div>
     </div>
@@ -945,7 +1045,7 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div><span class="logo-name">فريلانس مصر</span>
       </div>
       <nav>
         <a onclick="showPage('home')">الرئيسية</a>
@@ -963,7 +1063,7 @@
     <div class="section-sub">تعرف على أبرز الكفاءات الموثقة على المنصة</div>
     <div class="cards-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
       <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
-        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-1.png" alt="Ahmed" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="avatar-lg" style="margin:0 auto 12px"><div class="verified-badge-sm">✓</div>أ</div>
         <div style="font-size:16px;font-weight:800">أحمد السيد</div>
         <div style="font-size:13px;color:var(--accent);margin:4px 0">مونتاج وتصميم فيديو</div>
         <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.9</div>
@@ -971,7 +1071,7 @@
         <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
       </div>
       <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
-        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-2.jpg" alt="Sara" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="avatar-lg" style="margin:0 auto 12px;background:linear-gradient(135deg,#f093fb,#f5576c)"><div class="verified-badge-sm">✓</div>س</div>
         <div style="font-size:16px;font-weight:800">سارة محمد</div>
         <div style="font-size:13px;color:var(--accent);margin:4px 0">كتابة محتوى تسويقي</div>
         <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.8</div>
@@ -979,7 +1079,7 @@
         <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
       </div>
       <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
-        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-3.jpg" alt="Mohamed" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="avatar-lg" style="margin:0 auto 12px;background:linear-gradient(135deg,#43e97b,#38f9d7)"><div class="verified-badge-sm">✓</div>م</div>
         <div style="font-size:16px;font-weight:800">محمد علي</div>
         <div style="font-size:13px;color:var(--accent);margin:4px 0">برمجة وتطوير مواقع</div>
         <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 5.0</div>
@@ -987,7 +1087,7 @@
         <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;justify-content:center">عرض البروفايل</button>
       </div>
       <div class="form-card" style="text-align:center;cursor:pointer" onclick="requireLogin()">
-        <div class="avatar-lg" style="margin:0 auto 12px;overflow:hidden;border-radius:50%"><img src="assets/images/team-member-4.jpg" alt="Nour" style="width:100%;height:100%;object-fit:cover"><div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="avatar-lg" style="margin:0 auto 12px;background:linear-gradient(135deg,#667eea,#764ba2)"><div class="verified-badge-sm">✓</div>ن</div>
         <div style="font-size:16px;font-weight:800">نور حسن</div>
         <div style="font-size:13px;color:var(--accent);margin:4px 0">تصميم جرافيك وهوية</div>
         <div class="card-stars" style="margin:6px 0">⭐⭐⭐⭐⭐ 4.7</div>
@@ -1005,7 +1105,7 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div><span class="logo-name">فريلانس مصر</span>
       </div>
       <nav id="dash-nav">
         <a onclick="showPage('home')">الرئيسية</a>
@@ -1026,7 +1126,7 @@
         </div>
         <div class="profile-btn" onclick="switchTab('overview')">
           <div class="avatar-sm" id="dash-avatar">م</div>
-          <span id="dash-username">حسابي</span>
+          <span id="dash-username">محمد أحمد</span>
         </div>
         <button class="btn btn-outline btn-sm" onclick="logout()">خروج</button>
       </div>
@@ -1037,19 +1137,19 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sidebar-user">
-        <div class="avatar-lg" id="sidebar-avatar">م</div>
-        <div class="sidebar-name" id="sidebar-name">حسابي</div>
+        <div class="avatar-lg" id="sidebar-avatar">م<div class="verified-badge-sm">✓</div></div>
+        <div class="sidebar-name" id="sidebar-name">محمد أحمد</div>
         <div class="sidebar-type" id="sidebar-type">مشتري</div>
       </div>
       <div class="sidebar-nav">
-        <a onclick="switchTab('overview')" class="active" id="tab-overview"><i class="fa-solid fa-chart-simple" style="margin-inline-start:8px"></i> لوحة التحكم</a>
-        <a onclick="switchTab('account')" id="tab-account"><i class="fa-regular fa-user" style="margin-inline-start:8px"></i> حسابي</a>
-        <a onclick="switchTab('orders')" id="tab-orders"><i class="fa-solid fa-list-check" style="margin-inline-start:8px"></i> طلباتي</a>
-        <a onclick="switchTab('messages')" id="tab-messages"><i class="fa-regular fa-comments" style="margin-inline-start:8px"></i> الرسائل</a>
-        <a onclick="switchTab('reviews')" id="tab-reviews"><i class="fa-solid fa-star" style="margin-inline-start:8px"></i> التقييمات</a>
-        <a onclick="switchTab('favorites')" id="tab-favorites"><i class="fa-solid fa-heart" style="margin-inline-start:8px"></i> المفضلة</a>
-        <a onclick="switchTab('settings')" id="tab-settings"><i class="fa-solid fa-gear" style="margin-inline-start:8px"></i> الإعدادات</a>
-        <a onclick="logout()" class="danger"><i class="fa-solid fa-right-from-bracket" style="margin-inline-start:8px"></i> تسجيل الخروج</a>
+        <a onclick="switchTab('overview')" class="active" id="tab-overview"><span>📊</span> لوحة التحكم</a>
+        <a onclick="switchTab('account')" id="tab-account"><span>👤</span> حسابي</a>
+        <a onclick="switchTab('orders')" id="tab-orders"><span>📋</span> طلباتي</a>
+        <a onclick="switchTab('messages')" id="tab-messages"><span>💬</span> الرسائل</a>
+        <a onclick="switchTab('reviews')" id="tab-reviews"><span>⭐</span> التقييمات</a>
+        <a onclick="switchTab('favorites')" id="tab-favorites"><span>❤️</span> المفضلة</a>
+        <a onclick="switchTab('settings')" id="tab-settings"><span>⚙️</span> الإعدادات</a>
+        <a onclick="logout()" class="danger"><span>🚪</span> تسجيل الخروج</a>
       </div>
     </div>
 
@@ -1113,23 +1213,7 @@
         <div class="table-wrap" id="my-services-section">
           <div class="table-head">
             <h3>🛠️ خدماتي</h3>
-            <button id="btn-new-service" class="btn btn-primary btn-sm" onclick="openCreateServiceForm()">+ إضافة خدمة جديدة</button>
-          </div>
-          <div id="create-service-form" style="display:none;padding:16px;border-top:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.4));margin-top:8px;border-radius:10px">
-            <div style="display:flex;flex-direction:column;gap:10px;max-width:720px">
-              <input id="svc-title" class="form-control" placeholder="عنوان الخدمة (مثال: مونتاج فيديو احترافي)" />
-              <textarea id="svc-desc" class="form-control" placeholder="وصف الخدمة"></textarea>
-              <input id="svc-price" class="form-control" placeholder="السعر (جنيه)" />
-              <div style="display:flex;gap:8px;align-items:center">
-                <input type="file" id="svc-media" accept="image/*,video/*" />
-                <button class="btn btn-outline btn-sm" onclick="document.getElementById('svc-media').click();return false">اختر ملف وسائط</button>
-                <div style="font-size:13px;color:var(--text-muted)">اختياري: صورة أو فيديو للخدمة</div>
-              </div>
-              <div style="display:flex;gap:8px">
-                <button class="btn btn-primary" id="svc-submit" onclick="submitNewService()">نشر الخدمة</button>
-                <button class="btn btn-outline" onclick="closeCreateServiceForm()">إلغاء</button>
-              </div>
-            </div>
+            <button class="btn btn-primary btn-sm">+ إضافة خدمة جديدة</button>
           </div>
           <table>
             <thead>
@@ -1203,7 +1287,7 @@
           <div class="form-grid">
             <div>
               <div class="form-label">📸 الصورة الشخصية</div>
-              <div class="upload-area" onclick="openFileDialog('avatar')">
+              <div class="upload-area" onclick="showToast('سيتم رفع الصورة على Google Drive','success')">
                 <div class="upload-icon">🤳</div>
                 <div style="font-size:14px;font-weight:600">اضغط لرفع الصورة</div>
                 <div style="font-size:12px;color:var(--text-muted);margin-top:4px">JPG, PNG - حد أقصى 5MB</div>
@@ -1211,7 +1295,7 @@
             </div>
             <div>
               <div class="form-label">🪪 صورة البطاقة الشخصية</div>
-              <div class="upload-area" onclick="openFileDialog('id_card')">
+              <div class="upload-area" onclick="showToast('سيتم رفع البطاقة على Google Drive','success')">
                 <div class="upload-icon">💳</div>
                 <div style="font-size:14px;font-weight:600">اضغط لرفع البطاقة</div>
                 <div style="font-size:12px;color:var(--text-muted);margin-top:4px">JPG, PNG - حد أقصى 5MB</div>
@@ -1220,7 +1304,7 @@
           </div>
           <div style="margin-top:16px">
             <div class="form-label">🎓 صور الشهادات (اختياري)</div>
-            <div class="upload-area" onclick="openFileDialog('certs')">
+            <div class="upload-area" onclick="showToast('سيتم رفع الشهادات على Google Drive','success')">
               <div class="upload-icon">📜</div>
               <div style="font-size:14px;font-weight:600">اضغط لرفع الشهادات</div>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px">يمكنك رفع أكثر من صورة</div>
@@ -1305,7 +1389,7 @@
             </div>
             <div class="chat-input">
               <input type="text" placeholder="اكتب رسالتك هنا..." id="chatInput">
-              <button class="btn btn-primary" onclick="sendMsgToBackend()"><i class="fa-solid fa-paper-plane"></i> إرسال</button>
+              <button class="btn btn-primary" onclick="sendMsg()">إرسال ✈️</button>
             </div>
           </div>
         </div>
@@ -1334,7 +1418,7 @@
           <div class="avatar-sm">خ</div>
           <div style="flex:1">
             <div style="display:flex;justify-content:space-between;align-items:center">
-              <div style="font-size:14px;font-weight:700">خالد نبيل <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div style="font-size:14px;font-weight:700">خالد نبيل <span class="chip">موثق ✓</span></div>
               <div style="display:flex;gap:8px;align-items:center">
                 <div class="toggle on" onclick="this.classList.toggle('on')" title="إظهار/إخفاء التقييم"></div>
                 <span style="font-size:12px;color:var(--text-muted)">إظهار في البروفايل</span>
@@ -1369,10 +1453,10 @@
         <div class="page-title">❤️ المفضلة</div>
         <div class="cards-grid">
           <div class="service-card">
-            <div class="card-img card-img-1"><img src="assets/VIP_video.png" alt="إعلانات فيديو" style="width:100%;height:100%;object-fit:cover"></div>
+            <div class="card-img card-img-1">🎬</div>
             <div class="card-body">
               <div class="card-title">تصميم فيديوهات إعلانية</div>
-              <div class="card-seller">👤 أحمد السيد <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div class="card-seller">👤 أحمد السيد <span class="chip">موثق ✓</span></div>
               <div class="card-stars">⭐⭐⭐⭐⭐ (128)</div>
             </div>
             <div class="card-footer">
@@ -1381,10 +1465,10 @@
             </div>
           </div>
           <div class="service-card">
-            <div class="card-img card-img-3"><img src="assets/VIP_web_mario.png" alt="تطوير موقع" style="width:100%;height:100%;object-fit:cover"></div>
+            <div class="card-img card-img-3">💻</div>
             <div class="card-body">
               <div class="card-title">تطوير موقع إلكتروني</div>
-              <div class="card-seller">👤 محمد علي <span class="chip">موثق <img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"></span></div>
+              <div class="card-seller">👤 محمد علي <span class="chip">موثق ✓</span></div>
               <div class="card-stars">⭐⭐⭐⭐⭐ (210)</div>
             </div>
             <div class="card-footer">
@@ -1441,13 +1525,13 @@
             <button class="btn btn-sm btn-danger" onclick="showToast('يرجى التواصل مع الدعم الفني لحذف الحساب','error')">حذف الحساب</button>
           </div>
         </div>
-          <div class="dev-info">
-          <div class="dev-logo"><img src="assets/logo.jpg" style="width:40px;height:40px;object-fit:cover;border-radius:8px" alt="logo"></div>
-          <div style="font-size:20px;font-weight:900;color:var(--text-main)"><span class="brand-name">SkillMate</span></div>
-          <div style="font-size:13px;color:var(--text-muted);margin:6px 0">منصة العمل الحر</div>
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px">
+        <div class="dev-info">
+          <div class="dev-logo">ف</div>
+          <div style="font-size:20px;font-weight:900;color:var(--text-main)">فريلانس مصر</div>
+          <div style="font-size:13px;color:var(--text-muted);margin:6px 0">منصة العمل الحر للمصريين</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px">
             <span style="font-size:14px;font-weight:700;color:var(--accent)">Dev.Maru_Faltas</span>
-            <span style="background:var(--success);color:#fff;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span>
+            <span style="background:var(--success);color:#fff;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">✓ موثق</span>
           </div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:8px">الإصدار 1.0.0 | جميع الحقوق محفوظة © 2025</div>
         </div>
@@ -1464,7 +1548,7 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div><span class="logo-name">فريلانس مصر</span>
       </div>
       <div style="font-size:14px;font-weight:700;color:var(--danger)">🔑 لوحة الأدمن</div>
       <div class="header-actions">
@@ -1476,7 +1560,7 @@
   <div class="dashboard-layout">
     <div class="sidebar">
       <div class="sidebar-user">
-        <div class="avatar-lg" style="background:linear-gradient(135deg,var(--danger),#c0392b)">أ<div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div></div>
+        <div class="avatar-lg" style="background:linear-gradient(135deg,var(--danger),#c0392b)">أ<div class="verified-badge-sm">✓</div></div>
         <div class="sidebar-name">المدير</div>
         <div class="sidebar-type" style="color:var(--danger)">أدمن النظام</div>
       </div>
@@ -1520,8 +1604,8 @@
           <table>
             <thead><tr><th>المستخدم</th><th>النوع</th><th>التوثيق</th><th>الطلبات</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
             <tbody>
-              <tr><td>محمد أحمد | buyer@test.com</td><td><span class="badge badge-blue">مشتري</span></td><td><span class="badge badge-success"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span></td><td>8</td><td>يناير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
-              <tr><td>سارة محمد | seller@test.com</td><td><span class="badge badge-warning">بائع</span></td><td><span class="badge badge-success"><img src="assets/Verified.png" style="height:14px;vertical-align:middle;margin-inline-start:6px" alt="verified"> موثق</span></td><td>95</td><td>فبراير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
+              <tr><td>محمد أحمد | buyer@test.com</td><td><span class="badge badge-blue">مشتري</span></td><td><span class="badge badge-success">✓ موثق</span></td><td>8</td><td>يناير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
+              <tr><td>سارة محمد | seller@test.com</td><td><span class="badge badge-warning">بائع</span></td><td><span class="badge badge-success">✓ موثق</span></td><td>95</td><td>فبراير 2025</td><td><button class="btn btn-sm btn-danger" style="font-size:12px" onclick="showToast('تم تعليق الحساب','error')">تعليق</button></td></tr>
               <tr><td>كريم وليد | karim@test.com</td><td><span class="badge badge-warning">بائع</span></td><td><span class="badge badge-warning">⏳ قيد المراجعة</span></td><td>12</td><td>مارس 2025</td><td><button class="btn btn-sm btn-success" style="font-size:12px" onclick="showToast('تم قبول التوثيق ✅','success')">قبول التوثيق</button></td></tr>
             </tbody>
           </table>
@@ -1536,9 +1620,9 @@
           <table>
             <thead><tr><th>رقم الطلب</th><th>المشتري</th><th>البائع</th><th>الخدمة</th><th>السعر</th><th>الحالة</th><th>التاريخ</th></tr></thead>
             <tbody>
-              <tr><td>#10047</td><td>خالد نبيل</td><td>أية سمير</td><td>مونتاج فيديو</td><td>500 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>15 مايو</td></tr>
-              <tr><td>#10046</td><td>ريم مصطفى</td><td>عمر محمد</td><td>تصميم هوية</td><td>800 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>10 مايو</td></tr>
-              <tr><td>#10045</td><td>عمرو حسين</td><td>يوسف محمد</td><td>كتابة محتوى</td><td>300 ج</td><td><span class="badge badge-danger">ملغي</span></td><td>5 مايو</td></tr>
+              <tr><td>#10047</td><td>خالد نبيل</td><td>أحمد السيد</td><td>مونتاج فيديو</td><td>500 ج</td><td><span class="badge badge-warning">قيد التنفيذ</span></td><td>15 مايو</td></tr>
+              <tr><td>#10046</td><td>ريم مصطفى</td><td>نور حسن</td><td>تصميم هوية</td><td>800 ج</td><td><span class="badge badge-success">مكتمل</span></td><td>10 مايو</td></tr>
+              <tr><td>#10045</td><td>عمرو حسين</td><td>سارة محمد</td><td>كتابة محتوى</td><td>300 ج</td><td><span class="badge badge-danger">ملغي</span></td><td>5 مايو</td></tr>
             </tbody>
           </table>
         </div>
@@ -1553,7 +1637,7 @@
             <thead><tr><th>رقم العملية</th><th>المشتري</th><th>البائع</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead>
             <tbody>
               <tr><td>#PAY-001</td><td>خالد نبيل</td><td>أحمد السيد</td><td>500 ج</td><td>15 مايو</td><td><span class="badge badge-success">ناجح</span></td></tr>
-              <tr><td>#PAY-002</td><td>ريم مصطفى</td><td>اماني عدلي</td><td>800 ج</td><td>10 مايو</td><td><span class="badge badge-success">ناجح</span></td></tr>
+              <tr><td>#PAY-002</td><td>ريم مصطفى</td><td>نور حسن</td><td>800 ج</td><td>10 مايو</td><td><span class="badge badge-success">ناجح</span></td></tr>
               <tr><td>#PAY-003</td><td>منى سعد</td><td>محمد علي</td><td>1200 ج</td><td>8 مايو</td><td><span class="badge badge-warning">معلق</span></td></tr>
             </tbody>
           </table>
@@ -1656,7 +1740,7 @@
   <header>
     <div class="header-inner">
       <div class="logo-area" onclick="showPage('home')">
-        <div class="logo-icon"><img src="assets/logo-circle.jpg" alt="SkillMate" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div><span class="brand-name">SkillMate</span>
+        <div class="logo-icon">ف</div><span class="logo-name">فريلانس مصر</span>
       </div>
       <nav>
         <a onclick="showPage('home')">الرئيسية</a>
@@ -1797,456 +1881,15 @@
 <!-- ============================================================ -->
 <script>
 // STATE
-let currentUser = null; // { role: 'buyer'|'seller'|'admin', name: '...', id: '...' }
+let currentUser = null; // { role: 'buyer'|'seller'|'admin', name: '...' }
 let selectedRole = 'buyer';
 
-
-// ========== GOOGLE APPS SCRIPT (Google Sheets) INTEGRATION ==========
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKe6R9WtQy0SrKE2JRkQiAQV5teyMHDumZpGO4SBX91VqjiToBH8mwceKRUGVB0aKn/exec'; // ضع رابط Web App هنا
-
-async function apiFetch(payload) {
-  const res = await fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-  return await res.json();
-}
-
-async function uploadFileBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async function(e) {
-      const base64 = e.target.result;
-      try {
-        const res = await apiFetch({ action: 'uploadImageBase64', base64, fileName: file.name });
-        if (res && res.url) resolve(res.url);
-        else reject(new Error(res && res.error ? res.error : 'فشل رفع الصورة'));
-      } catch (err) { reject(err); }
-    };
-    reader.onerror = () => reject(new Error('فشل قراءة الملف'));
-    reader.readAsDataURL(file);
-  });
-}
-
-// Expose simple wrappers on window to keep existing code working
-window.uploadFile = async (file, purpose) => await uploadFileBase64(file);
-window.doRegister = async (name, email, password, role) => await apiFetch({ action: 'registerUser', name, email, password, role });
-window.doLogin = async (email, password) => await apiFetch({ action: 'loginUser', email, password });
-window.fetchServices = async () => await apiFetch({ action: 'getServices' });
-window.fetchCategories = async () => await apiFetch({ action: 'getCategories' });
-window.addService = async (data) => await apiFetch(Object.assign({ action: 'addService' }, data));
-window.fetchOrders = async (userId, role) => await apiFetch({ action: 'getOrders', userId, role });
-window.fetchFavorites = async () => [];
-window.addFavorite = async () => {};
-window.removeFavorite = async () => {};
-window.addReview = async () => {};
-window.fetchAllUsers = async () => await apiFetch({ action: 'getAllUsers' });
-window.getVerifications = async () => await apiFetch({ action: 'getVerifications' });
-window.sendMessage = async (toUser, content) => await apiFetch({ action: 'sendMessage', toUser, content });
-window.saveFileLink = async (payload) => await apiFetch(Object.assign({ action: 'saveFileLink' }, payload));
-
-// NOTE: Some legacy code references Supabase; we've added wrappers that call Google Apps Script endpoints instead.
-
-// تسجيل الدخول عبر Supabase
-async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pass').value.trim();
-  if (!email || !pass) return showToast('الرجاء إدخال البريد وكلمة المرور','error');
-  try {
-    const user = await window.doLogin(email, pass);
-    currentUser = user;
-    localStorage.setItem('user', JSON.stringify(user));
-    updateAuthUI();
-    if (user.role === 'admin') { applyAdminUI(); showPage('admin'); }
-    else { applyUserUI(user.role, user.name); showPage('dashboard'); }
-    showToast('أهلاً بك ' + user.name + '!','success');
-  } catch(e) {
-    showToast(e.message || 'فشل تسجيل الدخول','error');
-  }
-}
-
-// تسجيل مستخدم جديد عبر Supabase
-async function doRegister() {
-  const first = document.querySelector('#page-register .form-grid .form-control') ? document.querySelector('#page-register .form-grid .form-control').value.trim() : '';
-  const email = document.querySelector('#page-register input[type="email"]') ? document.querySelector('#page-register input[type="email"]').value.trim() : '';
-  const pass  = document.querySelector('#page-register input[type="password"]') ? document.querySelector('#page-register input[type="password"]').value.trim() : '';
-  const role = selectedRole || 'buyer';
-  if (!email || !pass) return showToast('الرجاء إدخال بريد وكلمة مرور صحيحة','error');
-  try {
-    await window.doRegister(first || email.split('@')[0], email, pass, role);
-    showToast('تم إنشاء الحساب بنجاح!','success');
-    setTimeout(() => showPage('login'), 1200);
-  } catch(e) {
-    showToast(e.message || 'فشل إنشاء الحساب','error');
-  }
-}
-
-// تسجيل الخروج
-function logout() {
-  currentUser = null;
-  localStorage.removeItem('user');
-  updateAuthUI();
-  showPage('home');
-  showToast('تم تسجيل الخروج بنجاح 👋','success');
-}
-
-// جلب الخدمات من Supabase
-async function fetchServices() {
-  try {
-    const list = await window.fetchServices();
-    renderServices(list);
-    renderMyServices(list);
-  } catch(e) {
-    showToast('تعذر تحميل الخدمات','error');
-  }
-}
-
-// جلب التصنيفات
-async function fetchCategories() {
-  try {
-    const cats = await window.fetchCategories();
-    // يمكنك هنا ملء قائمة التصنيفات في الواجهة
-  } catch(e) {
-    showToast('تعذر تحميل التصنيفات','error');
-  }
-}
-
-// رفع ملف (صورة/هوية/خدمة)
-async function uploadFileHandler(file, purpose) {
-  try {
-    const url = await window.uploadFile(file, purpose);
-    showToast('تم رفع الملف بنجاح','success');
-    return url;
-  } catch(e) {
-    showToast(e.message || 'فشل رفع الملف','error');
-    return null;
-  }
-}
-
-// إضافة خدمة جديدة
-async function submitNewService() {
-  const title = document.getElementById('svc-title').value.trim();
-  const desc = document.getElementById('svc-desc').value.trim();
-  const price = parseFloat(document.getElementById('svc-price').value) || 0;
-  const mediaInput = document.getElementById('svc-media');
-  if (!title) return showToast('ضع عنواناً للخدمة','error');
-  if (!price || price <= 0) return showToast('حدد سعراً صالحاً','error');
-  let media_url = null;
-  if (mediaInput && mediaInput.files && mediaInput.files[0]) {
-    media_url = await uploadFileHandler(mediaInput.files[0], 'service_media');
-  }
-  try {
-    await window.addService({ title, description: desc, price, media_url });
-    showToast('تم نشر الخدمة بنجاح','success');
-    closeCreateServiceForm();
-    await fetchServices();
-  } catch(e) {
-    showToast(e.message || 'فشل إنشاء الخدمة','error');
-  }
-}
-
-// إرسال رسالة
-async function sendMsgToBackend() {
-  const input = document.getElementById('chatInput');
-  if (!input.value.trim()) return;
-  // يجب تحديد to_user من واجهة الدردشة
-  const head = document.querySelector('.chat-head');
-  const toUser = head ? head.dataset.toUser : null;
-  sendMsg(); // optimistic UI
-  if (currentUser && toUser) {
-    try {
-      await window.sendMessage(toUser, input.value);
-    } catch(e) {
-      showToast(e.message || 'فشل إرسال الرسالة','error');
-    }
-  }
-}
-
-// رفع صورة شخصية/هوية
-function openFileDialog(purpose){
-  pendingUploadPurpose = purpose || 'other';
-  fileInput.value = null;
-  fileInput.click();
-}
-fileInput.addEventListener('change', async (ev) => {
-  const f = ev.target.files && ev.target.files[0];
-  if (!f) return;
-  showToast('جاري رفع الملف...','success');
-  try {
-    const url = await uploadFileHandler(f, pendingUploadPurpose);
-    if (url && pendingUploadPurpose === 'avatar') {
-      const avatarEl = document.getElementById('dash-avatar');
-      if (avatarEl) avatarEl.style.backgroundImage = `url(${url})`, avatarEl.textContent = '';
-      syncCurrentUserProfile({ avatar_url: url });
-    }
-    if (url && pendingUploadPurpose === 'id_card') {
-      syncCurrentUserProfile({ id_card_url: url });
-    }
-  } catch(e) {}
-  finally { pendingUploadPurpose = null; }
-});
-
-// جلب الطلبات
-async function fetchOrders() {
-  try {
-    const orders = await window.fetchOrders();
-    // يمكنك هنا عرض الطلبات في الواجهة
-  } catch(e) { showToast('تعذر تحميل الطلبات','error'); }
-}
-
-// جلب المفضلة
-async function fetchFavorites() {
-  try {
-    const favs = await window.fetchFavorites();
-    // يمكنك هنا عرض المفضلة في الواجهة
-  } catch(e) { showToast('تعذر تحميل المفضلة','error'); }
-}
-
-// إضافة للمفضلة
-async function addFavorite(service_id) {
-  try { await window.addFavorite(service_id); showToast('تمت الإضافة للمفضلة','success'); } catch(e) { showToast(e.message,'error'); }
-}
-
-// حذف من المفضلة
-async function removeFavorite(service_id) {
-  try { await window.removeFavorite(service_id); showToast('تمت الإزالة من المفضلة','success'); } catch(e) { showToast(e.message,'error'); }
-}
-
-// إضافة تقييم
-async function addReview(service_id, rating, comment) {
-  try { await window.addReview(service_id, rating, comment); showToast('تم إرسال التقييم','success'); } catch(e) { showToast(e.message,'error'); }
-}
-
-// طلب توثيق
-async function requestVerification(file_id, doc_type) {
-  try { await window.requestVerification(file_id, doc_type); showToast('تم إرسال طلب التوثيق','success'); } catch(e) { showToast(e.message,'error'); }
-}
-
-// جلب الإشعارات
-async function fetchNotifications() {
-  try { const notifs = await window.fetchNotifications(); /* عرض الإشعارات */ } catch(e) { showToast('تعذر تحميل الإشعارات','error'); }
-}
-
-// دوال الأدمن (جلب كل المستخدمين/الطلبات/التوثيقات)
-async function fetchAllUsers() { try { return await window.fetchAllUsers(); } catch(e) { showToast(e.message,'error'); } }
-async function fetchAllOrders() { try { return await window.fetchAllOrders(); } catch(e) { showToast(e.message,'error'); } }
-async function fetchAllVerifications() { try { return await window.fetchAllVerifications(); } catch(e) { showToast(e.message,'error'); } }
-async function updateVerificationStatus(verification_id, status, review_notes) { try { await window.updateVerificationStatus(verification_id, status, review_notes); showToast('تم تحديث حالة التوثيق','success'); } catch(e) { showToast(e.message,'error'); } }
-
-// عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-  fetchServices();
-  fetchCategories();
-  updateAuthUI();
-});
-
-function getDisplayName(user) {
-  if (!user) return 'حسابي';
-  const name = (user.name || user.full_name || '').trim();
-  if (name) return name;
-  if (user.email) return user.email.split('@')[0];
-  return 'حسابي';
-}
-
-function isVerifiedProfile(user) {
-  return !!(user && user.avatar_url && user.id_card_url);
-}
-
-function buildCheckoutUrl(data) {
-  const q = new URLSearchParams();
-  if (data.service_id) q.set('service_id', data.service_id);
-  if (data.price) q.set('price', data.price);
-  if (data.seller_id) q.set('seller_id', data.seller_id);
-  if (data.title) q.set('title', data.title);
-  return 'checkout.html?' + q.toString();
-}
-
-function renderUserProfileUI() {
-  const user = currentUser;
-  const name = getDisplayName(user);
-  const verified = isVerifiedProfile(user);
-  const initial = (name && name.charAt(0)) || 'م';
-  const dashName = document.getElementById('dash-username');
-  const sidebarName = document.getElementById('sidebar-name');
-  const dashAvatar = document.getElementById('dash-avatar');
-  const sidebarAvatar = document.getElementById('sidebar-avatar');
-  if (dashName) dashName.textContent = name;
-  if (sidebarName) sidebarName.textContent = name;
-  if (dashAvatar) dashAvatar.textContent = initial;
-  if (sidebarAvatar) {
-    sidebarAvatar.innerHTML = initial + (verified ? '<div class="verified-badge-sm"><img src="assets/Verified.png" style="width:100%;height:100%;object-fit:contain" alt="verified"></div>' : '');
-  }
-}
-
-function syncCurrentUserProfile(patch) {
-  if (!currentUser) return;
-  currentUser = Object.assign({}, currentUser, patch || {});
-  localStorage.setItem('user', JSON.stringify(currentUser));
-  renderUserProfileUI();
-  updateAuthUI();
-}
-
-function buildPreviewCard(card) {
-  if (!card) return null;
-  const clone = card.cloneNode(true);
-  clone.classList.add('checkout-preview-card');
-  clone.removeAttribute('onclick');
-  clone.querySelectorAll('button').forEach(btn => btn.remove());
-  clone.querySelectorAll('[onclick]').forEach(el => el.removeAttribute('onclick'));
-  clone.querySelectorAll('.service-card').forEach(el => el.style.cursor = 'default');
-  return clone;
-}
-
-// Checkout navigation helpers
-function goToCheckoutFromButton(btn){
-  const card = btn.closest('.service-card') || btn.closest('.card-img');
-  if (!card) return showToast('خطأ في تحديد الخدمة','error');
-  const img = card.querySelector('.card-img') || card.querySelector('[data-service-id]') || card;
-  const serviceId = img && img.dataset && img.dataset.serviceId ? img.dataset.serviceId : img.getAttribute('data-service-id');
-  const price = img && img.dataset && img.dataset.price ? img.dataset.price : img.getAttribute('data-price');
-  const seller = img && img.dataset && img.dataset.sellerId ? img.dataset.sellerId : img.getAttribute('data-seller-id');
-  goToCheckout(serviceId, price, seller, card);
-}
-
-function goToCheckout(serviceId, price, sellerId, card){
-  const titleEl = card ? card.querySelector('.card-title') : null;
-  const title = titleEl ? titleEl.textContent.trim() : '';
-  openCheckoutModal({ service_id: serviceId, price: price, seller_id: sellerId, title }, card);
-}
-
-let currentCheckout = null;
-
-function openCheckoutModal(data, sourceCard) {
-  currentCheckout = data || {};
-  const modal = document.getElementById('checkoutModal');
-  if (!modal) return;
-  const previewHost = document.getElementById('checkoutPreviewHost');
-  const titleNode = document.getElementById('checkoutTitle');
-  const sellerNode = document.getElementById('checkoutSeller');
-  const priceNode = document.getElementById('checkoutPrice');
-  const msgNode = document.getElementById('checkoutMsg');
-  if (previewHost) {
-    previewHost.innerHTML = '';
-    const previewCard = buildPreviewCard(sourceCard);
-    if (previewCard) previewHost.appendChild(previewCard);
-    else {
-      const fallback = document.createElement('div');
-      fallback.className = 'order-detail-card';
-      fallback.innerHTML = '<div style="font-weight:800;margin-bottom:8px">' + (currentCheckout.title || 'خدمة غير معروفة') + '</div>' + '<div style="color:var(--text-muted)">السعر: ' + (currentCheckout.price || '--') + ' جنيه</div>';
-      previewHost.appendChild(fallback);
-    }
-  }
-  if (titleNode) titleNode.textContent = currentCheckout.title || 'خدمة غير معروفة';
-  if (sellerNode) sellerNode.textContent = currentCheckout.seller_id ? ('البائع: ' + currentCheckout.seller_id) : '';
-  if (priceNode) priceNode.textContent = currentCheckout.price ? (currentCheckout.price + ' جنيه') : '--';
-  if (msgNode) msgNode.textContent = 'اضغط ادفع الآن للانتقال إلى صفحة التشيك أوت';
-  modal.style.display = 'flex';
-}
-
-function closeCheckoutModal() {
-  const modal = document.getElementById('checkoutModal');
-  if (modal) modal.style.display = 'none';
-}
-
-async function handleCheckoutPay() {
-  if (!currentCheckout || !currentCheckout.service_id) {
-    showToast('لا توجد خدمة محددة','error');
-    return;
-  }
-  closeCheckoutModal();
-  window.location.href = buildCheckoutUrl(currentCheckout);
-}
-
-// ========== SERVICES DYNAMIC FETCH & RENDER ==========
-async function fetchServices() {
-  try {
-    const list = await window.fetchServices();
-    renderServices(list);
-    renderMyServices(list);
-  } catch(e) {
-    showToast('تعذر تحميل الخدمات','error');
-  }
-}
-
-function renderServices(list) {
-  const grid = document.querySelector('#page-services .cards-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  (list || []).forEach(svc => {
-    const card = document.createElement('div');
-    card.className = 'service-card';
-    card.onclick = () => goToCheckout(svc.id, svc.price, svc.seller_id, card);
-    const media = svc.media_url ? `<img src="${svc.media_url}" style="width:100%;height:100%;object-fit:cover">` : '';
-    const imgShell = document.createElement('div'); imgShell.className = 'card-img'; imgShell.setAttribute('data-service-id', svc.id);
-    imgShell.setAttribute('data-price', svc.price || 0); imgShell.setAttribute('data-seller-id', svc.seller_id || '');
-    imgShell.innerHTML = media || '<div style="font-size:40px">🎯</div>';
-    const body = document.createElement('div'); body.className = 'card-body';
-    body.innerHTML = `<div class="card-title">${svc.title || 'بدون عنوان'}</div>` + `<div class="card-seller">👤 ${svc.seller_id || 'بائع'}</div>` + `<div class="card-stars">⭐⭐⭐⭐☆</div>`;
-    const footer = document.createElement('div'); footer.className = 'card-footer'; footer.innerHTML = `<div class="card-price">${svc.price || 0} <span>جنيه</span></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();goToCheckoutFromButton(this)">اطلب</button>`;
-    card.appendChild(imgShell); card.appendChild(body); card.appendChild(footer);
-    grid.appendChild(card);
-  });
-}
-
-function renderMyServices(allServices) {
-  const tbody = document.querySelector('#my-services-section table tbody');
-  if (!tbody) return;
-  tbody.innerHTML = '';
-  const list = (allServices || []).filter(s => currentUser && s.seller_id === currentUser.id);
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted)">لم تقم بنشر أي خدمة بعد</td></tr>';
-    return;
-  }
-  list.forEach(svc => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${svc.title}</td><td>⭐ 0.0</td><td><span class="badge badge-success">نشط</span></td><td><button class="btn btn-sm" style="background:rgba(52,152,219,0.1);color:var(--accent);font-size:12px">إخفاء</button> <button class="btn btn-sm btn-danger" style="font-size:12px">حذف</button></td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-// ========== CREATE SERVICE (Seller) ==========
-function openCreateServiceForm() {
-  if (!currentUser) return showToast('سجّل الدخول أولاً','error');
-  if (currentUser.role !== 'seller') return showToast('يجب أن تكون بائعاً لنشر خدمة','error');
-  document.getElementById('create-service-form').style.display = 'block';
-  document.getElementById('btn-new-service').style.display = 'none';
-}
-
-function closeCreateServiceForm() {
-  document.getElementById('create-service-form').style.display = 'none';
-  document.getElementById('btn-new-service').style.display = 'inline-flex';
-  document.getElementById('svc-title').value = '';
-  document.getElementById('svc-desc').value = '';
-  document.getElementById('svc-price').value = '';
-  document.getElementById('svc-media').value = null;
-}
-
-async function submitNewService() {
-  const title = document.getElementById('svc-title').value.trim();
-  const desc = document.getElementById('svc-desc').value.trim();
-  const price = parseFloat(document.getElementById('svc-price').value) || 0;
-  const mediaInput = document.getElementById('svc-media');
-  if (!title) return showToast('ضع عنواناً للخدمة','error');
-  if (!price || price <= 0) return showToast('حدد سعراً صالحاً','error');
-  let media_url = null;
-  if (mediaInput && mediaInput.files && mediaInput.files[0]) {
-    media_url = await window.uploadFile(mediaInput.files[0], 'service_media');
-  }
-  try {
-    await window.addService({ title, description: desc, price, media_url });
-    showToast('تم نشر الخدمة بنجاح','success');
-    closeCreateServiceForm();
-    await fetchServices();
-  } catch(e) {
-    showToast(e.message || 'فشل إنشاء الخدمة','error');
-  }
-}
-
-// initialize services on load
-document.addEventListener('DOMContentLoaded', () => {
-  fetchServices();
-});
+// DEMO USERS
+const demoUsers = {
+  'buyer@test.com':  { pass:'123456', role:'buyer',  name:'محمد أحمد' },
+  'seller@test.com': { pass:'123456', role:'seller', name:'سارة محمد' },
+  'admin@test.com':  { pass:'123456', role:'admin',  name:'المدير' },
+};
 
 // ===== PAGE NAVIGATION =====
 function showPage(page) {
@@ -2254,23 +1897,17 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   window.scrollTo(0, 0);
   updateAuthUI();
-  if (page === 'dashboard' && currentUser) renderUserProfileUI();
 }
 
 function updateAuthUI() {
   const authEl = document.getElementById('header-auth');
   const userEl = document.getElementById('header-user');
   const notifWrap = document.getElementById('notifWrap');
-  const stored = localStorage.getItem('user');
-  if (!currentUser && stored) currentUser = JSON.parse(stored);
 
   if (currentUser) {
     if (authEl) authEl.style.display = 'none';
-    if (userEl) userEl.style.display = 'flex';
-    const headerUsername = document.getElementById('header-username');
-    if (headerUsername) headerUsername.textContent = getDisplayName(currentUser);
+    if (userEl) { userEl.style.display = 'flex'; document.getElementById('header-username').textContent = currentUser.name; }
     if (notifWrap) notifWrap.style.display = 'flex';
-    renderUserProfileUI();
   } else {
     if (authEl) authEl.style.display = 'flex';
     if (userEl) userEl.style.display = 'none';
@@ -2284,105 +1921,37 @@ function requireLogin() {
 
 // ===== AUTH =====
 function doLogin() {
-  (async () => {
-    const email = document.getElementById('login-email').value.trim();
-    const pass  = document.getElementById('login-pass').value.trim();
-    if (!email || !pass) return showToast('الرجاء إدخال البريد وكلمة المرور','error');
-    try {
-      const res = await window.doLogin(email, pass);
-      if (res && res.networkError) {
-        const local = localLogin(email, pass);
-        if (!local) return showToast('فشل تسجيل الدخول (خدمة غير متاحة)','error');
-        localStorage.setItem('token', local.token);
-        localStorage.setItem('user', JSON.stringify(local.user));
-        currentUser = local.user;
-        applyUserUI(local.user.role, local.user.name);
-        showPage('dashboard');
-        return showToast('تم تسجيل الدخول (وضع محلي) — ' + local.user.name,'success');
-      }
-      if (!res || res.error || (!res.user && !res.userId && !res.name)) return showToast(res && (res.error||res.message) ? (res.error||res.message) : 'فشل تسجيل الدخول','error');
-      // normalize user object
-      const user = res.user || { id: res.userId || res.user_id || res.id, name: res.name || (res.user && res.user.name) || (res.user && res.user.email), role: res.role || (res.user && res.user.role) || 'buyer' };
-      localStorage.setItem('token', res.token || '');
-      localStorage.setItem('user', JSON.stringify(user));
-      currentUser = user;
-      if (user.role === 'admin') { applyAdminUI(); showPage('admin'); }
-      else { applyUserUI(user.role, user.name); showPage('dashboard'); }
-      showToast('أهلاً بك ' + (user.name || 'مستخدم') + '!','success');
-    } catch (e) {
-      showToast(e.message || 'فشل تسجيل الدخول','error');
-    }
-  })();
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value.trim();
+  const user = demoUsers[email];
+  if (user && user.pass === pass) {
+    currentUser = { role: user.role, name: user.name };
+    if (user.role === 'admin') { applyAdminUI(); showPage('admin'); }
+    else { applyUserUI(user.role, user.name); showPage('dashboard'); }
+    showToast('أهلاً بك ' + user.name + '! 👋','success');
+  } else {
+    showToast('بيانات الدخول غير صحيحة ❌','error');
+  }
 }
 
 function doRegister() {
-  (async () => {
-    // collect minimal fields from form (best-effort)
-    const first = document.querySelector('#page-register .form-grid .form-control') ? document.querySelector('#page-register .form-grid .form-control').value.trim() : '';
-    const email = document.querySelector('#page-register input[type="email"]') ? document.querySelector('#page-register input[type="email"]').value.trim() : '';
-    const pass  = document.querySelector('#page-register input[type="password"]') ? document.querySelector('#page-register input[type="password"]').value.trim() : '';
-    const role = selectedRole || 'buyer';
-    if (!email || !pass) return showToast('الرجاء إدخال بريد وكلمة مرور صحيحة','error');
-    try {
-      const res = await window.doRegister(first || email.split('@')[0], email, pass, role);
-      if (res && res.networkError) {
-        const local = localRegister(email, pass, first || email.split('@')[0], role);
-        if (!local) return showToast('فشل إنشاء الحساب (خدمة غير متاحة) أو البريد مستخدم','error');
-        localStorage.setItem('token', local.token);
-        localStorage.setItem('user', JSON.stringify(local.user));
-        currentUser = local.user;
-        showToast('تم إنشاء الحساب محليًا!','success');
-        setTimeout(() => showPage('dashboard'), 900);
-        return;
-      }
-      if (!res || res.error) return showToast(res && (res.error||res.message) ? (res.error||res.message) : 'فشل إنشاء الحساب','error');
-      const user = res.user || { id: res.userId || res.user_id || res.id, name: res.name || (res.user && res.user.name) || email, role: res.role || (res.user && res.user.role) || role };
-      localStorage.setItem('token', res.token || '');
-      localStorage.setItem('user', JSON.stringify(user));
-      currentUser = user;
-      showToast('تم إنشاء الحساب بنجاح!','success');
-      setTimeout(() => showPage('dashboard'), 1200);
-    } catch (e) {
-      showToast(e.message || 'فشل إنشاء الحساب','error');
-    }
-  })();
+  showToast('تم إنشاء الحساب بنجاح! ابدأ رحلتك مع فريلانس مصر 🎉','success');
+  setTimeout(() => showPage('login'), 1500);
 }
 
 function logout() {
   currentUser = null;
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  localStorage.removeItem('currentUser');
   updateAuthUI();
   showPage('home');
   showToast('تم تسجيل الخروج بنجاح 👋','success');
 }
 
-// ===== Local mock auth (fallback when backend is unreachable)
-function _loadLocalUsers(){
-  try{ return JSON.parse(localStorage.getItem('local_users')||'[]') }catch(e){ return [] }
-}
-function _saveLocalUsers(list){ localStorage.setItem('local_users', JSON.stringify(list)); }
-function localRegister(email, password, name, role){
-  const users = _loadLocalUsers();
-  if (users.find(u=>u.email===email)) return null;
-  const id = 'local-' + Date.now() + '-' + Math.floor(Math.random()*9999);
-  const user = { id, name, email, role, created_at: new Date().toISOString() };
-  users.push({ ...user, password });
-  _saveLocalUsers(users);
-  return { token: 'local-token-'+id, user };
-}
-function localLogin(email, password){
-  const users = _loadLocalUsers();
-  const u = users.find(x=>x.email===email && x.password===password);
-  if (!u) return null;
-  const user = { id: u.id, name: u.name, email: u.email, role: u.role };
-  return { token: 'local-token-'+u.id, user };
-}
-
 function applyUserUI(role, name) {
-  if (currentUser) currentUser.name = name;
-  renderUserProfileUI();
+  document.getElementById('dash-username').textContent = name;
+  document.getElementById('sidebar-name').textContent = name;
+  const avatarChar = name.charAt(0);
+  document.getElementById('dash-avatar').textContent = avatarChar;
+  document.getElementById('sidebar-avatar').innerHTML = avatarChar + '<div class="verified-badge-sm">✓</div>';
 
   const isSeller = role === 'seller';
   document.getElementById('sidebar-type').textContent = isSeller ? 'بائع - مقدم خدمة' : 'مشتري';
@@ -2436,7 +2005,7 @@ function switchContactTab(tab) {
 function toggleDark() {
   document.body.classList.toggle('dark');
   document.querySelectorAll('.theme-toggle').forEach(b => {
-    b.innerHTML = document.body.classList.contains('dark') ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    b.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
   });
 }
 
@@ -2472,22 +2041,6 @@ function sendMsg() {
   messages.scrollTop = messages.scrollHeight;
 }
 
-// Enhanced: send to backend when possible
-async function sendMsgToBackend() {
-  const input = document.getElementById('chatInput');
-  if (!input.value.trim()) return;
-  const head = document.querySelector('.chat-head');
-  const toUser = head ? head.dataset.toUser : null;
-  // optimistic UI
-  sendMsg();
-  if (currentUser && toUser) {
-    try {
-      const res = await window.sendMessage(toUser, input.value);
-      if (res && res.error) showToast(res.error || 'فشل إرسال الرسالة','error');
-    } catch (e) { showToast(e.message || 'فشل إرسال الرسالة','error'); }
-  }
-}
-
 // ===== TOAST =====
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
@@ -2503,103 +2056,6 @@ updateAuthUI();
 
 // Init category toggle (open first one)
 document.querySelector('.cat-menu-item').classList.add('open');
-
-// ===== UPLOAD HANDLING =====
-const fileInput = document.getElementById('fileInput');
-let pendingUploadPurpose = null;
-function openFileDialog(purpose){
-  pendingUploadPurpose = purpose || 'other';
-  fileInput.value = null;
-  fileInput.click();
-}
-fileInput.addEventListener('change', async (ev) => {
-  const f = ev.target.files && ev.target.files[0];
-  if (!f) return;
-  const form = new FormData();
-  form.append('file', f);
-  form.append('purpose', pendingUploadPurpose || 'other');
-  showToast('جاري رفع الملف...','success');
-  try {
-    // Primary: upload via Apps Script endpoint
-    try {
-      const url = await window.uploadFile(f, pendingUploadPurpose);
-      if (url) {
-        showToast('تم الرفع بنجاح','success');
-        if (pendingUploadPurpose === 'avatar') {
-          const avatarEl = document.getElementById('dash-avatar');
-          if (avatarEl) avatarEl.style.backgroundImage = `url(${url})`, avatarEl.textContent = '';
-          syncCurrentUserProfile({ avatar_url: url });
-        }
-        if (pendingUploadPurpose === 'id_card') {
-          syncCurrentUserProfile({ id_card_url: url });
-        }
-        pendingUploadPurpose = null;
-        return;
-      }
-    } catch (ePrimary) {
-      // continue to fallback
-    }
-
-    // Fallback: try uploading directly to 0x0.st (no API key required)
-    showToast('رفع الخادم فشل، محاولة رفع بديل...','warning');
-    try {
-      const extForm = new FormData();
-      extForm.append('file', f);
-      const r = await fetch('https://0x0.st', { method: 'POST', body: extForm });
-      if (!r.ok) throw new Error('external_upload_failed');
-      const text = await r.text();
-      const url = text.trim().split('\n')[0];
-      if (!url || !url.startsWith('http')) throw new Error('invalid_external_url');
-      // save the external link via Apps Script if available
-      try {
-        const saveRes = await window.saveFileLink({ url, filename: f.name, content_type: f.type, size: f.size, purpose: pendingUploadPurpose });
-        if (saveRes && (saveRes.ok || saveRes.success)) {
-          showToast('تم الرفع والربط بنجاح','success');
-          const fileUrl = saveRes.file ? saveRes.file.url : url;
-          if (pendingUploadPurpose === 'avatar') {
-            const avatarEl = document.getElementById('dash-avatar');
-            if (avatarEl) avatarEl.style.backgroundImage = `url(${fileUrl})`, avatarEl.textContent = '';
-            syncCurrentUserProfile({ avatar_url: fileUrl });
-          }
-          if (pendingUploadPurpose === 'id_card') {
-            syncCurrentUserProfile({ id_card_url: fileUrl });
-          }
-        } else if (saveRes && saveRes.networkError) {
-          showToast('تم الرفع إلى المزود الخارجي (لم يتم حفظ الرابط على الخادم)','success');
-        } else {
-          showToast(saveRes && (saveRes.error || saveRes.message) ? (saveRes.error || saveRes.message) : 'فشل حفظ الرابط على الخادم','error');
-        }
-      } catch (eSave) {
-        // no backend to save link, still show external URL success
-        showToast('تم الرفع إلى المزود الخارجي (الرابط مؤقت)','success');
-      }
-    } catch (e2) {
-      showToast(e2.message || 'فشل رفع الملف خارجيًا','error');
-    }
-  } catch (e) {
-    showToast(e.message || 'فشل رفع الملف','error');
-  } finally {
-    pendingUploadPurpose = null;
-  }
-});
-
-// ===== MOBILE DRAWER =====
-const mobileBtn = document.getElementById('mobileMenuBtn');
-const mobileDrawer = document.getElementById('mobile-drawer');
-if (mobileBtn && mobileDrawer) {
-  mobileBtn.addEventListener('click', () => {
-    const open = mobileDrawer.style.display === 'block';
-    mobileDrawer.style.display = open ? 'none' : 'block';
-    mobileBtn.setAttribute('aria-expanded', (!open).toString());
-    mobileDrawer.setAttribute('aria-hidden', open.toString());
-  });
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#mobile-drawer') && !e.target.closest('#mobileMenuBtn')) {
-      if (mobileDrawer.style.display === 'block') mobileDrawer.style.display = 'none';
-    }
-  });
-  window.addEventListener('resize', () => { if (window.innerWidth > 920) mobileDrawer.style.display = 'none'; });
-}
 </script>
 </body>
 </html>

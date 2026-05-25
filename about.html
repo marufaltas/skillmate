@@ -49,12 +49,14 @@
   <header>
     <div class="header-inner">
       <div class="logo-area">
-        <a href="platform.html"><div class="logo-icon"><img src="assets/logo.jpg" alt="logo"></div></a>
+        <a href="index.html"><div class="logo-icon"><img src="assets/logo.jpg" alt="logo"></div></a>
         <div style="font-weight:900;color:#eaf3ff"><span class="brand-name">SkillMate</span></div>
       </div>
+      <button id="mobileBackBtn" class="float-back-btn back-btn" onclick="window.location.href='index.html'" style="display:none;margin-inline-end:6px;border:none;background:transparent;color:inherit;font-size:18px;cursor:pointer" title="رجوع"><i class="fa-solid fa-arrow-right"></i></button>
+      <div id="mobileHeaderTitle" class="mobile-title" style="display:none">عن المنصة</div>
       <nav style="margin-inline-start:auto">
-        <a href="platform.html">الرئيسية</a>
-        <a href="platform.html#features-section">المميزات</a>
+        <a href="index.html">الرئيسية</a>
+        <a href="index.html#features-section">المميزات</a>
         <a href="contact.html">تواصل معنا</a>
       </nav>
     </div>
@@ -65,7 +67,7 @@
       <div class="heroInner">
         <div style="display:flex;justify-content:center;margin-bottom:18px">
           <div class="project-header">
-            <div class="project-line">مشروع تخرج مشروع تخرج مقدم لتحقيق جزء من المتطلبات للحصول على بكالوريوس التسويق والتجارة اإللكترونية</div>
+            <div class="project-line">مشروع تخرج مقدم لتحقيق جزء من المتطلبات للحصول على بكالوريوس التسويق والتجارة اإللكترونية</div>
             <div class="project-line">معهد طيبه العالي للحاسب والعلوم الاداريه</div>
             <div class="project-line">تحت اشراف د / محمد حامد </div>
             <div class="project-line">دفعهه 2025 / 2026</div>
@@ -109,5 +111,16 @@
       <div>© 2025 SkillMate - جميع الحقوق محفوظة</div>
     </footer>
   </main>
+  <script>
+    // show mobile title/back on small screens
+    function _aboutMobileHeaderInit(){
+      var mh = document.getElementById('mobileHeaderTitle');
+      var mb = document.getElementById('mobileBackBtn');
+      if(mh) mh.style.display = window.innerWidth <= 640 ? 'block' : 'none';
+      if(mb) mb.style.display = window.innerWidth <= 640 ? 'flex' : 'none';
+    }
+    _aboutMobileHeaderInit();
+    window.addEventListener('resize', _aboutMobileHeaderInit);
+  </script>
 </body>
 </html>

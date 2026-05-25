@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Keep the proxy endpoint stable on Apache-based hosting.
+RewriteRule ^api/proxy$ api/proxy.php [L,QSA]
